@@ -37,15 +37,16 @@ Context size for local models was set to 96 KiB for all local models as this fit
 
 The following is a list of experiments. I ran each model at least twice (postfix _tX in experiment directory), some of them more often.
 
-The thumbnails give an idea how the game looked like. Clicking on the experiment name brings you to the directory in this repository.
-
-To test in your browser the examples built by LLMs, click on the thumbnail!
-
 The files in this repository only record the final state of each experiment. That is, if intermediate versions existed that needed bugfix, those are not present.
 
 Not every experiment is bugfixed. If needed I usually did one or two rounds of fixes and then stopped.
 
-The LLMs all got this simple command `Write a space invaders game, contained in a single HTML file.`.
+The LLMs all got this simple command `Write a space invaders game, contained in a single HTML file.`
+
+> [!IMPORTANT]
+> Click on the thumbnail to test - in your browser - the examples built by the LLMs.
+> Clicking on the experiment name (left of thumbnail) brings you to the GitHub directory for
+> the given experiment.
 
 <!-- Everything below this line is generated automatically, do not change -->
 
