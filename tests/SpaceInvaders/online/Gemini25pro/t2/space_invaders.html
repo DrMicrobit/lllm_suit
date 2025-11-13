@@ -1,0 +1,491 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Space Invaders</title>
+    <style>
+        body {
+            margin: 0;
+            background-color: #000;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            color: white;
+            font-family: 'Courier New', Courier, monospace;
+            text-align: center;
+        }
+        canvas {
+            background-color: #111;
+            border: 2px solid #333;
+        }
+        .container {
+            position: relative;
+        }
+        #messageOverlay {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            display: none; /* Hidden by default */
+            font-size: 24px;
+            text-shadow: 2px 2px 4px #000;
+        }
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <canvas id="gameCanvas"></canvas>
+    <div id="messageOverlay">
+        <h1>GAME OVER</h1>
+        <p>Press 'R' to Restart</p>
+    </div>
+</div>
+
+<script>
+    const canvas = document.getElementById('gameCanvas');
+    const ctx = canvas.getContext('2d');
+    const messageOverlay = document.getElementById('messageOverlay');
+
+    canvas.width = 600;
+    canvas.height = 700;
+
+    let game;
+
+    // --- CLASSES ---
+
+    class Player {
+        constructor() {
+            this.width = 50;
+            this.height = 20;
+            this.position = {
+                x: canvas.width / 2 - this.width / 2,
+                y: canvas.height - this.height - 20
+            };
+            this.velocity = { x: 0 };
+            this.speed = 7;
+            this.image = this.createPlayerImage();
+        }
+
+        createPlayerImage() {
+            const playerCanvas = document.createElement('canvas');
+            playerCanvas.width = this.width;
+            playerCanvas.height = this.height;
+            const pCtx = playerCanvas.getContext('2d');
+            pCtx.fillStyle = 'lime';
+            // Base
+            pCtx.fillRect(0, 10, 50, 10);
+            // Cockpit
+            pCtx.fillRect(20, 0, 10, 10);
+            return playerCanvas;
+        }
+
+        draw() {
+            ctx.drawImage(this.image, this.position.x, this.position.y, this.width, this.height);
+        }
+
+        update() {
+            this.position.x += this.velocity.x;
+            
+            // Prevent player from going off-screen
+            if (this.position.x < 0) {
+                this.position.x = 0;
+            } else if (this.position.x + this.width > canvas.width) {
+                this.position.x = canvas.width - this.width;
+            }
+            
+            this.draw();
+        }
+    }
+
+    class Projectile {
+        constructor({ position, velocity, color = 'red' }) {
+            this.position = position;
+            this.velocity = velocity;
+            this.width = 4;
+            this.height = 10;
+            this.color = color;
+        }
+
+        draw() {
+            ctx.fillStyle = this.color;
+            ctx.fillRect(this.position.x, this.position.y, this.width, this.height);
+        }
+
+        update() {
+            this.position.y += this.velocity.y;
+            this.draw();
+        }
+    }
+
+    class Particle {
+        constructor({ position, velocity, radius, color }) {
+            this.position = position;
+            this.velocity = velocity;
+            this.radius = radius;
+            this.color = color;
+            this.opacity = 1;
+        }
+
+        draw() {
+            ctx.save();
+            ctx.globalAlpha = this.opacity;
+            ctx.beginPath();
+            ctx.arc(this.position.x, this.position.y, this.radius, 0, Math.PI * 2);
+            ctx.fillStyle = this.color;
+            ctx.fill();
+            ctx.closePath();
+            ctx.restore();
+        }
+
+        update() {
+            this.position.x += this.velocity.x;
+            this.position.y += this.velocity.y;
+            this.opacity -= 0.02;
+            this.draw();
+        }
+    }
+
+    class Invader {
+        constructor({ position }) {
+            this.width = 30;
+            this.height = 30;
+            this.position = {
+                x: position.x,
+                y: position.y
+            };
+            this.image = this.createInvaderImage();
+        }
+        
+        createInvaderImage() {
+            const invaderCanvas = document.createElement('canvas');
+            invaderCanvas.width = this.width;
+            invaderCanvas.height = this.height;
+            const iCtx = invaderCanvas.getContext('2d');
+            iCtx.fillStyle = 'white';
+            // Example of a simple pixel-art invader
+            const pattern = [
+                [0,0,1,0,0,0,0,0,1,0,0],
+                [0,0,0,1,0,0,0,1,0,0,0],
+                [0,0,1,1,1,1,1,1,1,0,0],
+                [0,1,1,0,1,1,1,0,1,1,0],
+                [1,1,1,1,1,1,1,1,1,1,1],
+                [1,0,1,1,1,1,1,1,1,0,1],
+                [1,0,1,0,0,0,0,0,1,0,1],
+                [0,0,0,1,1,0,1,1,0,0,0]
+            ];
+            const pixelSize = 2.5;
+            pattern.forEach((row, y) => {
+                row.forEach((dot, x) => {
+                    if (dot) {
+                        iCtx.fillRect(x * pixelSize + 2, y * pixelSize + 2, pixelSize, pixelSize);
+                    }
+                });
+            });
+            return invaderCanvas;
+        }
+
+        draw() {
+             ctx.drawImage(this.image, this.position.x, this.position.y, this.width, this.height);
+        }
+
+        update({ velocity }) {
+            this.position.x += velocity.x;
+            this.position.y += velocity.y;
+            this.draw();
+        }
+    }
+
+    class Grid {
+        constructor() {
+            this.position = { x: 0, y: 0 };
+            this.velocity = { x: 2, y: 0 };
+            this.invaders = [];
+            
+            const rows = Math.floor(Math.random() * 4) + 2; // 2 to 5 rows
+            const cols = Math.floor(Math.random() * 8) + 5; // 5 to 12 cols
+
+            this.width = cols * 40;
+
+            for (let x = 0; x < cols; x++) {
+                for (let y = 0; y < rows; y++) {
+                    this.invaders.push(new Invader({
+                        position: {
+                            x: x * 40,
+                            y: y * 40 + 50
+                        }
+                    }));
+                }
+            }
+        }
+
+        update() {
+            this.position.x += this.velocity.x;
+            this.position.y += this.velocity.y;
+            this.velocity.y = 0;
+
+            if (this.position.x + this.width >= canvas.width || this.position.x <= 0) {
+                this.velocity.x = -this.velocity.x;
+                this.velocity.y = 30; // Move down
+            }
+        }
+    }
+    
+    // --- GAME STATE ---
+    function init() {
+        game = {
+            player: new Player(),
+            projectiles: [],
+            grids: [new Grid()],
+            invaderProjectiles: [],
+            particles: [],
+            keys: {
+                a: { pressed: false },
+                d: { pressed: false },
+                arrowLeft: { pressed: false },
+                arrowRight: { pressed: false },
+                space: { pressed: false }
+            },
+            score: 0,
+            frames: 0,
+            shootCooldown: 20, // Frames between shots
+            lastShotFrame: 0,
+            invaderSpeed: 1,
+            state: 'playing' // 'playing', 'gameover'
+        };
+        messageOverlay.style.display = 'none';
+    }
+
+
+    // --- GAME LOGIC ---
+
+    function createParticles(object, color) {
+        for (let i = 0; i < 15; i++) {
+            game.particles.push(new Particle({
+                position: {
+                    x: object.position.x + object.width / 2,
+                    y: object.position.y + object.height / 2
+                },
+                velocity: {
+                    x: (Math.random() - 0.5) * 2,
+                    y: (Math.random() - 0.5) * 2
+                },
+                radius: Math.random() * 3,
+                color: color
+            }));
+        }
+    }
+
+    function gameOver() {
+        console.log('Game Over');
+        game.state = 'gameover';
+        messageOverlay.style.display = 'block';
+        createParticles(game.player, 'white');
+    }
+
+    function animate() {
+        if (game.state === 'gameover') return;
+        
+        requestAnimationFrame(animate);
+
+        // Clear canvas
+        ctx.fillStyle = '#111';
+        ctx.fillRect(0, 0, canvas.width, canvas.height);
+
+        // Update player
+        game.player.update();
+
+        // Update particles
+        game.particles.forEach((particle, i) => {
+            if (particle.opacity <= 0) {
+                setTimeout(() => game.particles.splice(i, 1), 0);
+            } else {
+                particle.update();
+            }
+        });
+
+        // Update player projectiles
+        game.projectiles.forEach((projectile, index) => {
+            if (projectile.position.y + projectile.height <= 0) {
+                setTimeout(() => game.projectiles.splice(index, 1), 0);
+            } else {
+                projectile.update();
+            }
+        });
+
+        // Update invader projectiles
+        game.invaderProjectiles.forEach((invaderProjectile, index) => {
+            if (invaderProjectile.position.y + invaderProjectile.height >= canvas.height) {
+                setTimeout(() => game.invaderProjectiles.splice(index, 1), 0);
+            } else {
+                invaderProjectile.update();
+            }
+            // Collision with player
+            if (
+                invaderProjectile.position.y + invaderProjectile.height >= game.player.position.y &&
+                invaderProjectile.position.x + invaderProjectile.width >= game.player.position.x &&
+                invaderProjectile.position.x <= game.player.position.x + game.player.width
+            ) {
+                setTimeout(() => {
+                    game.invaderProjectiles.splice(index, 1);
+                    gameOver();
+                }, 0);
+            }
+        });
+
+        // Update invader grids
+        game.grids.forEach((grid, gridIndex) => {
+            grid.update();
+
+            // Invader shooting
+            if (game.frames % 100 === 0 && grid.invaders.length > 0) {
+                const randomInvader = grid.invaders[Math.floor(Math.random() * grid.invaders.length)];
+                game.invaderProjectiles.push(new Projectile({
+                    position: {
+                        x: randomInvader.position.x + randomInvader.width / 2,
+                        y: randomInvader.position.y + randomInvader.height
+                    },
+                    velocity: { x: 0, y: 5 }
+                }));
+            }
+
+            grid.invaders.forEach((invader, i) => {
+                invader.update({ velocity: grid.velocity });
+
+                // Check for collision between player projectiles and invaders
+                game.projectiles.forEach((projectile, j) => {
+                    if (
+                        projectile.position.y <= invader.position.y + invader.height &&
+                        projectile.position.x + projectile.width >= invader.position.x &&
+                        projectile.position.x <= invader.position.x + invader.width &&
+                        projectile.position.y + projectile.height >= invader.position.y
+                    ) {
+                        setTimeout(() => {
+                            const invaderFound = grid.invaders.find(inv => inv === invader);
+                            const projectileFound = game.projectiles.find(proj => proj === projectile);
+                            
+                            if (invaderFound && projectileFound) {
+                                game.score += 100;
+                                createParticles(invader, 'yellow');
+                                grid.invaders.splice(i, 1);
+                                game.projectiles.splice(j, 1);
+                                
+                                // Adjust grid width and position after removing invader
+                                if (grid.invaders.length > 0) {
+                                    const firstInvader = grid.invaders[0];
+                                    const lastInvader = grid.invaders[grid.invaders.length - 1];
+                                    grid.width = lastInvader.position.x - firstInvader.position.x + lastInvader.width;
+                                    grid.position.x = firstInvader.position.x;
+                                } else {
+                                    game.grids.splice(gridIndex, 1);
+                                }
+                            }
+                        }, 0);
+                    }
+                });
+
+                // Check if invaders reached the player
+                 if (invader.position.y + invader.height >= game.player.position.y) {
+                    setTimeout(() => gameOver(), 0);
+                }
+            });
+        });
+
+        // Player movement
+        if ((game.keys.a.pressed || game.keys.arrowLeft.pressed) && game.player.position.x > 0) {
+            game.player.velocity.x = -game.player.speed;
+        } else if ((game.keys.d.pressed || game.keys.arrowRight.pressed) && game.player.position.x + game.player.width < canvas.width) {
+            game.player.velocity.x = game.player.speed;
+        } else {
+            game.player.velocity.x = 0;
+        }
+
+        // Player shooting
+        if (game.keys.space.pressed && (game.frames - game.lastShotFrame > game.shootCooldown)) {
+            game.lastShotFrame = game.frames;
+            game.projectiles.push(new Projectile({
+                position: {
+                    x: game.player.position.x + game.player.width / 2 - 2,
+                    y: game.player.position.y
+                },
+                velocity: { x: 0, y: -10 },
+                color: 'lime'
+            }));
+        }
+
+        // Spawn new wave of invaders
+        if (game.grids.length === 0) {
+            game.grids.push(new Grid());
+            game.invaderSpeed += 0.2; // Increase difficulty
+            game.grids[0].velocity.x = game.invaderSpeed > 0 ? game.invaderSpeed : -game.invaderSpeed;
+
+        }
+
+        // Draw Score
+        ctx.fillStyle = 'white';
+        ctx.font = '20px "Courier New", Courier, monospace';
+        ctx.fillText(`Score: ${game.score}`, 15, 30);
+        
+        // Draw controls hint on first run
+        if (game.frames < 300) {
+             ctx.font = '16px "Courier New", Courier, monospace';
+             ctx.fillStyle = 'rgba(255, 255, 255, 0.5)';
+             ctx.fillText("Move: A/D or ←/→ | Shoot: Space", canvas.width / 2 - 150, canvas.height - 5);
+        }
+
+        game.frames++;
+    }
+
+
+    // --- EVENT LISTENERS ---
+    
+    window.addEventListener('keydown', ({ key }) => {
+        if (game.state === 'gameover') {
+            if (key.toLowerCase() === 'r') {
+                init();
+                animate();
+            }
+            return;
+        }
+
+        switch (key.toLowerCase()) {
+            case 'a':
+            case 'arrowleft':
+                game.keys[key.toLowerCase() === 'a' ? 'a' : 'arrowLeft'].pressed = true;
+                break;
+            case 'd':
+            case 'arrowright':
+                 game.keys[key.toLowerCase() === 'd' ? 'd' : 'arrowRight'].pressed = true;
+                break;
+            case ' ': // Spacebar
+                game.keys.space.pressed = true;
+                break;
+        }
+    });
+
+    window.addEventListener('keyup', ({ key }) => {
+        switch (key.toLowerCase()) {
+            case 'a':
+            case 'arrowleft':
+                game.keys[key.toLowerCase() === 'a' ? 'a' : 'arrowLeft'].pressed = false;
+                break;
+            case 'd':
+            case 'arrowright':
+                game.keys[key.toLowerCase() === 'd' ? 'd' : 'arrowRight'].pressed = false;
+                break;
+            case ' ': // Spacebar
+                game.keys.space.pressed = false;
+                break;
+        }
+    });
+
+    // --- START GAME ---
+    init();
+    animate();
+
+</script>
+
+</body>
+</html>

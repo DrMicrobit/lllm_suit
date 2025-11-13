@@ -1,0 +1,1 @@
+Write a space invaders game, contained in a single HTML file.

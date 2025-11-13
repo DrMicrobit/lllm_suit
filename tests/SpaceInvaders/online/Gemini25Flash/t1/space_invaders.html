@@ -1,0 +1,452 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Space Invaders</title>
+    <style>
+        body {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            margin: 0;
+            background-color: #333;
+            font-family: 'Press Start 2P', cursive; /* Fallback to a system font if this isn't available */
+            color: #eee;
+            flex-direction: column;
+            overflow: hidden; /* Prevent scrollbars if elements slightly exceed viewport */
+        }
+        /* Attempt to import a pixel font if online, otherwise use system monospace */
+        @import url('https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap');
+        h1 {
+            font-size: 2.5em;
+            margin-bottom: 20px;
+            color: #00FF00;
+            text-shadow: 0 0 5px #00FF00;
+        }
+        canvas {
+            background-color: #000;
+            border: 2px solid #fff;
+            display: block; /* Remove extra space below canvas */
+            box-shadow: 0 0 15px rgba(255, 255, 255, 0.5);
+        }
+        .game-info {
+            margin-top: 15px;
+            font-size: 1.2em;
+            text-align: center;
+            display: flex;
+            gap: 30px;
+        }
+        .game-info p {
+            margin: 0;
+        }
+        .hidden {
+            display: none;
+        }
+        #message {
+            margin-top: 10px;
+            font-size: 1.1em;
+            color: yellow;
+            text-shadow: 0 0 3px yellow;
+        }
+    </style>
+</head>
+<body>
+    <h1>SPACE INVADERS</h1>
+    <canvas id="gameCanvas" width="800" height="600"></canvas>
+    <div class="game-info">
+        <p>Score: <span id="scoreDisplay">0</span></p>
+        <p>Lives: <span id="livesDisplay">3</span></p>
+    </div>
+    <p id="message" class="hidden">Press 'R' to Restart</p>
+
+    <script>
+        // Get canvas and context
+        const canvas = document.getElementById('gameCanvas');
+        const ctx = canvas.getContext('2d');
+
+        // Game Constants
+        const CANVAS_WIDTH = canvas.width;
+        const CANVAS_HEIGHT = canvas.height;
+        const PLAYER_SPEED = 5;
+        const PLAYER_WIDTH = 50;
+        const PLAYER_HEIGHT = 20;
+        const BULLET_SPEED = 7;
+        const BULLET_WIDTH = 5;
+        const BULLET_HEIGHT = 15;
+        const INVADER_ROWS = 5;
+        const INVADER_COLS = 10;
+        const INVADER_WIDTH = 40;
+        const INVADER_HEIGHT = 30;
+        const INVADER_SPACING_X = 50; // Horizontal spacing between invaders
+        const INVADER_SPACING_Y = 40; // Vertical spacing between invaders
+        const INVADER_START_X = 50; // Starting X position for the first invader
+        const INVADER_START_Y = 30; // Starting Y position for the first invader
+        const INVADER_MOVE_STEP_HORIZONTAL = 10; // How much invaders move sideways per step
+        const INVADER_DROP_STEP = 20; // How much invaders drop down
+        const INVADER_INITIAL_SPEED_MULTIPLIER = 1; // Base speed for invader horizontal movement
+        const INVADER_SHOT_CHANCE = 0.005; // Chance for an invader to shoot per frame (adjust for difficulty)
+        const INVADER_BULLET_SPEED = 4;
+        const GAME_OVER_TEXT_SIZE = 48;
+        const WIN_TEXT_SIZE = 48;
+        const INVADER_MOVE_INTERVAL_MS = 500; // Time in milliseconds between invader "steps"
+
+        // Game State Variables
+        let player;
+        let playerBullets = [];
+        let invaders = [];
+        let invaderBullets = [];
+        let score = 0;
+        let lives = 3;
+        let gameOver = false;
+        let gameWon = false;
+        let gameRunning = false;
+        let keys = {}; // To track pressed keys (e.g., {'ArrowLeft': true})
+        let invaderDirection = 1; // 1 for right, -1 for left
+        let invaderCurrentSpeedMultiplier = INVADER_INITIAL_SPEED_MULTIPLIER;
+        let lastInvaderMoveTime = 0; // Timestamp of the last invader movement
+
+        // DOM elements for display
+        const scoreDisplay = document.getElementById('scoreDisplay');
+        const livesDisplay = document.getElementById('livesDisplay');
+        const messageDisplay = document.getElementById('message');
+
+        // Game Objects (simple constructors/factories)
+        function createPlayer() {
+            return {
+                x: CANVAS_WIDTH / 2 - PLAYER_WIDTH / 2,
+                y: CANVAS_HEIGHT - PLAYER_HEIGHT - 30,
+                width: PLAYER_WIDTH,
+                height: PLAYER_HEIGHT,
+                dx: 0, // Player's horizontal velocity
+                shootCooldown: 300, // milliseconds
+                lastShotTime: 0 // Timestamp of the last shot
+            };
+        }
+
+        function createBullet(x, y, dy, color) {
+            return {
+                x: x,
+                y: y,
+                width: BULLET_WIDTH,
+                height: BULLET_HEIGHT,
+                dy: dy, // +ve for invader bullet (down), -ve for player bullet (up)
+                color: color
+            };
+        }
+
+        function createInvader(x, y, row, col) {
+            return {
+                x: x,
+                y: y,
+                width: INVADER_WIDTH,
+                height: INVADER_HEIGHT,
+                row: row,
+                col: col,
+                isAlive: true
+            };
+        }
+
+        // --- Initialization ---
+        function initGame() {
+            player = createPlayer();
+            playerBullets = [];
+            invaders = [];
+            invaderBullets = [];
+            score = 0;
+            lives = 3;
+            gameOver = false;
+            gameWon = false;
+            gameRunning = true;
+            invaderDirection = 1;
+            invaderCurrentSpeedMultiplier = INVADER_INITIAL_SPEED_MULTIPLIER;
+            lastInvaderMoveTime = performance.now(); // Initialize for the first invader move
+
+            // Populate invaders
+            for (let r = 0; r < INVADER_ROWS; r++) {
+                for (let c = 0; c < INVADER_COLS; c++) {
+                    const x = INVADER_START_X + c * INVADER_SPACING_X;
+                    const y = INVADER_START_Y + r * INVADER_SPACING_Y;
+                    invaders.push(createInvader(x, y, r, c));
+                }
+            }
+            updateHUD(); // Update score and lives display
+            messageDisplay.classList.add('hidden'); // Hide restart message
+            requestAnimationFrame(gameLoop); // Start the game loop
+        }
+
+        // --- Drawing Functions ---
+        function drawPlayer() {
+            ctx.fillStyle = '#00FF00'; // Green player ship
+            ctx.fillRect(player.x, player.y, player.width, player.height);
+            // Add a simple triangle top for aesthetic
+            ctx.beginPath();
+            ctx.moveTo(player.x, player.y);
+            ctx.lineTo(player.x + player.width / 2, player.y - player.height);
+            ctx.lineTo(player.x + player.width, player.y);
+            ctx.fill();
+        }
+
+        function drawBullets(bulletsArray) {
+            bulletsArray.forEach(bullet => {
+                ctx.fillStyle = bullet.color;
+                ctx.fillRect(bullet.x, bullet.y, bullet.width, bullet.height);
+            });
+        }
+
+        function drawInvaders() {
+            invaders.forEach(invader => {
+                if (invader.isAlive) {
+                    ctx.fillStyle = '#FF00FF'; // Magenta invaders
+                    ctx.fillRect(invader.x, invader.y, invader.width, invader.height);
+                    // Add simple "eyes"
+                    ctx.fillStyle = '#FFF';
+                    ctx.fillRect(invader.x + invader.width * 0.2, invader.y + invader.height * 0.3, invader.width * 0.2, invader.height * 0.2);
+                    ctx.fillRect(invader.x + invader.width * 0.6, invader.y + invader.height * 0.3, invader.width * 0.2, invader.height * 0.2);
+                }
+            });
+        }
+
+        function updateHUD() {
+            scoreDisplay.textContent = score;
+            livesDisplay.textContent = lives;
+        }
+
+        function drawGameOver() {
+            ctx.fillStyle = 'rgba(0, 0, 0, 0.7)'; // Semi-transparent black overlay
+            ctx.fillRect(0, 0, CANVAS_WIDTH, CANVAS_HEIGHT); // Cover entire canvas
+
+            ctx.fillStyle = '#FFF';
+            ctx.font = `#$#${GAME_OVER_TEXT_SIZE}px 'Press Start 2P', monospace#$#`;
+            ctx.textAlign = 'center';
+            ctx.textBaseline = 'middle';
+            if (gameWon) {
+                ctx.fillText('YOU WIN!', CANVAS_WIDTH / 2, CANVAS_HEIGHT / 2 - 40);
+                ctx.fillStyle = '#0F0';
+            } else {
+                ctx.fillText('GAME OVER', CANVAS_WIDTH / 2, CANVAS_HEIGHT / 2 - 40);
+                ctx.fillStyle = '#F00';
+            }
+            ctx.font = `#$#24px 'Press Start 2P', monospace#$#`;
+            ctx.fillText(`Score: ${score}`, CANVAS_WIDTH / 2, CANVAS_HEIGHT / 2 + 20);
+            messageDisplay.classList.remove('hidden'); // Show restart message
+        }
+
+        // --- Game Logic Updates ---
+        function updatePlayer() {
+            if (keys['ArrowLeft'] || keys['a']) {
+                player.dx = -PLAYER_SPEED;
+            } else if (keys['ArrowRight'] || keys['d']) {
+                player.dx = PLAYER_SPEED;
+            } else {
+                player.dx = 0;
+            }
+
+            player.x += player.dx;
+
+            // Keep player within canvas bounds
+            if (player.x < 0) {
+                player.x = 0;
+            }
+            if (player.x + player.width > CANVAS_WIDTH) {
+                player.x = CANVAS_WIDTH - player.width;
+            }
+
+            // Handle shooting
+            if ((keys[' '] || keys['ArrowUp'] || keys['w']) && performance.now() - player.lastShotTime > player.shootCooldown) {
+                playerBullets.push(createBullet(player.x + player.width / 2 - BULLET_WIDTH / 2, player.y, -BULLET_SPEED, '#00FFFF')); // Cyan bullet
+                player.lastShotTime = performance.now();
+            }
+        }
+
+        function updatePlayerBullets() {
+            for (let i = playerBullets.length - 1; i >= 0; i--) {
+                const bullet = playerBullets[i];
+                bullet.y += bullet.dy;
+
+                // Remove bullet if it goes off-screen
+                if (bullet.y + bullet.height < 0) {
+                    playerBullets.splice(i, 1);
+                    continue;
+                }
+
+                // Check for collision with invaders
+                for (let j = invaders.length - 1; j >= 0; j--) {
+                    const invader = invaders[j];
+                    if (invader.isAlive && checkCollision(bullet, invader)) {
+                        invader.isAlive = false; // Mark invader as hit
+                        score += 10; // Increase score
+                        updateHUD();
+                        playerBullets.splice(i, 1); // Remove the bullet
+                        
+                        // Increase invader speed as fewer invaders remain
+                        const aliveInvadersCount = invaders.filter(inv => inv.isAlive).length;
+                        if (invaders.length > 0 && aliveInvadersCount < invaders.length) {
+                             // Adjust speed dynamically based on remaining invaders
+                            invaderCurrentSpeedMultiplier = INVADER_INITIAL_SPEED_MULTIPLIER * (1 + (invaders.length - aliveInvadersCount) / (invaders.length * 2));
+                        }
+                       
+                        // Check if all invaders are defeated
+                        if (aliveInvadersCount === 0) {
+                            gameWon = true;
+                            gameOver = true;
+                            gameRunning = false;
+                        }
+                        break; // Bullet can only hit one invader
+                    }
+                }
+            }
+        }
+
+        function updateInvaders() {
+            const currentTime = performance.now();
+            let shouldDrop = false;
+            let edgeReached = false;
+
+            // Determine if invaders should move/drop
+            if (currentTime - lastInvaderMoveTime > INVADER_MOVE_INTERVAL_MS) {
+                // Check if any invader has reached the edge
+                for (const invader of invaders) {
+                    if (invader.isAlive) {
+                        const nextX = invader.x + INVADER_MOVE_STEP_HORIZONTAL * invaderDirection * invaderCurrentSpeedMultiplier;
+                        if (nextX + invader.width > CANVAS_WIDTH || nextX < 0) {
+                            edgeReached = true;
+                            break;
+                        }
+                    }
+                }
+
+                if (edgeReached) {
+                    shouldDrop = true;
+                    invaderDirection *= -1; // Reverse horizontal direction
+                }
+
+                // Move and potentially drop invaders
+                invaders.forEach(invader => {
+                    if (invader.isAlive) {
+                        invader.x += INVADER_MOVE_STEP_HORIZONTAL * invaderDirection * invaderCurrentSpeedMultiplier;
+                        if (shouldDrop) {
+                            invader.y += INVADER_DROP_STEP;
+                        }
+                    }
+                });
+
+                lastInvaderMoveTime = currentTime; // Reset move timer
+            }
+
+            // Invader shooting and collision with player
+            let activeInvaders = invaders.filter(inv => inv.isAlive);
+            activeInvaders.forEach(invader => {
+                // Invader shooting logic
+                if (Math.random() < INVADER_SHOT_CHANCE) {
+                    // Only invaders in the bottom row of their column can shoot (simple logic)
+                    const invadersInColumn = activeInvaders.filter(i => i.col === invader.col);
+                    const lowestInvaderInColumn = invadersInColumn.reduce((prev, current) =>
+                        (prev.row > current.row ? prev : current), invadersInColumn[0]
+                    );
+
+                    if (lowestInvaderInColumn === invader) { // If this is the lowest invader in its column
+                        invaderBullets.push(createBullet(invader.x + invader.width / 2 - BULLET_WIDTH / 2, invader.y + invader.height, INVADER_BULLET_SPEED, '#FF0000')); // Red bullet
+                    }
+                }
+
+                // Check if invader has reached player's level (game over condition)
+                if (invader.y + invader.height > player.y) {
+                    gameOver = true;
+                    gameWon = false;
+                    gameRunning = false;
+                }
+            });
+        }
+
+        function updateInvaderBullets() {
+            for (let i = invaderBullets.length - 1; i >= 0; i--) {
+                const bullet = invaderBullets[i];
+                bullet.y += bullet.dy;
+
+                // Remove if off-screen
+                if (bullet.y > CANVAS_HEIGHT) {
+                    invaderBullets.splice(i, 1);
+                    continue;
+                }
+
+                // Collision with player
+                if (checkCollision(bullet, player)) {
+                    lives--;
+                    updateHUD();
+                    invaderBullets.splice(i, 1); // Remove bullet
+
+                    if (lives <= 0) {
+                        gameOver = true;
+                        gameWon = false;
+                        gameRunning = false;
+                    }
+                    // Optional: brief invincibility for player after being hit
+                    // For simplicity, we skip it here.
+                    continue;
+                }
+            }
+        }
+
+        // --- Utility Functions ---
+        function checkCollision(rect1, rect2) {
+            return rect1.x < rect2.x + rect2.width &&
+                   rect1.x + rect1.width > rect2.x &&
+                   rect1.y < rect2.y + rect2.height &&
+                   rect1.y + rect1.height > rect2.y;
+        }
+
+        // --- Game Loop ---
+        let lastFrameTime = performance.now();
+        function gameLoop(currentTime) {
+            const deltaTime = currentTime - lastFrameTime;
+            lastFrameTime = currentTime;
+
+            if (!gameRunning) {
+                if (gameOver) {
+                    drawGameOver();
+                }
+                return; // Stop the loop if game is not running
+            }
+
+            // Clear canvas
+            ctx.clearRect(0, 0, CANVAS_WIDTH, CANVAS_HEIGHT);
+
+            // Update game elements
+            updatePlayer();
+            updatePlayerBullets();
+            updateInvaders();
+            updateInvaderBullets();
+
+            // Draw game elements
+            drawPlayer();
+            drawBullets(playerBullets);
+            drawBullets(invaderBullets); // Draw invader bullets
+            drawInvaders();
+            // HUD is updated in update functions, so no need to draw here explicitly
+            // updateHUD() is called on score/life change
+
+            // Request next frame
+            requestAnimationFrame(gameLoop);
+        }
+
+        // --- Event Listeners for Input ---
+        document.addEventListener('keydown', (e) => {
+            keys[e.key] = true;
+            // Handle 'R' key for restart only when game is over
+            if (e.key === 'r' && gameOver) {
+                initGame();
+            }
+        });
+
+        document.addEventListener('keyup', (e) => {
+            keys[e.key] = false;
+        });
+
+        // Start the game initially
+        initGame();
+
+    </script>
+</body>
+</html>

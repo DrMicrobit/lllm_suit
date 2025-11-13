@@ -1,0 +1,472 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Space Invaders</title>
+    <style>
+        body {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            background-color: #000;
+            margin: 0;
+            overflow: hidden; /* Prevent scrollbars */
+            font-family: 'Press Start 2P', cursive; /* A pixel-art font if available */
+            color: #fff;
+        }
+
+        @font-face {
+            font-family: 'Press Start 2P';
+            src: url('https://fonts.gstatic.com/s/pressstart2p/v15/8ReDeCIfgWJPJsl3KGFARg-3w.woff2') format('woff2');
+            /* Fallback or local install if online source fails */
+            /* You might need to self-host this font or remove if not critical */
+            font-weight: 400;
+            font-style: normal;
+        }
+
+
+        canvas {
+            background-color: #000;
+            border: 2px solid #0f0;
+            display: block;
+            margin: auto;
+        }
+
+        #game-info {
+            position: absolute;
+            top: 10px;
+            left: 10px;
+            font-family: 'Press Start 2P', cursive;
+            font-size: 14px;
+            color: #0f0;
+        }
+    </style>
+</head>
+<body>
+    <canvas id="gameCanvas" width="800" height="600"></canvas>
+
+    <script>
+        // --- Game Setup ---
+        const canvas = document.getElementById('gameCanvas');
+        const ctx = canvas.getContext('2d');
+
+        const CANVAS_WIDTH = canvas.width;
+        const CANVAS_HEIGHT = canvas.height;
+
+        let gameRunning = false;
+        let gameOver = false;
+        let gamePaused = false;
+        let score = 0;
+        let level = 1;
+        let lives = 3;
+        let animationFrameId;
+
+        // --- Player ---
+        const player = {
+            width: 50,
+            height: 30,
+            x: CANVAS_WIDTH / 2 - 25,
+            y: CANVAS_HEIGHT - 50,
+            speed: 5,
+            color: '#0f0',
+            isMovingLeft: false,
+            isMovingRight: false,
+            canShoot: true,
+            fireRate: 300, // milliseconds
+        };
+
+        // --- Bullets ---
+        // INCREASED bulletSpeed for both player and invader bullets
+        const bulletSpeed = 9; // Increased from 7
+        const bulletWidth = 4;
+        const bulletHeight = 10;
+
+        // --- Invaders ---
+        let invaders = [];
+        const invaderRows = 5;
+        const invaderCols = 10;
+        const invaderWidth = 30;
+        const invaderHeight = 20;
+        const invaderPadding = 15; // Space between invaders
+        const invaderOffsetTop = 50; // Initial Y offset
+        const invaderOffsetLeft = 50; // Initial X offset
+
+        // INCREASED invaderSpeedX and DECREASED invaderMoveInterval
+        let invaderSpeedX = 2; // Increased from 1
+        const invaderSpeedY = 20; // Vertical drop
+        let invaderMoveDirection = 1; // 1 for right, -1 for left
+        let invaderUpdateTimer = 0; // To control invader movement speed
+        const invaderMoveInterval = 200; // ms per move (Decreased from 500ms)
+        // DECREASED invaderFireRate for more frequent invader shots
+        const invaderFireRate = 1500; // ms between invader shots (Decreased from 2000ms)
+
+        // --- Keys State ---
+        const keys = {};
+
+        // --- Game Initialization ---
+        function initGame() {
+            player.x = CANVAS_WIDTH / 2 - player.width / 2;
+            player.y = CANVAS_HEIGHT - 50 - player.height / 2;
+            player.isMovingLeft = false;
+            player.isMovingRight = false;
+            playerBullets = [];
+            invaderBullets = [];
+            invaders = [];
+            score = 0;
+            lives = 3;
+            level = 1;
+            gameOver = false;
+            gamePaused = false;
+            gameRunning = true;
+
+            resetInvaders();
+            // Reset base speeds for a new game
+            invaderSpeedX = 2; // Reset to initial faster speed
+            player.fireRate = 300; // Reset player fire rate
+            invaderMoveDirection = 1;
+            invaderUpdateTimer = 0;
+
+            if (animationFrameId) {
+                cancelAnimationFrame(animationFrameId);
+            }
+            gameLoop(0); // Start game loop with a timestamp
+        }
+
+        function resetInvaders() {
+            invaders = [];
+            for (let row = 0; row < invaderRows; row++) {
+                for (let col = 0; col < invaderCols; col++) {
+                    invaders.push({
+                        x: invaderOffsetLeft + col * (invaderWidth + invaderPadding),
+                        y: invaderOffsetTop + row * (invaderHeight + invaderPadding),
+                        width: invaderWidth,
+                        height: invaderHeight,
+                        alive: true,
+                        color: `hsl(${row * 60}, 100%, 50%)`, // Different color per row
+                        lastShotTime: Date.now() + Math.random() * invaderFireRate, // Stagger initial shots
+                    });
+                }
+            }
+        }
+
+        // --- Drawing Functions ---
+        function drawPlayer() {
+            ctx.fillStyle = player.color;
+            ctx.fillRect(player.x, player.y, player.width, player.height);
+            // Simple player design (triangle top)
+            ctx.beginPath();
+            ctx.moveTo(player.x + player.width / 2, player.y);
+            ctx.lineTo(player.x, player.y + player.height);
+            ctx.lineTo(player.x + player.width, player.y + player.height);
+            ctx.closePath();
+            ctx.fillStyle = player.color;
+            ctx.fill();
+        }
+
+        function drawBullets(bullets, color) {
+            ctx.fillStyle = color;
+            bullets.forEach(bullet => {
+                if (bullet.active) {
+                    ctx.fillRect(bullet.x, bullet.y, bulletWidth, bulletHeight);
+                }
+            });
+        }
+
+        function drawInvaders() {
+            invaders.forEach(invader => {
+                if (invader.alive) {
+                    ctx.fillStyle = invader.color;
+                    ctx.fillRect(invader.x, invader.y, invader.width, invader.height);
+                    // Simple invader design (eyes)
+                    ctx.fillStyle = '#000';
+                    ctx.fillRect(invader.x + invader.width * 0.2, invader.y + invader.height * 0.3, invader.width * 0.2, invader.height * 0.2);
+                    ctx.fillRect(invader.x + invader.width * 0.6, invader.y + invader.height * 0.3, invader.width * 0.2, invader.height * 0.2);
+                }
+            });
+        }
+
+        function drawScore() {
+            ctx.font = '16px "Press Start 2P"';
+            ctx.fillStyle = '#0f0';
+            ctx.textAlign = 'left';
+            ctx.fillText(`SCORE: ${score}`, 10, 25);
+            ctx.fillText(`LIVES: ${lives}`, 10, 50);
+            ctx.fillText(`LEVEL: ${level}`, CANVAS_WIDTH - ctx.measureText(`LEVEL: ${level}`).width - 10, 25);
+        }
+
+        function drawMessage(text, color = '#0f0') {
+            ctx.font = '30px "Press Start 2P"';
+            ctx.fillStyle = color;
+            ctx.textAlign = 'center';
+            ctx.fillText(text, CANVAS_WIDTH / 2, CANVAS_HEIGHT / 2);
+            ctx.font = '16px "Press Start 2P"';
+            ctx.fillText('Press R to Restart', CANVAS_WIDTH / 2, CANVAS_HEIGHT / 2 + 40);
+        }
+
+        function drawPauseScreen() {
+            ctx.fillStyle = 'rgba(0, 0, 0, 0.7)';
+            ctx.fillRect(0, 0, CANVAS_WIDTH, CANVAS_HEIGHT);
+            drawMessage('PAUSED', '#fff');
+            ctx.font = '16px "Press Start 2P"';
+            ctx.fillText('Press P to Resume', CANVAS_WIDTH / 2, CANVAS_HEIGHT / 2 + 80);
+        }
+
+        // --- Update Functions ---
+        function updatePlayer(deltaTime) {
+            if (player.isMovingLeft) {
+                player.x -= player.speed;
+            }
+            if (player.isMovingRight) {
+                player.x += player.speed;
+            }
+
+            // Keep player within canvas bounds
+            if (player.x < 0) player.x = 0;
+            if (player.x + player.width > CANVAS_WIDTH) player.x = CANVAS_WIDTH - player.width;
+        }
+
+        function updatePlayerBullets() {
+            playerBullets.forEach(bullet => {
+                bullet.y -= bulletSpeed;
+                bullet.active = bullet.y > 0;
+            });
+            playerBullets = playerBullets.filter(bullet => bullet.active);
+        }
+
+        function updateInvaders(deltaTime) {
+            const now = Date.now();
+            invaderUpdateTimer += deltaTime;
+
+            // Invader movement logic
+            if (invaderUpdateTimer >= invaderMoveInterval / level) { // Invaders move faster with levels
+                let hitEdge = false;
+                invaders.forEach(invader => {
+                    if (invader.alive) {
+                        invader.x += invaderSpeedX * invaderMoveDirection;
+                        if (invader.x + invader.width > CANVAS_WIDTH || invader.x < 0) {
+                            hitEdge = true;
+                        }
+                    }
+                });
+
+                if (hitEdge) {
+                    invaderMoveDirection *= -1; // Reverse direction
+                    invaders.forEach(invader => {
+                        if (invader.alive) {
+                            invader.y += invaderSpeedY; // Drop down
+                        }
+                    });
+                }
+                invaderUpdateTimer = 0;
+            }
+
+
+            // Invader shooting logic
+            const aliveInvaders = invaders.filter(inv => inv.alive);
+            if (aliveInvaders.length > 0) {
+                const bottomRowInvaders = aliveInvaders.filter(inv => {
+                    // Only invaders that don't have other invaders directly below them can shoot
+                    // Also filter to only those invaders that are closer to the player's X position to create more direct threats
+                    return !aliveInvaders.some(otherInv =>
+                        otherInv.x === inv.x && otherInv.y > inv.y
+                    );
+                });
+
+                // Pick a random invader from the bottom row to shoot
+                if (bottomRowInvaders.length > 0) {
+                    const shooterIndex = Math.floor(Math.random() * bottomRowInvaders.length);
+                    const shooter = bottomRowInvaders[shooterIndex];
+
+                    // Invaders shoot faster with levels, and use the adjusted invaderFireRate
+                    if (shooter && now - shooter.lastShotTime > invaderFireRate / level) {
+                        invaderBullets.push({
+                            x: shooter.x + invaderWidth / 2 - bulletWidth / 2,
+                            y: shooter.y + invaderHeight,
+                            width: bulletWidth, // Added for collision detection
+                            height: bulletHeight, // Added for collision detection
+                            active: true
+                        });
+                        shooter.lastShotTime = now;
+                    }
+                }
+            }
+        }
+
+        function updateInvaderBullets() {
+            invaderBullets.forEach(bullet => {
+                bullet.y += bulletSpeed;
+                bullet.active = bullet.y < CANVAS_HEIGHT;
+            });
+            invaderBullets = invaderBullets.filter(bullet => bullet.active);
+        }
+
+        // --- Collision Detection ---
+        function checkCollision(rect1, rect2) {
+            return rect1.x < rect2.x + rect2.width &&
+                   rect1.x + rect1.width > rect2.x &&
+                   rect1.y < rect2.y + rect2.height &&
+                   rect1.y + rect1.height > rect2.y;
+        }
+
+        function handleCollisions() {
+            // Player Bullet - Invader Collisions
+            playerBullets.forEach(bullet => {
+                invaders.forEach(invader => {
+                    if (bullet.active && invader.alive && checkCollision(bullet, invader)) {
+                        bullet.active = false; // Deactivate player bullet
+                        invader.alive = false; // Mark invader as hit
+                        score += 10;
+                    }
+                });
+            });
+            playerBullets = playerBullets.filter(bullet => bullet.active); // Remove hit bullets
+
+            // Invader Bullet - Player Collisions
+            invaderBullets.forEach(bullet => {
+                // The `bullet` object needs width and height for checkCollision
+                // Made sure they are added when bullet is created
+                if (bullet.active && checkCollision(bullet, player)) {
+                    bullet.active = false; // Deactivate invader bullet
+                    lives--;
+                    if (lives <= 0) {
+                        gameOver = true;
+                        gameRunning = false;
+                    }
+                }
+            });
+            invaderBullets = invaderBullets.filter(bullet => bullet.active); // Remove hit bullets
+        }
+
+        function checkWinCondition() {
+            const aliveInvaders = invaders.filter(inv => inv.alive);
+            if (aliveInvaders.length === 0) {
+                level++;
+                score += 100 * (level - 1); // Bonus for completing level
+                resetInvaders(); // Next wave of invaders
+                // Make game harder
+                invaderSpeedX += 0.5; // Invaders get horizontally faster
+                if (invaderSpeedX > 5) invaderSpeedX = 5; // Cap speed
+                player.fireRate = Math.max(100, player.fireRate - 50); // Player shoots faster
+            }
+        }
+
+        function checkLoseCondition() {
+            // Invaders reach bottom
+            invaders.forEach(invader => {
+                if (invader.alive && invader.y + invader.height >= player.y) {
+                    gameOver = true;
+                    gameRunning = false;
+                }
+            });
+        }
+
+        // --- Main Game Loop ---
+        let lastTime = 0;
+        function gameLoop(currentTime) {
+            const deltaTime = currentTime - lastTime;
+            lastTime = currentTime;
+
+            if (gameOver) {
+                ctx.clearRect(0, 0, CANVAS_WIDTH, CANVAS_HEIGHT);
+                drawInvaders(); // Draw remaining invaders (optional, but shows final state)
+                drawPlayer();
+                drawScore();
+                drawMessage('GAME OVER');
+                return;
+            }
+
+            if (gamePaused) {
+                drawPauseScreen();
+                animationFrameId = requestAnimationFrame(gameLoop);
+                return;
+            }
+
+            ctx.clearRect(0, 0, CANVAS_WIDTH, CANVAS_HEIGHT);
+
+            updatePlayer(deltaTime);
+            updatePlayerBullets();
+            updateInvaders(deltaTime);
+            updateInvaderBullets();
+            handleCollisions();
+            checkWinCondition();
+            checkLoseCondition();
+
+            drawPlayer();
+            drawBullets(playerBullets, '#ff0'); // Player bullets are yellow
+            drawBullets(invaderBullets, '#f00'); // Invader bullets are red
+            drawInvaders();
+            drawScore();
+
+            animationFrameId = requestAnimationFrame(gameLoop);
+        }
+
+        // --- Event Listeners ---
+        document.addEventListener('keydown', (e) => {
+            keys[e.code] = true;
+
+            if (e.code === 'ArrowLeft') {
+                player.isMovingLeft = true;
+            }
+            if (e.code === 'ArrowRight') {
+                player.isMovingRight = true;
+            }
+            if (e.code === 'Space' && player.canShoot && gameRunning && !gamePaused) {
+                playerBullets.push({
+                    x: player.x + player.width / 2 - bulletWidth / 2,
+                    y: player.y - bulletHeight,
+                    width: bulletWidth, // Added for collision detection
+                    height: bulletHeight, // Added for collision detection
+                    active: true
+                });
+                player.canShoot = false;
+                setTimeout(() => {
+                    player.canShoot = true;
+                }, player.fireRate);
+            }
+            if (e.code === 'KeyP') {
+                gamePaused = !gamePaused;
+            }
+            if (e.code === 'KeyR' && (gameOver || !gameRunning)) {
+                initGame(); // Restart the game
+            }
+            if (e.code === 'Enter' && !gameRunning && !gameOver) {
+                 initGame(); // Start game initially
+            }
+        });
+
+        document.addEventListener('keyup', (e) => {
+            keys[e.code] = false;
+
+            if (e.code === 'ArrowLeft') {
+                player.isMovingLeft = false;
+            }
+            if (e.code === 'ArrowRight') {
+                player.isMovingRight = false;
+            }
+        });
+
+        // --- Initial Call to Start Game Screen ---
+        function showStartScreen() {
+            ctx.clearRect(0, 0, CANVAS_WIDTH, CANVAS_HEIGHT);
+            drawScore(); // Clear initial info
+            ctx.font = '40px "Press Start 2P"';
+            ctx.fillStyle = '#0f0';
+            ctx.textAlign = 'center';
+            ctx.fillText('SPACE INVADERS', CANVAS_WIDTH / 2, CANVAS_HEIGHT / 2 - 50);
+
+            ctx.font = '20px "Press Start 2P"';
+            ctx.fillStyle = '#fff';
+            ctx.fillText('Press ENTER to Start', CANVAS_WIDTH / 2, CANVAS_HEIGHT / 2 + 20);
+
+            ctx.font = '14px "Press Start 2P"';
+            ctx.fillStyle = '#0f0';
+            ctx.fillText('Arrows: Move | Space: Shoot', CANVAS_WIDTH / 2, CANVAS_HEIGHT / 2 + 70);
+            ctx.fillText('P: Pause | R: Restart', CANVAS_WIDTH / 2, CANVAS_HEIGHT / 2 + 100);
+        }
+
+        showStartScreen(); // Display start screen when the page loads
+    </script>
+</body>
+</html>
