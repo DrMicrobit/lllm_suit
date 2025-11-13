@@ -37,9 +37,9 @@ Context size for local models was set to 96 KiB for all local models as this fit
 
 The following is a list of experiments. I ran each model at least twice (postfix _tX in experiment directory), some of them more often.
 
-The thumbnails give an idea how the game looked like. Clicking on the experiment name brings you to the directory in this repository
+The thumbnails give an idea how the game looked like. Clicking on the experiment name brings you to the directory in this repository.
 
-[Switch to this document, but displayed on GitHub pages!](https://drmicrobit.github.io/lllm_suit/) and you will be able to click on the thumbnail to directly try out the experiments in your browser!
+To test in your browser the examples built by LLMs, click on the thumbnail!
 
 The files in this repository only record the final state of each experiment. That is, if intermediate versions existed that needed bugfix, those are not present.
 
@@ -49,105 +49,105 @@ Not every experiment is bugfixed. If needed I usually did one or two rounds of f
 
 ### Local model experiments for Space Invaders
 
-Experiment <a href="https://github.com/DrMicrobit/lllm_suit/./tests/SpaceInvaders/local/qwen3-coder-30B-ollama/4bit_t1">./tests/SpaceInvaders/local/qwen3-coder-30B-ollama/4bit_t1</a> <a href="https://drmicrobit.github.io/lllm_suit/./tests/SpaceInvaders/local/qwen3-coder-30B-ollama/4bit_t1/space_invaders.html">
+Experiment <a href="https://github.com/DrMicrobit/lllm_suit/blob/main/./tests/SpaceInvaders/local/qwen3-coder-30B-ollama/4bit_t1">./tests/SpaceInvaders/local/qwen3-coder-30B-ollama/4bit_t1</a> <a href="https://drmicrobit.github.io/lllm_suit/./tests/SpaceInvaders/local/qwen3-coder-30B-ollama/4bit_t1/space_invaders.html">
 <img src="./tests/SpaceInvaders/local/qwen3-coder-30B-ollama/4bit_t1/thumb.png" style="vertical-align: middle;">
 </a>
 
-Experiment <a href="https://github.com/DrMicrobit/lllm_suit/./tests/SpaceInvaders/local/qwen3-coder-30B-ollama/4bit_t2">./tests/SpaceInvaders/local/qwen3-coder-30B-ollama/4bit_t2</a> <a href="https://drmicrobit.github.io/lllm_suit/./tests/SpaceInvaders/local/qwen3-coder-30B-ollama/4bit_t2/space_invaders.html">
+Experiment <a href="https://github.com/DrMicrobit/lllm_suit/blob/main/./tests/SpaceInvaders/local/qwen3-coder-30B-ollama/4bit_t2">./tests/SpaceInvaders/local/qwen3-coder-30B-ollama/4bit_t2</a> <a href="https://drmicrobit.github.io/lllm_suit/./tests/SpaceInvaders/local/qwen3-coder-30B-ollama/4bit_t2/space_invaders.html">
 <img src="./tests/SpaceInvaders/local/qwen3-coder-30B-ollama/4bit_t2/thumb.png" style="vertical-align: middle;">
 </a>
 
-Experiment <a href="https://github.com/DrMicrobit/lllm_suit/./tests/SpaceInvaders/local/qwen3-coder-30B-ollama/4bit_t3">./tests/SpaceInvaders/local/qwen3-coder-30B-ollama/4bit_t3</a> <a href="https://drmicrobit.github.io/lllm_suit/./tests/SpaceInvaders/local/qwen3-coder-30B-ollama/4bit_t3/space_invaders.html">
+Experiment <a href="https://github.com/DrMicrobit/lllm_suit/blob/main/./tests/SpaceInvaders/local/qwen3-coder-30B-ollama/4bit_t3">./tests/SpaceInvaders/local/qwen3-coder-30B-ollama/4bit_t3</a> <a href="https://drmicrobit.github.io/lllm_suit/./tests/SpaceInvaders/local/qwen3-coder-30B-ollama/4bit_t3/space_invaders.html">
 <img src="./tests/SpaceInvaders/local/qwen3-coder-30B-ollama/4bit_t3/thumb.png" style="vertical-align: middle;">
 </a>
 
-Experiment <a href="https://github.com/DrMicrobit/lllm_suit/./tests/SpaceInvaders/local/qwen3-coder-30B-ollama/4bit_t4">./tests/SpaceInvaders/local/qwen3-coder-30B-ollama/4bit_t4</a> <a href="https://drmicrobit.github.io/lllm_suit/./tests/SpaceInvaders/local/qwen3-coder-30B-ollama/4bit_t4/space_invaders.html">
+Experiment <a href="https://github.com/DrMicrobit/lllm_suit/blob/main/./tests/SpaceInvaders/local/qwen3-coder-30B-ollama/4bit_t4">./tests/SpaceInvaders/local/qwen3-coder-30B-ollama/4bit_t4</a> <a href="https://drmicrobit.github.io/lllm_suit/./tests/SpaceInvaders/local/qwen3-coder-30B-ollama/4bit_t4/space_invaders.html">
 <img src="./tests/SpaceInvaders/local/qwen3-coder-30B-ollama/4bit_t4/thumb.png" style="vertical-align: middle;">
 </a>
 
-Experiment <a href="https://github.com/DrMicrobit/lllm_suit/./tests/SpaceInvaders/local/qwen3-coder-30B-ollama/4bit_t5">./tests/SpaceInvaders/local/qwen3-coder-30B-ollama/4bit_t5</a> <a href="https://drmicrobit.github.io/lllm_suit/./tests/SpaceInvaders/local/qwen3-coder-30B-ollama/4bit_t5/space_invaders.html">
+Experiment <a href="https://github.com/DrMicrobit/lllm_suit/blob/main/./tests/SpaceInvaders/local/qwen3-coder-30B-ollama/4bit_t5">./tests/SpaceInvaders/local/qwen3-coder-30B-ollama/4bit_t5</a> <a href="https://drmicrobit.github.io/lllm_suit/./tests/SpaceInvaders/local/qwen3-coder-30B-ollama/4bit_t5/space_invaders.html">
 <img src="./tests/SpaceInvaders/local/qwen3-coder-30B-ollama/4bit_t5/thumb.png" style="vertical-align: middle;">
 </a>
 
-Experiment <a href="https://github.com/DrMicrobit/lllm_suit/./tests/SpaceInvaders/local/qwen3-coder-30B-unsloth/2bit_t1">./tests/SpaceInvaders/local/qwen3-coder-30B-unsloth/2bit_t1</a> <a href="https://drmicrobit.github.io/lllm_suit/./tests/SpaceInvaders/local/qwen3-coder-30B-unsloth/2bit_t1/space_invaders.html">
+Experiment <a href="https://github.com/DrMicrobit/lllm_suit/blob/main/./tests/SpaceInvaders/local/qwen3-coder-30B-unsloth/2bit_t1">./tests/SpaceInvaders/local/qwen3-coder-30B-unsloth/2bit_t1</a> <a href="https://drmicrobit.github.io/lllm_suit/./tests/SpaceInvaders/local/qwen3-coder-30B-unsloth/2bit_t1/space_invaders.html">
 <img src="./tests/SpaceInvaders/local/qwen3-coder-30B-unsloth/2bit_t1/thumb.png" style="vertical-align: middle;">
 </a>
 
-Experiment <a href="https://github.com/DrMicrobit/lllm_suit/./tests/SpaceInvaders/local/qwen3-coder-30B-unsloth/2bit_t2">./tests/SpaceInvaders/local/qwen3-coder-30B-unsloth/2bit_t2</a> <a href="https://drmicrobit.github.io/lllm_suit/./tests/SpaceInvaders/local/qwen3-coder-30B-unsloth/2bit_t2/space_invaders.html">
+Experiment <a href="https://github.com/DrMicrobit/lllm_suit/blob/main/./tests/SpaceInvaders/local/qwen3-coder-30B-unsloth/2bit_t2">./tests/SpaceInvaders/local/qwen3-coder-30B-unsloth/2bit_t2</a> <a href="https://drmicrobit.github.io/lllm_suit/./tests/SpaceInvaders/local/qwen3-coder-30B-unsloth/2bit_t2/space_invaders.html">
 <img src="./tests/SpaceInvaders/local/qwen3-coder-30B-unsloth/2bit_t2/thumb.png" style="vertical-align: middle;">
 </a>
 
-Experiment <a href="https://github.com/DrMicrobit/lllm_suit/./tests/SpaceInvaders/local/qwen3-coder-30B-unsloth/3bit_t1">./tests/SpaceInvaders/local/qwen3-coder-30B-unsloth/3bit_t1</a> <a href="https://drmicrobit.github.io/lllm_suit/./tests/SpaceInvaders/local/qwen3-coder-30B-unsloth/3bit_t1/space_invaders.html">
+Experiment <a href="https://github.com/DrMicrobit/lllm_suit/blob/main/./tests/SpaceInvaders/local/qwen3-coder-30B-unsloth/3bit_t1">./tests/SpaceInvaders/local/qwen3-coder-30B-unsloth/3bit_t1</a> <a href="https://drmicrobit.github.io/lllm_suit/./tests/SpaceInvaders/local/qwen3-coder-30B-unsloth/3bit_t1/space_invaders.html">
 <img src="./tests/SpaceInvaders/local/qwen3-coder-30B-unsloth/3bit_t1/thumb.png" style="vertical-align: middle;">
 </a>
 
-Experiment <a href="https://github.com/DrMicrobit/lllm_suit/./tests/SpaceInvaders/local/qwen3-coder-30B-unsloth/3bit_t2">./tests/SpaceInvaders/local/qwen3-coder-30B-unsloth/3bit_t2</a> <a href="https://drmicrobit.github.io/lllm_suit/./tests/SpaceInvaders/local/qwen3-coder-30B-unsloth/3bit_t2/space_invaders.html">
+Experiment <a href="https://github.com/DrMicrobit/lllm_suit/blob/main/./tests/SpaceInvaders/local/qwen3-coder-30B-unsloth/3bit_t2">./tests/SpaceInvaders/local/qwen3-coder-30B-unsloth/3bit_t2</a> <a href="https://drmicrobit.github.io/lllm_suit/./tests/SpaceInvaders/local/qwen3-coder-30B-unsloth/3bit_t2/space_invaders.html">
 <img src="./tests/SpaceInvaders/local/qwen3-coder-30B-unsloth/3bit_t2/thumb.png" style="vertical-align: middle;">
 </a>
 
-Experiment <a href="https://github.com/DrMicrobit/lllm_suit/./tests/SpaceInvaders/local/qwen3-coder-30B-unsloth/4bit_t1">./tests/SpaceInvaders/local/qwen3-coder-30B-unsloth/4bit_t1</a> <a href="https://drmicrobit.github.io/lllm_suit/./tests/SpaceInvaders/local/qwen3-coder-30B-unsloth/4bit_t1/space_invaders.html">
+Experiment <a href="https://github.com/DrMicrobit/lllm_suit/blob/main/./tests/SpaceInvaders/local/qwen3-coder-30B-unsloth/4bit_t1">./tests/SpaceInvaders/local/qwen3-coder-30B-unsloth/4bit_t1</a> <a href="https://drmicrobit.github.io/lllm_suit/./tests/SpaceInvaders/local/qwen3-coder-30B-unsloth/4bit_t1/space_invaders.html">
 <img src="./tests/SpaceInvaders/local/qwen3-coder-30B-unsloth/4bit_t1/thumb.png" style="vertical-align: middle;">
 </a>
 
-Experiment <a href="https://github.com/DrMicrobit/lllm_suit/./tests/SpaceInvaders/local/qwen3-coder-30B-unsloth/4bit_t2">./tests/SpaceInvaders/local/qwen3-coder-30B-unsloth/4bit_t2</a> <a href="https://drmicrobit.github.io/lllm_suit/./tests/SpaceInvaders/local/qwen3-coder-30B-unsloth/4bit_t2/space_invaders.html">
+Experiment <a href="https://github.com/DrMicrobit/lllm_suit/blob/main/./tests/SpaceInvaders/local/qwen3-coder-30B-unsloth/4bit_t2">./tests/SpaceInvaders/local/qwen3-coder-30B-unsloth/4bit_t2</a> <a href="https://drmicrobit.github.io/lllm_suit/./tests/SpaceInvaders/local/qwen3-coder-30B-unsloth/4bit_t2/space_invaders.html">
 <img src="./tests/SpaceInvaders/local/qwen3-coder-30B-unsloth/4bit_t2/thumb.png" style="vertical-align: middle;">
 </a>
 
-Experiment <a href="https://github.com/DrMicrobit/lllm_suit/./tests/SpaceInvaders/local/qwen3-coder-30B-unsloth/4bitUD_t1">./tests/SpaceInvaders/local/qwen3-coder-30B-unsloth/4bitUD_t1</a> <a href="https://drmicrobit.github.io/lllm_suit/./tests/SpaceInvaders/local/qwen3-coder-30B-unsloth/4bitUD_t1/space_invaders.html">
+Experiment <a href="https://github.com/DrMicrobit/lllm_suit/blob/main/./tests/SpaceInvaders/local/qwen3-coder-30B-unsloth/4bitUD_t1">./tests/SpaceInvaders/local/qwen3-coder-30B-unsloth/4bitUD_t1</a> <a href="https://drmicrobit.github.io/lllm_suit/./tests/SpaceInvaders/local/qwen3-coder-30B-unsloth/4bitUD_t1/space_invaders.html">
 <img src="./tests/SpaceInvaders/local/qwen3-coder-30B-unsloth/4bitUD_t1/thumb.png" style="vertical-align: middle;">
 </a>
 
-Experiment <a href="https://github.com/DrMicrobit/lllm_suit/./tests/SpaceInvaders/local/qwen3-coder-30B-unsloth/4bitUD_t2">./tests/SpaceInvaders/local/qwen3-coder-30B-unsloth/4bitUD_t2</a> <a href="https://drmicrobit.github.io/lllm_suit/./tests/SpaceInvaders/local/qwen3-coder-30B-unsloth/4bitUD_t2/space_invaders.html">
+Experiment <a href="https://github.com/DrMicrobit/lllm_suit/blob/main/./tests/SpaceInvaders/local/qwen3-coder-30B-unsloth/4bitUD_t2">./tests/SpaceInvaders/local/qwen3-coder-30B-unsloth/4bitUD_t2</a> <a href="https://drmicrobit.github.io/lllm_suit/./tests/SpaceInvaders/local/qwen3-coder-30B-unsloth/4bitUD_t2/space_invaders.html">
 <img src="./tests/SpaceInvaders/local/qwen3-coder-30B-unsloth/4bitUD_t2/thumb.png" style="vertical-align: middle;">
 </a>
 
 ### Online model experiments for Space Invaders
 
-Experiment <a href="https://github.com/DrMicrobit/lllm_suit/./tests/SpaceInvaders/online/Gemini25Flash/t1">./tests/SpaceInvaders/online/Gemini25Flash/t1</a> <a href="https://drmicrobit.github.io/lllm_suit/./tests/SpaceInvaders/online/Gemini25Flash/t1/space_invaders.html">
+Experiment <a href="https://github.com/DrMicrobit/lllm_suit/blob/main/./tests/SpaceInvaders/online/Gemini25Flash/t1">./tests/SpaceInvaders/online/Gemini25Flash/t1</a> <a href="https://drmicrobit.github.io/lllm_suit/./tests/SpaceInvaders/online/Gemini25Flash/t1/space_invaders.html">
 <img src="./tests/SpaceInvaders/online/Gemini25Flash/t1/thumb.png" style="vertical-align: middle;">
 </a>
 
-Experiment <a href="https://github.com/DrMicrobit/lllm_suit/./tests/SpaceInvaders/online/Gemini25Flash/t2">./tests/SpaceInvaders/online/Gemini25Flash/t2</a> <a href="https://drmicrobit.github.io/lllm_suit/./tests/SpaceInvaders/online/Gemini25Flash/t2/space_invaders.html">
+Experiment <a href="https://github.com/DrMicrobit/lllm_suit/blob/main/./tests/SpaceInvaders/online/Gemini25Flash/t2">./tests/SpaceInvaders/online/Gemini25Flash/t2</a> <a href="https://drmicrobit.github.io/lllm_suit/./tests/SpaceInvaders/online/Gemini25Flash/t2/space_invaders.html">
 <img src="./tests/SpaceInvaders/online/Gemini25Flash/t2/thumb.png" style="vertical-align: middle;">
 </a>
 
-Experiment <a href="https://github.com/DrMicrobit/lllm_suit/./tests/SpaceInvaders/online/Gemini25pro/t1">./tests/SpaceInvaders/online/Gemini25pro/t1</a> <a href="https://drmicrobit.github.io/lllm_suit/./tests/SpaceInvaders/online/Gemini25pro/t1/space_invaders.html">
+Experiment <a href="https://github.com/DrMicrobit/lllm_suit/blob/main/./tests/SpaceInvaders/online/Gemini25pro/t1">./tests/SpaceInvaders/online/Gemini25pro/t1</a> <a href="https://drmicrobit.github.io/lllm_suit/./tests/SpaceInvaders/online/Gemini25pro/t1/space_invaders.html">
 <img src="./tests/SpaceInvaders/online/Gemini25pro/t1/thumb.png" style="vertical-align: middle;">
 </a>
 
-Experiment <a href="https://github.com/DrMicrobit/lllm_suit/./tests/SpaceInvaders/online/Gemini25pro/t2">./tests/SpaceInvaders/online/Gemini25pro/t2</a> <a href="https://drmicrobit.github.io/lllm_suit/./tests/SpaceInvaders/online/Gemini25pro/t2/space_invaders.html">
+Experiment <a href="https://github.com/DrMicrobit/lllm_suit/blob/main/./tests/SpaceInvaders/online/Gemini25pro/t2">./tests/SpaceInvaders/online/Gemini25pro/t2</a> <a href="https://drmicrobit.github.io/lllm_suit/./tests/SpaceInvaders/online/Gemini25pro/t2/space_invaders.html">
 <img src="./tests/SpaceInvaders/online/Gemini25pro/t2/thumb.png" style="vertical-align: middle;">
 </a>
 
-Experiment <a href="https://github.com/DrMicrobit/lllm_suit/./tests/SpaceInvaders/online/GPT5/t1">./tests/SpaceInvaders/online/GPT5/t1</a> <a href="https://drmicrobit.github.io/lllm_suit/./tests/SpaceInvaders/online/GPT5/t1/space_invaders.html">
+Experiment <a href="https://github.com/DrMicrobit/lllm_suit/blob/main/./tests/SpaceInvaders/online/GPT5/t1">./tests/SpaceInvaders/online/GPT5/t1</a> <a href="https://drmicrobit.github.io/lllm_suit/./tests/SpaceInvaders/online/GPT5/t1/space_invaders.html">
 <img src="./tests/SpaceInvaders/online/GPT5/t1/thumb.png" style="vertical-align: middle;">
 </a>
 
-Experiment <a href="https://github.com/DrMicrobit/lllm_suit/./tests/SpaceInvaders/online/GPT5/t2">./tests/SpaceInvaders/online/GPT5/t2</a> <a href="https://drmicrobit.github.io/lllm_suit/./tests/SpaceInvaders/online/GPT5/t2/space_invaders.html">
+Experiment <a href="https://github.com/DrMicrobit/lllm_suit/blob/main/./tests/SpaceInvaders/online/GPT5/t2">./tests/SpaceInvaders/online/GPT5/t2</a> <a href="https://drmicrobit.github.io/lllm_suit/./tests/SpaceInvaders/online/GPT5/t2/space_invaders.html">
 <img src="./tests/SpaceInvaders/online/GPT5/t2/thumb.png" style="vertical-align: middle;">
 </a>
 
-Experiment <a href="https://github.com/DrMicrobit/lllm_suit/./tests/SpaceInvaders/online/Opus41/t1">./tests/SpaceInvaders/online/Opus41/t1</a> <a href="https://drmicrobit.github.io/lllm_suit/./tests/SpaceInvaders/online/Opus41/t1/space_invaders.html">
+Experiment <a href="https://github.com/DrMicrobit/lllm_suit/blob/main/./tests/SpaceInvaders/online/Opus41/t1">./tests/SpaceInvaders/online/Opus41/t1</a> <a href="https://drmicrobit.github.io/lllm_suit/./tests/SpaceInvaders/online/Opus41/t1/space_invaders.html">
 <img src="./tests/SpaceInvaders/online/Opus41/t1/thumb.png" style="vertical-align: middle;">
 </a>
 
-Experiment <a href="https://github.com/DrMicrobit/lllm_suit/./tests/SpaceInvaders/online/Opus41/t2">./tests/SpaceInvaders/online/Opus41/t2</a> <a href="https://drmicrobit.github.io/lllm_suit/./tests/SpaceInvaders/online/Opus41/t2/space_invaders.html">
+Experiment <a href="https://github.com/DrMicrobit/lllm_suit/blob/main/./tests/SpaceInvaders/online/Opus41/t2">./tests/SpaceInvaders/online/Opus41/t2</a> <a href="https://drmicrobit.github.io/lllm_suit/./tests/SpaceInvaders/online/Opus41/t2/space_invaders.html">
 <img src="./tests/SpaceInvaders/online/Opus41/t2/thumb.png" style="vertical-align: middle;">
 </a>
 
-Experiment <a href="https://github.com/DrMicrobit/lllm_suit/./tests/SpaceInvaders/online/Qwen3code-online/t1">./tests/SpaceInvaders/online/Qwen3code-online/t1</a> <a href="https://drmicrobit.github.io/lllm_suit/./tests/SpaceInvaders/online/Qwen3code-online/t1/space_invaders.html">
+Experiment <a href="https://github.com/DrMicrobit/lllm_suit/blob/main/./tests/SpaceInvaders/online/Qwen3code-online/t1">./tests/SpaceInvaders/online/Qwen3code-online/t1</a> <a href="https://drmicrobit.github.io/lllm_suit/./tests/SpaceInvaders/online/Qwen3code-online/t1/space_invaders.html">
 <img src="./tests/SpaceInvaders/online/Qwen3code-online/t1/thumb.png" style="vertical-align: middle;">
 </a>
 
-Experiment <a href="https://github.com/DrMicrobit/lllm_suit/./tests/SpaceInvaders/online/Qwen3code-online/t2">./tests/SpaceInvaders/online/Qwen3code-online/t2</a> <a href="https://drmicrobit.github.io/lllm_suit/./tests/SpaceInvaders/online/Qwen3code-online/t2/space_invaders.html">
+Experiment <a href="https://github.com/DrMicrobit/lllm_suit/blob/main/./tests/SpaceInvaders/online/Qwen3code-online/t2">./tests/SpaceInvaders/online/Qwen3code-online/t2</a> <a href="https://drmicrobit.github.io/lllm_suit/./tests/SpaceInvaders/online/Qwen3code-online/t2/space_invaders.html">
 <img src="./tests/SpaceInvaders/online/Qwen3code-online/t2/thumb.png" style="vertical-align: middle;">
 </a>
 
-Experiment <a href="https://github.com/DrMicrobit/lllm_suit/./tests/SpaceInvaders/online/Sonnet45/t1">./tests/SpaceInvaders/online/Sonnet45/t1</a> <a href="https://drmicrobit.github.io/lllm_suit/./tests/SpaceInvaders/online/Sonnet45/t1/space_invaders.html">
+Experiment <a href="https://github.com/DrMicrobit/lllm_suit/blob/main/./tests/SpaceInvaders/online/Sonnet45/t1">./tests/SpaceInvaders/online/Sonnet45/t1</a> <a href="https://drmicrobit.github.io/lllm_suit/./tests/SpaceInvaders/online/Sonnet45/t1/space_invaders.html">
 <img src="./tests/SpaceInvaders/online/Sonnet45/t1/thumb.png" style="vertical-align: middle;">
 </a>
 
-Experiment <a href="https://github.com/DrMicrobit/lllm_suit/./tests/SpaceInvaders/online/Sonnet45/t2">./tests/SpaceInvaders/online/Sonnet45/t2</a> <a href="https://drmicrobit.github.io/lllm_suit/./tests/SpaceInvaders/online/Sonnet45/t2/space_invaders.html">
+Experiment <a href="https://github.com/DrMicrobit/lllm_suit/blob/main/./tests/SpaceInvaders/online/Sonnet45/t2">./tests/SpaceInvaders/online/Sonnet45/t2</a> <a href="https://drmicrobit.github.io/lllm_suit/./tests/SpaceInvaders/online/Sonnet45/t2/space_invaders.html">
 <img src="./tests/SpaceInvaders/online/Sonnet45/t2/thumb.png" style="vertical-align: middle;">
 </a>
 
