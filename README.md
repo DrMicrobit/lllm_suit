@@ -45,6 +45,8 @@ The files in this repository only record the final state of each experiment. Tha
 
 Not every experiment is bugfixed. If needed I usually did one or two rounds of fixes and then stopped.
 
+The LLMs all got this simple command `Write a space invaders game, contained in a single HTML file.`.
+
 <!-- Everything below this line is generated automatically, do not change -->
 
 ### Local model experiments for Space Invaders
