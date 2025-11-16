@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Galaga Test</title>
+</head>
+
+<body>
+    <h1>Galaga Test</h1>
+    <canvas id="gameCanvas" width="800" height="600"></canvas>
+    <script>
+        const canvas = document.getElementById('gameCanvas');
+        const ctx = canvas.getContext('2d');
+
+        // Draw a simple player
+        ctx.fillStyle = '#00f';
+        ctx.beginPath();
+        ctx.moveTo(400, 550);
+        ctx.lineTo(425, 500);
+        ctx.lineTo(450, 550);
+        ctx.closePath();
+        ctx.fill();
+
+        // Draw a simple enemy
+        ctx.fillStyle = '#f00';
+        ctx.beginPath();
+        ctx.arc(400, 100, 15, 0, Math.PI * 2);
+        ctx.fill();
+
+        // Draw a bullet
+        ctx.fillStyle = '#fff';
+        ctx.fillRect(420, 500, 6, 15);
+    </script>
+</body>
+
+</html>

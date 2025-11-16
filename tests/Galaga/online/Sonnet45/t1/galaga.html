@@ -1,0 +1,485 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Galaga Game</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            background: #000;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            font-family: 'Courier New', monospace;
+            color: #fff;
+        }
+        
+        #gameCanvas {
+            border: 2px solid #00ff00;
+            background: #000;
+            box-shadow: 0 0 20px #00ff00;
+        }
+        
+        #score {
+            font-size: 24px;
+            margin-bottom: 10px;
+            color: #00ff00;
+            text-shadow: 0 0 10px #00ff00;
+        }
+        
+        #gameOver {
+            position: absolute;
+            font-size: 48px;
+            color: #ff0000;
+            text-shadow: 0 0 20px #ff0000;
+            display: none;
+        }
+        
+        #instructions {
+            margin-top: 10px;
+            font-size: 14px;
+            color: #00ff00;
+            text-align: center;
+        }
+    </style>
+</head>
+<body>
+    <div id="score">SCORE: 0 | LIVES: 3</div>
+    <canvas id="gameCanvas"></canvas>
+    <div id="gameOver">GAME OVER<br><span style="font-size: 24px;">Press SPACE to restart</span></div>
+    <div id="instructions">
+        Use ARROW KEYS to move | SPACE to shoot | ESC to pause
+    </div>
+
+    <script>
+        const canvas = document.getElementById('gameCanvas');
+        const ctx = canvas.getContext('2d');
+        const scoreElement = document.getElementById('score');
+        const gameOverElement = document.getElementById('gameOver');
+        
+        canvas.width = 800;
+        canvas.height = 600;
+        
+        // Game state
+        let gameState = {
+            score: 0,
+            lives: 3,
+            isGameOver: false,
+            isPaused: false,
+            level: 1
+        };
+        
+        // Player
+        const player = {
+            x: canvas.width / 2 - 20,
+            y: canvas.height - 60,
+            width: 40,
+            height: 30,
+            speed: 5,
+            moveLeft: false,
+            moveRight: false
+        };
+        
+        // Bullets
+        let bullets = [];
+        const bulletSpeed = 7;
+        const bulletCooldown = 250; // milliseconds
+        let lastBulletTime = 0;
+        
+        // Enemies
+        let enemies = [];
+        const enemyRows = 4;
+        const enemyCols = 10;
+        let enemyDirection = 1;
+        let enemySpeed = 0.5;
+        
+        // Diving enemies
+        let divingEnemies = [];
+        
+        // Enemy bullets
+        let enemyBullets = [];
+        
+        // Particles for explosions
+        let particles = [];
+        
+        // Initialize enemies
+        function initEnemies() {
+            enemies = [];
+            for (let row = 0; row < enemyRows; row++) {
+                for (let col = 0; col < enemyCols; col++) {
+                    enemies.push({
+                        x: col * 60 + 100,
+                        y: row * 50 + 50,
+                        width: 35,
+                        height: 35,
+                        type: row % 3, // Different enemy types
+                        isAlive: true,
+                        originalX: col * 60 + 100,
+                        originalY: row * 50 + 50
+                    });
+                }
+            }
+        }
+        
+        // Create explosion particles
+        function createExplosion(x, y, color) {
+            for (let i = 0; i < 15; i++) {
+                particles.push({
+                    x: x,
+                    y: y,
+                    vx: (Math.random() - 0.5) * 6,
+                    vy: (Math.random() - 0.5) * 6,
+                    life: 1,
+                    color: color
+                });
+            }
+        }
+        
+        // Draw player
+        function drawPlayer() {
+            ctx.fillStyle = '#00ff00';
+            ctx.beginPath();
+            ctx.moveTo(player.x + player.width / 2, player.y);
+            ctx.lineTo(player.x, player.y + player.height);
+            ctx.lineTo(player.x + player.width, player.y + player.height);
+            ctx.closePath();
+            ctx.fill();
+            
+            // Cockpit
+            ctx.fillStyle = '#00ffff';
+            ctx.fillRect(player.x + player.width / 2 - 5, player.y + 10, 10, 8);
+        }
+        
+        // Draw enemy
+        function drawEnemy(enemy) {
+            if (!enemy.isAlive) return;
+            
+            const colors = ['#ff0000', '#ff00ff', '#ffff00'];
+            ctx.fillStyle = colors[enemy.type];
+            
+            // Body
+            ctx.fillRect(enemy.x + 5, enemy.y + 10, enemy.width - 10, enemy.height - 15);
+            
+            // Wings
+            ctx.fillRect(enemy.x, enemy.y + 15, enemy.width, 10);
+            
+            // Eyes
+            ctx.fillStyle = '#fff';
+            ctx.fillRect(enemy.x + 10, enemy.y + 15, 5, 5);
+            ctx.fillRect(enemy.x + enemy.width - 15, enemy.y + 15, 5, 5);
+        }
+        
+        // Draw bullet
+        function drawBullet(bullet) {
+            ctx.fillStyle = bullet.isEnemy ? '#ff0000' : '#ffffff';
+            ctx.fillRect(bullet.x, bullet.y, 3, 10);
+        }
+        
+        // Draw particles
+        function drawParticles() {
+            particles.forEach((particle, index) => {
+                ctx.fillStyle = particle.color;
+                ctx.globalAlpha = particle.life;
+                ctx.fillRect(particle.x, particle.y, 3, 3);
+                ctx.globalAlpha = 1;
+                
+                particle.x += particle.vx;
+                particle.y += particle.vy;
+                particle.life -= 0.02;
+                
+                if (particle.life <= 0) {
+                    particles.splice(index, 1);
+                }
+            });
+        }
+        
+        // Update player
+        function updatePlayer() {
+            if (player.moveLeft && player.x > 0) {
+                player.x -= player.speed;
+            }
+            if (player.moveRight && player.x < canvas.width - player.width) {
+                player.x += player.speed;
+            }
+        }
+        
+        // Update bullets
+        function updateBullets() {
+            bullets = bullets.filter(bullet => {
+                bullet.y -= bulletSpeed;
+                return bullet.y > 0;
+            });
+            
+            enemyBullets = enemyBullets.filter(bullet => {
+                bullet.y += 4;
+                return bullet.y < canvas.height;
+            });
+        }
+        
+        // Update enemies
+        function updateEnemies() {
+            let hitEdge = false;
+            
+            enemies.forEach(enemy => {
+                if (!enemy.isAlive) return;
+                
+                enemy.x += enemyDirection * enemySpeed;
+                
+                if (enemy.x <= 0 || enemy.x >= canvas.width - enemy.width) {
+                    hitEdge = true;
+                }
+                
+                // Sine wave motion
+                enemy.y = enemy.originalY + Math.sin(Date.now() / 500 + enemy.originalX) * 10;
+                
+                // Random diving
+                if (Math.random() < 0.0005 && divingEnemies.length < 3) {
+                    divingEnemies.push({
+                        ...enemy,
+                        isDiving: true,
+                        diveSpeed: 3,
+                        angle: Math.PI / 2,
+                        originalEnemy: enemy
+                    });
+                }
+                
+                // Random shooting
+                if (Math.random() < 0.001) {
+                    enemyBullets.push({
+                        x: enemy.x + enemy.width / 2,
+                        y: enemy.y + enemy.height,
+                        isEnemy: true
+                    });
+                }
+            });
+            
+            if (hitEdge) {
+                enemyDirection *= -1;
+                enemies.forEach(enemy => {
+                    if (enemy.isAlive) {
+                        enemy.originalY += 10;
+                    }
+                });
+            }
+        }
+        
+        // Update diving enemies
+        function updateDivingEnemies() {
+            divingEnemies = divingEnemies.filter((enemy, index) => {
+                if (!enemy.isDiving) return false;
+                
+                // Dive toward player
+                const dx = player.x - enemy.x;
+                const dy = player.y - enemy.y;
+                const angle = Math.atan2(dy, dx);
+                
+                enemy.x += Math.cos(angle) * enemy.diveSpeed;
+                enemy.y += Math.sin(angle) * enemy.diveSpeed;
+                
+                // Return to formation
+                if (enemy.y > canvas.height - 100) {
+                    enemy.isDiving = false;
+                    enemy.originalEnemy.isAlive = true;
+                    return false;
+                }
+                
+                return enemy.y < canvas.height;
+            });
+        }
+        
+        // Check collisions
+        function checkCollisions() {
+            // Bullet hits enemy
+            bullets.forEach((bullet, bIndex) => {
+                enemies.forEach((enemy, eIndex) => {
+                    if (enemy.isAlive &&
+                        bullet.x > enemy.x &&
+                        bullet.x < enemy.x + enemy.width &&
+                        bullet.y > enemy.y &&
+                        bullet.y < enemy.y + enemy.height) {
+                        
+                        enemy.isAlive = false;
+                        bullets.splice(bIndex, 1);
+                        gameState.score += (enemy.type + 1) * 10;
+                        createExplosion(enemy.x + enemy.width / 2, enemy.y + enemy.height / 2, '#ffff00');
+                    }
+                });
+                
+                // Bullet hits diving enemy
+                divingEnemies.forEach((enemy, eIndex) => {
+                    if (bullet.x > enemy.x &&
+                        bullet.x < enemy.x + enemy.width &&
+                        bullet.y > enemy.y &&
+                        bullet.y < enemy.y + enemy.height) {
+                        
+                        divingEnemies.splice(eIndex, 1);
+                        bullets.splice(bIndex, 1);
+                        enemy.originalEnemy.isAlive = false;
+                        gameState.score += 50;
+                        createExplosion(enemy.x + enemy.width / 2, enemy.y + enemy.height / 2, '#ff00ff');
+                    }
+                });
+            });
+            
+            // Enemy bullet hits player
+            enemyBullets.forEach((bullet, index) => {
+                if (bullet.x > player.x &&
+                    bullet.x < player.x + player.width &&
+                    bullet.y > player.y &&
+                    bullet.y < player.y + player.height) {
+                    
+                    enemyBullets.splice(index, 1);
+                    gameState.lives--;
+                    createExplosion(player.x + player.width / 2, player.y + player.height / 2, '#00ff00');
+                    
+                    if (gameState.lives <= 0) {
+                        gameState.isGameOver = true;
+                    }
+                }
+            });
+            
+            // Diving enemy hits player
+            divingEnemies.forEach((enemy, index) => {
+                if (enemy.x < player.x + player.width &&
+                    enemy.x + enemy.width > player.x &&
+                    enemy.y < player.y + player.height &&
+                    enemy.y + enemy.height > player.y) {
+                    
+                    divingEnemies.splice(index, 1);
+                    enemy.originalEnemy.isAlive = false;
+                    gameState.lives--;
+                    createExplosion(player.x + player.width / 2, player.y + player.height / 2, '#00ff00');
+                    
+                    if (gameState.lives <= 0) {
+                        gameState.isGameOver = true;
+                    }
+                }
+            });
+            
+            // Check if all enemies are dead
+            const aliveEnemies = enemies.filter(e => e.isAlive).length;
+            if (aliveEnemies === 0 && divingEnemies.length === 0) {
+                gameState.level++;
+                enemySpeed += 0.2;
+                initEnemies();
+            }
+        }
+        
+        // Update score display
+        function updateScore() {
+            scoreElement.textContent = `SCORE: ${gameState.score} | LIVES: ${gameState.lives}`;
+        }
+        
+        // Draw everything
+        function draw() {
+            ctx.fillStyle = '#000';
+            ctx.fillRect(0, 0, canvas.width, canvas.height);
+            
+            // Draw stars background
+            for (let i = 0; i < 50; i++) {
+                const x = (i * 37) % canvas.width;
+                const y = (i * 41 + Date.now() / 10) % canvas.height;
+                ctx.fillStyle = '#ffffff';
+                ctx.fillRect(x, y, 1, 1);
+            }
+            
+            drawPlayer();
+            
+            enemies.forEach(drawEnemy);
+            divingEnemies.forEach(drawEnemy);
+            bullets.forEach(drawBullet);
+            enemyBullets.forEach(drawBullet);
+            drawParticles();
+            
+            if (gameState.isPaused) {
+                ctx.fillStyle = 'rgba(0, 0, 0, 0.7)';
+                ctx.fillRect(0, 0, canvas.width, canvas.height);
+                ctx.fillStyle = '#00ff00';
+                ctx.font = '48px Courier New';
+                ctx.textAlign = 'center';
+                ctx.fillText('PAUSED', canvas.width / 2, canvas.height / 2);
+            }
+        }
+        
+        // Game loop
+        function gameLoop() {
+            if (!gameState.isGameOver && !gameState.isPaused) {
+                updatePlayer();
+                updateBullets();
+                updateEnemies();
+                updateDivingEnemies();
+                checkCollisions();
+                updateScore();
+            }
+            
+            draw();
+            
+            if (gameState.isGameOver) {
+                gameOverElement.style.display = 'block';
+            }
+            
+            requestAnimationFrame(gameLoop);
+        }
+        
+        // Keyboard controls
+        document.addEventListener('keydown', (e) => {
+            if (e.key === 'ArrowLeft') player.moveLeft = true;
+            if (e.key === 'ArrowRight') player.moveRight = true;
+            
+            if (e.key === ' ' && !gameState.isGameOver) {
+                e.preventDefault();
+                const now = Date.now();
+                if (now - lastBulletTime > bulletCooldown) {
+                    bullets.push({
+                        x: player.x + player.width / 2,
+                        y: player.y,
+                        isEnemy: false
+                    });
+                    lastBulletTime = now;
+                }
+            }
+            
+            if (e.key === ' ' && gameState.isGameOver) {
+                e.preventDefault();
+                // Restart game
+                gameState = {
+                    score: 0,
+                    lives: 3,
+                    isGameOver: false,
+                    isPaused: false,
+                    level: 1
+                };
+                player.x = canvas.width / 2 - 20;
+                bullets = [];
+                enemyBullets = [];
+                divingEnemies = [];
+                particles = [];
+                enemySpeed = 0.5;
+                initEnemies();
+                gameOverElement.style.display = 'none';
+            }
+            
+            if (e.key === 'Escape') {
+                gameState.isPaused = !gameState.isPaused;
+            }
+        });
+        
+        document.addEventListener('keyup', (e) => {
+            if (e.key === 'ArrowLeft') player.moveLeft = false;
+            if (e.key === 'ArrowRight') player.moveRight = false;
+        });
+        
+        // Start game
+        initEnemies();
+        gameLoop();
+    </script>
+</body>
+</html>
