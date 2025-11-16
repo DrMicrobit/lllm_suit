@@ -1,0 +1,4 @@
+- Features: no start screen, 3 lives, score, no sound.
+- Bugs: none
+- Graphics: simplistic basic shapes. Smooth animation.
+- Comments: very basic, but works.

@@ -1,0 +1,4 @@
+- Features: no start screen, 1 life, score, no sound.
+- Bugs: wave mechanics with unequal number of aliens
+- Graphics: simplistic monochrome alien sprite. Smooth animation. Particle effect explosions.
+- Comments: basic, works.

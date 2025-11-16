@@ -1,0 +1,4 @@
+- Features: no start screen, 1 life, score, no sound.
+- Bugs: no wave mechanics
+- Graphics: simplistic basic shapes. Smooth animation.
+- Comments: very basic, but works.

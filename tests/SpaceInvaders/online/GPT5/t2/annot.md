@@ -1,0 +1,4 @@
+- Features: start screen, 3 lives as graphical display, score, high score, sound. Took 3+ minutes to generate.
+- Bugs: alien formation movement reverses direction for already killed columns
+- Graphics: modern looking retro. Smooth animation. Aliens in slight waves. Particle effect explosions. Parallax starfield.
+- Comments: close seconds, bested only by other GPT5 version.

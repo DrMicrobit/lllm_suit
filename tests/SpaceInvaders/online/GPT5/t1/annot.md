@@ -1,0 +1,4 @@
+- Features: start screen, 3 lives, score, high score, sound. Took 3+ minutes to generate.
+- Bugs: initoal version had a code error, did not start.
+- Graphics: modern looking retro. Smooth animation. Aliens in slight waves. Particle effect explosions. Parallax starfield. Playing field dynamically adapts to browser window.
+- Comments: probably best / most advanced version in this experiment.

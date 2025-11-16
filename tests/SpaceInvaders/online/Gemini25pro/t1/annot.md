@@ -1,0 +1,4 @@
+- Features: start screen, 3 lives, score, no sound.
+- Bugs: no wave mechanics
+- Graphics: simplistic monochrome alien sprite. Smooth animation.
+- Comments: basic, works.

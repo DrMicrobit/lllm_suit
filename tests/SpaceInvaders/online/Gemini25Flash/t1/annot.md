@@ -1,0 +1,4 @@
+- Features: no start screen, 3 lives, score, no sound.
+- Bugs: none
+- Graphics: simplistic basic shapes, almost monochrome. Jagged animation of aliens
+- Comments: very basic, but works.

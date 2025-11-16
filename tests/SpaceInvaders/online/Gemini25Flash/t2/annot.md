@@ -1,0 +1,4 @@
+- Overall: start screen, 3 lives, level counter, score, no sound.
+- Bugs: none
+- Graphics: shapes with 'yes'. Multi-colored. Smooth animations
+- Comments: basic, and works.

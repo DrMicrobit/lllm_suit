@@ -1,0 +1,4 @@
+- Features: no start screen, 3 lives, score, no sound.
+- Bugs: initoal version had a code error, did not start. No wave mechanics, no difficulty increase.
+- Graphics: simplistic basic shapes. Smooth animation.
+- Comments: very basic, but works.

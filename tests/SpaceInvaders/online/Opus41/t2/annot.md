@@ -1,0 +1,4 @@
+- Features: no start screen, 3 lives, score, no sound.
+- Bugs: alien fire frequency way too low
+- Graphics: simplistic basic shapes. Smooth animation.
+- Comments: very basic, but works.
