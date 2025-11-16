@@ -1,3 +1,4 @@
+![](./title.png)
 
 # Suitability of local LLMs for AI assisted coding
 
@@ -52,105 +53,219 @@ The LLMs all got this simple command `Write a space invaders game, contained in 
 
 ### Local model experiments for Space Invaders
 
-Experiment <a href="https://github.com/DrMicrobit/lllm_suit/blob/main/./tests/SpaceInvaders/local/qwen3-coder-30B-ollama/4bit_t1">./tests/SpaceInvaders/local/qwen3-coder-30B-ollama/4bit_t1</a> <a href="https://drmicrobit.github.io/lllm_suit/./tests/SpaceInvaders/local/qwen3-coder-30B-ollama/4bit_t1/space_invaders.html">
-<img src="./tests/SpaceInvaders/local/qwen3-coder-30B-ollama/4bit_t1/thumb.png" style="vertical-align: middle;">
+#### Experiment <a href="https://github.com/DrMicrobit/lllm_suit/blob/main/./tests/SpaceInvaders/local/qwen3-coder-30B-ollama/4bit_t1">./tests/SpaceInvaders/local/qwen3-coder-30B-ollama/4bit_t1</a>
+
+<a href="https://drmicrobit.github.io/lllm_suit/./tests/SpaceInvaders/local/qwen3-coder-30B-ollama/4bit_t1/space_invaders.html">
+  <img src="./tests/SpaceInvaders/local/qwen3-coder-30B-ollama/4bit_t1/thumb.png" style="vertical-align: middle;">
 </a>
 
-Experiment <a href="https://github.com/DrMicrobit/lllm_suit/blob/main/./tests/SpaceInvaders/local/qwen3-coder-30B-ollama/4bit_t2">./tests/SpaceInvaders/local/qwen3-coder-30B-ollama/4bit_t2</a> <a href="https://drmicrobit.github.io/lllm_suit/./tests/SpaceInvaders/local/qwen3-coder-30B-ollama/4bit_t2/space_invaders.html">
-<img src="./tests/SpaceInvaders/local/qwen3-coder-30B-ollama/4bit_t2/thumb.png" style="vertical-align: middle;">
+Very basic. Title screen, restart after game over. Smooth anim. 
+Continuous autofire, 1 life.  Alien projectiles spawn in any row.
+Needed 3 bugfixing iterations, inlcuding 1 game breaking (game did not start).
+
+#### Experiment <a href="https://github.com/DrMicrobit/lllm_suit/blob/main/./tests/SpaceInvaders/local/qwen3-coder-30B-ollama/4bit_t2">./tests/SpaceInvaders/local/qwen3-coder-30B-ollama/4bit_t2</a>
+
+<a href="https://drmicrobit.github.io/lllm_suit/./tests/SpaceInvaders/local/qwen3-coder-30B-ollama/4bit_t2/space_invaders.html">
+  <img src="./tests/SpaceInvaders/local/qwen3-coder-30B-ollama/4bit_t2/thumb.png" style="vertical-align: middle;">
 </a>
 
-Experiment <a href="https://github.com/DrMicrobit/lllm_suit/blob/main/./tests/SpaceInvaders/local/qwen3-coder-30B-ollama/4bit_t3">./tests/SpaceInvaders/local/qwen3-coder-30B-ollama/4bit_t3</a> <a href="https://drmicrobit.github.io/lllm_suit/./tests/SpaceInvaders/local/qwen3-coder-30B-ollama/4bit_t3/space_invaders.html">
-<img src="./tests/SpaceInvaders/local/qwen3-coder-30B-ollama/4bit_t3/thumb.png" style="vertical-align: middle;">
+Very basic. Title screen, restart after game over. Smooth anim.
+Continuous autofire, 3 lives. Alien projectiles spawn in any row.
+Needed 2 bugfixing iterations.
+
+#### Experiment <a href="https://github.com/DrMicrobit/lllm_suit/blob/main/./tests/SpaceInvaders/local/qwen3-coder-30B-ollama/4bit_t3">./tests/SpaceInvaders/local/qwen3-coder-30B-ollama/4bit_t3</a>
+
+<a href="https://drmicrobit.github.io/lllm_suit/./tests/SpaceInvaders/local/qwen3-coder-30B-ollama/4bit_t3/space_invaders.html">
+  <img src="./tests/SpaceInvaders/local/qwen3-coder-30B-ollama/4bit_t3/thumb.png" style="vertical-align: middle;">
 </a>
 
-Experiment <a href="https://github.com/DrMicrobit/lllm_suit/blob/main/./tests/SpaceInvaders/local/qwen3-coder-30B-ollama/4bit_t4">./tests/SpaceInvaders/local/qwen3-coder-30B-ollama/4bit_t4</a> <a href="https://drmicrobit.github.io/lllm_suit/./tests/SpaceInvaders/local/qwen3-coder-30B-ollama/4bit_t4/space_invaders.html">
-<img src="./tests/SpaceInvaders/local/qwen3-coder-30B-ollama/4bit_t4/thumb.png" style="vertical-align: middle;">
+Very basic. Title screen, restart after game over. Smooth anim. 
+Continuous autofire, 1 life. Alien projectiles spawn in any row. Player projectiles are
+circles instead of lines like in other versions.
+One-shot: no bugfixing.
+#### Experiment <a href="https://github.com/DrMicrobit/lllm_suit/blob/main/./tests/SpaceInvaders/local/qwen3-coder-30B-ollama/4bit_t4">./tests/SpaceInvaders/local/qwen3-coder-30B-ollama/4bit_t4</a>
+
+<a href="https://drmicrobit.github.io/lllm_suit/./tests/SpaceInvaders/local/qwen3-coder-30B-ollama/4bit_t4/space_invaders.html">
+  <img src="./tests/SpaceInvaders/local/qwen3-coder-30B-ollama/4bit_t4/thumb.png" style="vertical-align: middle;">
 </a>
 
-Experiment <a href="https://github.com/DrMicrobit/lllm_suit/blob/main/./tests/SpaceInvaders/local/qwen3-coder-30B-ollama/4bit_t5">./tests/SpaceInvaders/local/qwen3-coder-30B-ollama/4bit_t5</a> <a href="https://drmicrobit.github.io/lllm_suit/./tests/SpaceInvaders/local/qwen3-coder-30B-ollama/4bit_t5/space_invaders.html">
-<img src="./tests/SpaceInvaders/local/qwen3-coder-30B-ollama/4bit_t5/thumb.png" style="vertical-align: middle;">
+Very basic. No title screen, restart after game over.
+Continuous autofire, 3 lives. Alien projectiles spawn in any row.
+Could not get smooth animation even after 3 bugfixing iterations.
+
+#### Experiment <a href="https://github.com/DrMicrobit/lllm_suit/blob/main/./tests/SpaceInvaders/local/qwen3-coder-30B-ollama/4bit_t5">./tests/SpaceInvaders/local/qwen3-coder-30B-ollama/4bit_t5</a>
+
+<a href="https://drmicrobit.github.io/lllm_suit/./tests/SpaceInvaders/local/qwen3-coder-30B-ollama/4bit_t5/space_invaders.html">
+  <img src="./tests/SpaceInvaders/local/qwen3-coder-30B-ollama/4bit_t5/thumb.png" style="vertical-align: middle;">
 </a>
 
-Experiment <a href="https://github.com/DrMicrobit/lllm_suit/blob/main/./tests/SpaceInvaders/local/qwen3-coder-30B-unsloth/2bit_t1">./tests/SpaceInvaders/local/qwen3-coder-30B-unsloth/2bit_t1</a> <a href="https://drmicrobit.github.io/lllm_suit/./tests/SpaceInvaders/local/qwen3-coder-30B-unsloth/2bit_t1/space_invaders.html">
-<img src="./tests/SpaceInvaders/local/qwen3-coder-30B-unsloth/2bit_t1/thumb.png" style="vertical-align: middle;">
+Very basic. Title screen, restart after game over.
+Continuous autofire, 3 lives. Aliens don't shoot.
+Could not get smooth anim after 3 bugfixing iterations.
+
+#### Experiment <a href="https://github.com/DrMicrobit/lllm_suit/blob/main/./tests/SpaceInvaders/local/qwen3-coder-30B-unsloth/2bit_t1">./tests/SpaceInvaders/local/qwen3-coder-30B-unsloth/2bit_t1</a>
+
+<a href="https://drmicrobit.github.io/lllm_suit/./tests/SpaceInvaders/local/qwen3-coder-30B-unsloth/2bit_t1/space_invaders.html">
+  <img src="./tests/SpaceInvaders/local/qwen3-coder-30B-unsloth/2bit_t1/thumb.png" style="vertical-align: middle;">
 </a>
 
-Experiment <a href="https://github.com/DrMicrobit/lllm_suit/blob/main/./tests/SpaceInvaders/local/qwen3-coder-30B-unsloth/2bit_t2">./tests/SpaceInvaders/local/qwen3-coder-30B-unsloth/2bit_t2</a> <a href="https://drmicrobit.github.io/lllm_suit/./tests/SpaceInvaders/local/qwen3-coder-30B-unsloth/2bit_t2/space_invaders.html">
-<img src="./tests/SpaceInvaders/local/qwen3-coder-30B-unsloth/2bit_t2/thumb.png" style="vertical-align: middle;">
+Extremely basic. No Title screen. Smooth anim.
+Riddled with bugs: alien movement; player cannot be killed.
+
+#### Experiment <a href="https://github.com/DrMicrobit/lllm_suit/blob/main/./tests/SpaceInvaders/local/qwen3-coder-30B-unsloth/2bit_t2">./tests/SpaceInvaders/local/qwen3-coder-30B-unsloth/2bit_t2</a>
+
+<a href="https://drmicrobit.github.io/lllm_suit/./tests/SpaceInvaders/local/qwen3-coder-30B-unsloth/2bit_t2/space_invaders.html">
+  <img src="./tests/SpaceInvaders/local/qwen3-coder-30B-unsloth/2bit_t2/thumb.png" style="vertical-align: middle;">
 </a>
 
-Experiment <a href="https://github.com/DrMicrobit/lllm_suit/blob/main/./tests/SpaceInvaders/local/qwen3-coder-30B-unsloth/3bit_t1">./tests/SpaceInvaders/local/qwen3-coder-30B-unsloth/3bit_t1</a> <a href="https://drmicrobit.github.io/lllm_suit/./tests/SpaceInvaders/local/qwen3-coder-30B-unsloth/3bit_t1/space_invaders.html">
-<img src="./tests/SpaceInvaders/local/qwen3-coder-30B-unsloth/3bit_t1/thumb.png" style="vertical-align: middle;">
+Extremely basic. Title screen. Smooth anim.
+Bugs: alien movement; aliens don't shoot.
+#### Experiment <a href="https://github.com/DrMicrobit/lllm_suit/blob/main/./tests/SpaceInvaders/local/qwen3-coder-30B-unsloth/3bit_t1">./tests/SpaceInvaders/local/qwen3-coder-30B-unsloth/3bit_t1</a>
+
+<a href="https://drmicrobit.github.io/lllm_suit/./tests/SpaceInvaders/local/qwen3-coder-30B-unsloth/3bit_t1/space_invaders.html">
+  <img src="./tests/SpaceInvaders/local/qwen3-coder-30B-unsloth/3bit_t1/thumb.png" style="vertical-align: middle;">
 </a>
 
-Experiment <a href="https://github.com/DrMicrobit/lllm_suit/blob/main/./tests/SpaceInvaders/local/qwen3-coder-30B-unsloth/3bit_t2">./tests/SpaceInvaders/local/qwen3-coder-30B-unsloth/3bit_t2</a> <a href="https://drmicrobit.github.io/lllm_suit/./tests/SpaceInvaders/local/qwen3-coder-30B-unsloth/3bit_t2/space_invaders.html">
-<img src="./tests/SpaceInvaders/local/qwen3-coder-30B-unsloth/3bit_t2/thumb.png" style="vertical-align: middle;">
+Weird mixture of modernised and retro graphics. Title screen. Smooth anim.
+Riddled with bugs: Game did not start (needed bugfixing) alien movement; graphics scaling;
+jagged animation.
+#### Experiment <a href="https://github.com/DrMicrobit/lllm_suit/blob/main/./tests/SpaceInvaders/local/qwen3-coder-30B-unsloth/3bit_t2">./tests/SpaceInvaders/local/qwen3-coder-30B-unsloth/3bit_t2</a>
+
+<a href="https://drmicrobit.github.io/lllm_suit/./tests/SpaceInvaders/local/qwen3-coder-30B-unsloth/3bit_t2/space_invaders.html">
+  <img src="./tests/SpaceInvaders/local/qwen3-coder-30B-unsloth/3bit_t2/thumb.png" style="vertical-align: middle;">
 </a>
 
-Experiment <a href="https://github.com/DrMicrobit/lllm_suit/blob/main/./tests/SpaceInvaders/local/qwen3-coder-30B-unsloth/4bit_t1">./tests/SpaceInvaders/local/qwen3-coder-30B-unsloth/4bit_t1</a> <a href="https://drmicrobit.github.io/lllm_suit/./tests/SpaceInvaders/local/qwen3-coder-30B-unsloth/4bit_t1/space_invaders.html">
-<img src="./tests/SpaceInvaders/local/qwen3-coder-30B-unsloth/4bit_t1/thumb.png" style="vertical-align: middle;">
+Basic version. Title screen, restart after Game Over. Smooth alian anim, jagged player anim.
+Buggy player anim and response to keypresses (delays).
+#### Experiment <a href="https://github.com/DrMicrobit/lllm_suit/blob/main/./tests/SpaceInvaders/local/qwen3-coder-30B-unsloth/4bit_t1">./tests/SpaceInvaders/local/qwen3-coder-30B-unsloth/4bit_t1</a>
+
+<a href="https://drmicrobit.github.io/lllm_suit/./tests/SpaceInvaders/local/qwen3-coder-30B-unsloth/4bit_t1/space_invaders.html">
+  <img src="./tests/SpaceInvaders/local/qwen3-coder-30B-unsloth/4bit_t1/thumb.png" style="vertical-align: middle;">
 </a>
 
-Experiment <a href="https://github.com/DrMicrobit/lllm_suit/blob/main/./tests/SpaceInvaders/local/qwen3-coder-30B-unsloth/4bit_t2">./tests/SpaceInvaders/local/qwen3-coder-30B-unsloth/4bit_t2</a> <a href="https://drmicrobit.github.io/lllm_suit/./tests/SpaceInvaders/local/qwen3-coder-30B-unsloth/4bit_t2/space_invaders.html">
-<img src="./tests/SpaceInvaders/local/qwen3-coder-30B-unsloth/4bit_t2/thumb.png" style="vertical-align: middle;">
+Probably best local version. Smooth anim, starfield!
+Plus:
+- overall aesthetics of screen and text
+- aliens have 'eyes'
+- a moving starfield!
+- score counter
+- player has only 1 life
+
+Bugs:
+- the player can spam shots, laserlike
+- the start button is too low on some browsers, almost hidden
+- there are no waves: when the player has shot all aliens, a message appears with "You win", and the possibility to restart the game
+
+#### Experiment <a href="https://github.com/DrMicrobit/lllm_suit/blob/main/./tests/SpaceInvaders/local/qwen3-coder-30B-unsloth/4bit_t2">./tests/SpaceInvaders/local/qwen3-coder-30B-unsloth/4bit_t2</a>
+
+<a href="https://drmicrobit.github.io/lllm_suit/./tests/SpaceInvaders/local/qwen3-coder-30B-unsloth/4bit_t2/space_invaders.html">
+  <img src="./tests/SpaceInvaders/local/qwen3-coder-30B-unsloth/4bit_t2/thumb.png" style="vertical-align: middle;">
 </a>
 
-Experiment <a href="https://github.com/DrMicrobit/lllm_suit/blob/main/./tests/SpaceInvaders/local/qwen3-coder-30B-unsloth/4bitUD_t1">./tests/SpaceInvaders/local/qwen3-coder-30B-unsloth/4bitUD_t1</a> <a href="https://drmicrobit.github.io/lllm_suit/./tests/SpaceInvaders/local/qwen3-coder-30B-unsloth/4bitUD_t1/space_invaders.html">
-<img src="./tests/SpaceInvaders/local/qwen3-coder-30B-unsloth/4bitUD_t1/thumb.png" style="vertical-align: middle;">
+Very basic version.
+Bugs: aliens don't shoot, aliens move way too slow, game does not recognise player having shot all aliens.
+
+#### Experiment <a href="https://github.com/DrMicrobit/lllm_suit/blob/main/./tests/SpaceInvaders/local/qwen3-coder-30B-unsloth/4bitUD_t1">./tests/SpaceInvaders/local/qwen3-coder-30B-unsloth/4bitUD_t1</a>
+
+<a href="https://drmicrobit.github.io/lllm_suit/./tests/SpaceInvaders/local/qwen3-coder-30B-unsloth/4bitUD_t1/space_invaders.html">
+  <img src="./tests/SpaceInvaders/local/qwen3-coder-30B-unsloth/4bitUD_t1/thumb.png" style="vertical-align: middle;">
 </a>
 
-Experiment <a href="https://github.com/DrMicrobit/lllm_suit/blob/main/./tests/SpaceInvaders/local/qwen3-coder-30B-unsloth/4bitUD_t2">./tests/SpaceInvaders/local/qwen3-coder-30B-unsloth/4bitUD_t2</a> <a href="https://drmicrobit.github.io/lllm_suit/./tests/SpaceInvaders/local/qwen3-coder-30B-unsloth/4bitUD_t2/space_invaders.html">
-<img src="./tests/SpaceInvaders/local/qwen3-coder-30B-unsloth/4bitUD_t2/thumb.png" style="vertical-align: middle;">
+initial version 1 minutes 13 seconds. Nice aesthetics, but aliens move too slow.
+- two additional fixing rounds (each 7 seconds) and aliens move fast enough, although jerky
+- then: bug uncovered, when all aliens are shot no next wave appears. Fixing this took 20s.
+- then: I notice that the wave difficulty does not increase, every wave runs at the same speed. Asking the model to "add a display for alien speed" not only adds said display, but the model suddenly realises the bug all by itself and fixes it. Oh wow.
+- one last try to fix the jerky movement being unsuccessful (1 minute 45 seconds)
+#### Experiment <a href="https://github.com/DrMicrobit/lllm_suit/blob/main/./tests/SpaceInvaders/local/qwen3-coder-30B-unsloth/4bitUD_t2">./tests/SpaceInvaders/local/qwen3-coder-30B-unsloth/4bitUD_t2</a>
+
+<a href="https://drmicrobit.github.io/lllm_suit/./tests/SpaceInvaders/local/qwen3-coder-30B-unsloth/4bitUD_t2/space_invaders.html">
+  <img src="./tests/SpaceInvaders/local/qwen3-coder-30B-unsloth/4bitUD_t2/thumb.png" style="vertical-align: middle;">
 </a>
+
 
 ### Online model experiments for Space Invaders
 
-Experiment <a href="https://github.com/DrMicrobit/lllm_suit/blob/main/./tests/SpaceInvaders/online/Gemini25Flash/t1">./tests/SpaceInvaders/online/Gemini25Flash/t1</a> <a href="https://drmicrobit.github.io/lllm_suit/./tests/SpaceInvaders/online/Gemini25Flash/t1/space_invaders.html">
-<img src="./tests/SpaceInvaders/online/Gemini25Flash/t1/thumb.png" style="vertical-align: middle;">
+#### Experiment <a href="https://github.com/DrMicrobit/lllm_suit/blob/main/./tests/SpaceInvaders/online/Gemini25Flash/t1">./tests/SpaceInvaders/online/Gemini25Flash/t1</a>
+
+<a href="https://drmicrobit.github.io/lllm_suit/./tests/SpaceInvaders/online/Gemini25Flash/t1/space_invaders.html">
+  <img src="./tests/SpaceInvaders/online/Gemini25Flash/t1/thumb.png" style="vertical-align: middle;">
 </a>
 
-Experiment <a href="https://github.com/DrMicrobit/lllm_suit/blob/main/./tests/SpaceInvaders/online/Gemini25Flash/t2">./tests/SpaceInvaders/online/Gemini25Flash/t2</a> <a href="https://drmicrobit.github.io/lllm_suit/./tests/SpaceInvaders/online/Gemini25Flash/t2/space_invaders.html">
-<img src="./tests/SpaceInvaders/online/Gemini25Flash/t2/thumb.png" style="vertical-align: middle;">
+
+#### Experiment <a href="https://github.com/DrMicrobit/lllm_suit/blob/main/./tests/SpaceInvaders/online/Gemini25Flash/t2">./tests/SpaceInvaders/online/Gemini25Flash/t2</a>
+
+<a href="https://drmicrobit.github.io/lllm_suit/./tests/SpaceInvaders/online/Gemini25Flash/t2/space_invaders.html">
+  <img src="./tests/SpaceInvaders/online/Gemini25Flash/t2/thumb.png" style="vertical-align: middle;">
 </a>
 
-Experiment <a href="https://github.com/DrMicrobit/lllm_suit/blob/main/./tests/SpaceInvaders/online/Gemini25pro/t1">./tests/SpaceInvaders/online/Gemini25pro/t1</a> <a href="https://drmicrobit.github.io/lllm_suit/./tests/SpaceInvaders/online/Gemini25pro/t1/space_invaders.html">
-<img src="./tests/SpaceInvaders/online/Gemini25pro/t1/thumb.png" style="vertical-align: middle;">
+
+#### Experiment <a href="https://github.com/DrMicrobit/lllm_suit/blob/main/./tests/SpaceInvaders/online/Gemini25pro/t1">./tests/SpaceInvaders/online/Gemini25pro/t1</a>
+
+<a href="https://drmicrobit.github.io/lllm_suit/./tests/SpaceInvaders/online/Gemini25pro/t1/space_invaders.html">
+  <img src="./tests/SpaceInvaders/online/Gemini25pro/t1/thumb.png" style="vertical-align: middle;">
 </a>
 
-Experiment <a href="https://github.com/DrMicrobit/lllm_suit/blob/main/./tests/SpaceInvaders/online/Gemini25pro/t2">./tests/SpaceInvaders/online/Gemini25pro/t2</a> <a href="https://drmicrobit.github.io/lllm_suit/./tests/SpaceInvaders/online/Gemini25pro/t2/space_invaders.html">
-<img src="./tests/SpaceInvaders/online/Gemini25pro/t2/thumb.png" style="vertical-align: middle;">
+
+#### Experiment <a href="https://github.com/DrMicrobit/lllm_suit/blob/main/./tests/SpaceInvaders/online/Gemini25pro/t2">./tests/SpaceInvaders/online/Gemini25pro/t2</a>
+
+<a href="https://drmicrobit.github.io/lllm_suit/./tests/SpaceInvaders/online/Gemini25pro/t2/space_invaders.html">
+  <img src="./tests/SpaceInvaders/online/Gemini25pro/t2/thumb.png" style="vertical-align: middle;">
 </a>
 
-Experiment <a href="https://github.com/DrMicrobit/lllm_suit/blob/main/./tests/SpaceInvaders/online/GPT5/t1">./tests/SpaceInvaders/online/GPT5/t1</a> <a href="https://drmicrobit.github.io/lllm_suit/./tests/SpaceInvaders/online/GPT5/t1/space_invaders.html">
-<img src="./tests/SpaceInvaders/online/GPT5/t1/thumb.png" style="vertical-align: middle;">
+
+#### Experiment <a href="https://github.com/DrMicrobit/lllm_suit/blob/main/./tests/SpaceInvaders/online/GPT5/t1">./tests/SpaceInvaders/online/GPT5/t1</a>
+
+<a href="https://drmicrobit.github.io/lllm_suit/./tests/SpaceInvaders/online/GPT5/t1/space_invaders.html">
+  <img src="./tests/SpaceInvaders/online/GPT5/t1/thumb.png" style="vertical-align: middle;">
 </a>
 
-Experiment <a href="https://github.com/DrMicrobit/lllm_suit/blob/main/./tests/SpaceInvaders/online/GPT5/t2">./tests/SpaceInvaders/online/GPT5/t2</a> <a href="https://drmicrobit.github.io/lllm_suit/./tests/SpaceInvaders/online/GPT5/t2/space_invaders.html">
-<img src="./tests/SpaceInvaders/online/GPT5/t2/thumb.png" style="vertical-align: middle;">
+
+#### Experiment <a href="https://github.com/DrMicrobit/lllm_suit/blob/main/./tests/SpaceInvaders/online/GPT5/t2">./tests/SpaceInvaders/online/GPT5/t2</a>
+
+<a href="https://drmicrobit.github.io/lllm_suit/./tests/SpaceInvaders/online/GPT5/t2/space_invaders.html">
+  <img src="./tests/SpaceInvaders/online/GPT5/t2/thumb.png" style="vertical-align: middle;">
 </a>
 
-Experiment <a href="https://github.com/DrMicrobit/lllm_suit/blob/main/./tests/SpaceInvaders/online/Opus41/t1">./tests/SpaceInvaders/online/Opus41/t1</a> <a href="https://drmicrobit.github.io/lllm_suit/./tests/SpaceInvaders/online/Opus41/t1/space_invaders.html">
-<img src="./tests/SpaceInvaders/online/Opus41/t1/thumb.png" style="vertical-align: middle;">
+
+#### Experiment <a href="https://github.com/DrMicrobit/lllm_suit/blob/main/./tests/SpaceInvaders/online/Opus41/t1">./tests/SpaceInvaders/online/Opus41/t1</a>
+
+<a href="https://drmicrobit.github.io/lllm_suit/./tests/SpaceInvaders/online/Opus41/t1/space_invaders.html">
+  <img src="./tests/SpaceInvaders/online/Opus41/t1/thumb.png" style="vertical-align: middle;">
 </a>
 
-Experiment <a href="https://github.com/DrMicrobit/lllm_suit/blob/main/./tests/SpaceInvaders/online/Opus41/t2">./tests/SpaceInvaders/online/Opus41/t2</a> <a href="https://drmicrobit.github.io/lllm_suit/./tests/SpaceInvaders/online/Opus41/t2/space_invaders.html">
-<img src="./tests/SpaceInvaders/online/Opus41/t2/thumb.png" style="vertical-align: middle;">
+
+#### Experiment <a href="https://github.com/DrMicrobit/lllm_suit/blob/main/./tests/SpaceInvaders/online/Opus41/t2">./tests/SpaceInvaders/online/Opus41/t2</a>
+
+<a href="https://drmicrobit.github.io/lllm_suit/./tests/SpaceInvaders/online/Opus41/t2/space_invaders.html">
+  <img src="./tests/SpaceInvaders/online/Opus41/t2/thumb.png" style="vertical-align: middle;">
 </a>
 
-Experiment <a href="https://github.com/DrMicrobit/lllm_suit/blob/main/./tests/SpaceInvaders/online/Qwen3code-online/t1">./tests/SpaceInvaders/online/Qwen3code-online/t1</a> <a href="https://drmicrobit.github.io/lllm_suit/./tests/SpaceInvaders/online/Qwen3code-online/t1/space_invaders.html">
-<img src="./tests/SpaceInvaders/online/Qwen3code-online/t1/thumb.png" style="vertical-align: middle;">
+
+#### Experiment <a href="https://github.com/DrMicrobit/lllm_suit/blob/main/./tests/SpaceInvaders/online/Qwen3code-online/t1">./tests/SpaceInvaders/online/Qwen3code-online/t1</a>
+
+<a href="https://drmicrobit.github.io/lllm_suit/./tests/SpaceInvaders/online/Qwen3code-online/t1/space_invaders.html">
+  <img src="./tests/SpaceInvaders/online/Qwen3code-online/t1/thumb.png" style="vertical-align: middle;">
 </a>
 
-Experiment <a href="https://github.com/DrMicrobit/lllm_suit/blob/main/./tests/SpaceInvaders/online/Qwen3code-online/t2">./tests/SpaceInvaders/online/Qwen3code-online/t2</a> <a href="https://drmicrobit.github.io/lllm_suit/./tests/SpaceInvaders/online/Qwen3code-online/t2/space_invaders.html">
-<img src="./tests/SpaceInvaders/online/Qwen3code-online/t2/thumb.png" style="vertical-align: middle;">
+
+#### Experiment <a href="https://github.com/DrMicrobit/lllm_suit/blob/main/./tests/SpaceInvaders/online/Qwen3code-online/t2">./tests/SpaceInvaders/online/Qwen3code-online/t2</a>
+
+<a href="https://drmicrobit.github.io/lllm_suit/./tests/SpaceInvaders/online/Qwen3code-online/t2/space_invaders.html">
+  <img src="./tests/SpaceInvaders/online/Qwen3code-online/t2/thumb.png" style="vertical-align: middle;">
 </a>
 
-Experiment <a href="https://github.com/DrMicrobit/lllm_suit/blob/main/./tests/SpaceInvaders/online/Sonnet45/t1">./tests/SpaceInvaders/online/Sonnet45/t1</a> <a href="https://drmicrobit.github.io/lllm_suit/./tests/SpaceInvaders/online/Sonnet45/t1/space_invaders.html">
-<img src="./tests/SpaceInvaders/online/Sonnet45/t1/thumb.png" style="vertical-align: middle;">
+
+#### Experiment <a href="https://github.com/DrMicrobit/lllm_suit/blob/main/./tests/SpaceInvaders/online/Sonnet45/t1">./tests/SpaceInvaders/online/Sonnet45/t1</a>
+
+<a href="https://drmicrobit.github.io/lllm_suit/./tests/SpaceInvaders/online/Sonnet45/t1/space_invaders.html">
+  <img src="./tests/SpaceInvaders/online/Sonnet45/t1/thumb.png" style="vertical-align: middle;">
 </a>
 
-Experiment <a href="https://github.com/DrMicrobit/lllm_suit/blob/main/./tests/SpaceInvaders/online/Sonnet45/t2">./tests/SpaceInvaders/online/Sonnet45/t2</a> <a href="https://drmicrobit.github.io/lllm_suit/./tests/SpaceInvaders/online/Sonnet45/t2/space_invaders.html">
-<img src="./tests/SpaceInvaders/online/Sonnet45/t2/thumb.png" style="vertical-align: middle;">
+
+#### Experiment <a href="https://github.com/DrMicrobit/lllm_suit/blob/main/./tests/SpaceInvaders/online/Sonnet45/t2">./tests/SpaceInvaders/online/Sonnet45/t2</a>
+
+<a href="https://drmicrobit.github.io/lllm_suit/./tests/SpaceInvaders/online/Sonnet45/t2/space_invaders.html">
+  <img src="./tests/SpaceInvaders/online/Sonnet45/t2/thumb.png" style="vertical-align: middle;">
 </a>
+
 
