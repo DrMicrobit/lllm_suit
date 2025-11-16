@@ -3,7 +3,7 @@
 # This adds a list of experiment trials and thumbnails to the README.md
 #  of each experiment to help navigation and visualisation
 
-deploy=0
+deploy=1
 
 # Nothing bewlo this line to adapt
 

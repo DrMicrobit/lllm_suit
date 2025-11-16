@@ -114,9 +114,9 @@ I would not recommend using 3-bit models, and certainly not 2-bit models. One ca
 
 ## Online model experiments for Space Invaders
 
-### Experiment <a href="./online/Gemini25Flash/t1">online/Gemini25Flash/t1</a>
+### Experiment <a href="https://github.com/DrMicrobit/lllm_suit/blob/main/tests/SpaceInvaders/online/Gemini25Flash/t1">tests/SpaceInvaders/online/Gemini25Flash/t1</a>
 
-<a href="./online/Gemini25Flash/t1/space_invaders.html">
+<a href="https://drmicrobit.github.io/lllm_suit/tests/SpaceInvaders/online/Gemini25Flash/t1/space_invaders.html">
   <img src="online/Gemini25Flash/t1/thumb.png" style="vertical-align: middle;">
 </a>
 
@@ -125,9 +125,9 @@ I would not recommend using 3-bit models, and certainly not 2-bit models. One ca
 - Graphics: simplistic basic shapes, almost monochrome. Jagged animation of aliens
 - Comments: very basic, but works.
 
-### Experiment <a href="./online/Gemini25Flash/t2">online/Gemini25Flash/t2</a>
+### Experiment <a href="https://github.com/DrMicrobit/lllm_suit/blob/main/tests/SpaceInvaders/online/Gemini25Flash/t2">tests/SpaceInvaders/online/Gemini25Flash/t2</a>
 
-<a href="./online/Gemini25Flash/t2/space_invaders.html">
+<a href="https://drmicrobit.github.io/lllm_suit/tests/SpaceInvaders/online/Gemini25Flash/t2/space_invaders.html">
   <img src="online/Gemini25Flash/t2/thumb.png" style="vertical-align: middle;">
 </a>
 
@@ -135,9 +135,9 @@ I would not recommend using 3-bit models, and certainly not 2-bit models. One ca
 - Bugs: none
 - Graphics: shapes with 'yes'. Multi-colored. Smooth animations
 - Comments: basic, and works.
-### Experiment <a href="./online/Gemini25pro/t1">online/Gemini25pro/t1</a>
+### Experiment <a href="https://github.com/DrMicrobit/lllm_suit/blob/main/tests/SpaceInvaders/online/Gemini25pro/t1">tests/SpaceInvaders/online/Gemini25pro/t1</a>
 
-<a href="./online/Gemini25pro/t1/space_invaders.html">
+<a href="https://drmicrobit.github.io/lllm_suit/tests/SpaceInvaders/online/Gemini25pro/t1/space_invaders.html">
   <img src="online/Gemini25pro/t1/thumb.png" style="vertical-align: middle;">
 </a>
 
@@ -146,9 +146,9 @@ I would not recommend using 3-bit models, and certainly not 2-bit models. One ca
 - Graphics: simplistic monochrome alien sprite. Smooth animation.
 - Comments: basic, works.
 
-### Experiment <a href="./online/Gemini25pro/t2">online/Gemini25pro/t2</a>
+### Experiment <a href="https://github.com/DrMicrobit/lllm_suit/blob/main/tests/SpaceInvaders/online/Gemini25pro/t2">tests/SpaceInvaders/online/Gemini25pro/t2</a>
 
-<a href="./online/Gemini25pro/t2/space_invaders.html">
+<a href="https://drmicrobit.github.io/lllm_suit/tests/SpaceInvaders/online/Gemini25pro/t2/space_invaders.html">
   <img src="online/Gemini25pro/t2/thumb.png" style="vertical-align: middle;">
 </a>
 
@@ -157,9 +157,9 @@ I would not recommend using 3-bit models, and certainly not 2-bit models. One ca
 - Graphics: simplistic monochrome alien sprite. Smooth animation. Particle effect explosions.
 - Comments: basic, works.
 
-### Experiment <a href="./online/GPT5/t1">online/GPT5/t1</a>
+### Experiment <a href="https://github.com/DrMicrobit/lllm_suit/blob/main/tests/SpaceInvaders/online/GPT5/t1">tests/SpaceInvaders/online/GPT5/t1</a>
 
-<a href="./online/GPT5/t1/space_invaders.html">
+<a href="https://drmicrobit.github.io/lllm_suit/tests/SpaceInvaders/online/GPT5/t1/space_invaders.html">
   <img src="online/GPT5/t1/thumb.png" style="vertical-align: middle;">
 </a>
 
@@ -168,9 +168,9 @@ I would not recommend using 3-bit models, and certainly not 2-bit models. One ca
 - Graphics: modern looking retro. Smooth animation. Aliens in slight waves. Particle effect explosions. Parallax starfield. Playing field dynamically adapts to browser window.
 - Comments: probably best / most advanced version in this experiment.
 
-### Experiment <a href="./online/GPT5/t2">online/GPT5/t2</a>
+### Experiment <a href="https://github.com/DrMicrobit/lllm_suit/blob/main/tests/SpaceInvaders/online/GPT5/t2">tests/SpaceInvaders/online/GPT5/t2</a>
 
-<a href="./online/GPT5/t2/space_invaders.html">
+<a href="https://drmicrobit.github.io/lllm_suit/tests/SpaceInvaders/online/GPT5/t2/space_invaders.html">
   <img src="online/GPT5/t2/thumb.png" style="vertical-align: middle;">
 </a>
 
@@ -179,9 +179,9 @@ I would not recommend using 3-bit models, and certainly not 2-bit models. One ca
 - Graphics: modern looking retro. Smooth animation. Aliens in slight waves. Particle effect explosions. Parallax starfield.
 - Comments: close seconds, bested only by other GPT5 version.
 
-### Experiment <a href="./online/Opus41/t1">online/Opus41/t1</a>
+### Experiment <a href="https://github.com/DrMicrobit/lllm_suit/blob/main/tests/SpaceInvaders/online/Opus41/t1">tests/SpaceInvaders/online/Opus41/t1</a>
 
-<a href="./online/Opus41/t1/space_invaders.html">
+<a href="https://drmicrobit.github.io/lllm_suit/tests/SpaceInvaders/online/Opus41/t1/space_invaders.html">
   <img src="online/Opus41/t1/thumb.png" style="vertical-align: middle;">
 </a>
 
@@ -190,9 +190,9 @@ I would not recommend using 3-bit models, and certainly not 2-bit models. One ca
 - Graphics: simplistic basic shapes. Smooth animation.
 - Comments: very basic, but works.
 
-### Experiment <a href="./online/Opus41/t2">online/Opus41/t2</a>
+### Experiment <a href="https://github.com/DrMicrobit/lllm_suit/blob/main/tests/SpaceInvaders/online/Opus41/t2">tests/SpaceInvaders/online/Opus41/t2</a>
 
-<a href="./online/Opus41/t2/space_invaders.html">
+<a href="https://drmicrobit.github.io/lllm_suit/tests/SpaceInvaders/online/Opus41/t2/space_invaders.html">
   <img src="online/Opus41/t2/thumb.png" style="vertical-align: middle;">
 </a>
 
@@ -201,9 +201,9 @@ I would not recommend using 3-bit models, and certainly not 2-bit models. One ca
 - Graphics: simplistic basic shapes. Smooth animation.
 - Comments: very basic, but works.
 
-### Experiment <a href="./online/Qwen3code-online/t1">online/Qwen3code-online/t1</a>
+### Experiment <a href="https://github.com/DrMicrobit/lllm_suit/blob/main/tests/SpaceInvaders/online/Qwen3code-online/t1">tests/SpaceInvaders/online/Qwen3code-online/t1</a>
 
-<a href="./online/Qwen3code-online/t1/space_invaders.html">
+<a href="https://drmicrobit.github.io/lllm_suit/tests/SpaceInvaders/online/Qwen3code-online/t1/space_invaders.html">
   <img src="online/Qwen3code-online/t1/thumb.png" style="vertical-align: middle;">
 </a>
 
@@ -212,9 +212,9 @@ I would not recommend using 3-bit models, and certainly not 2-bit models. One ca
 - Graphics: simplistic basic shapes. Smooth animation.
 - Comments: very basic, but works.
 
-### Experiment <a href="./online/Qwen3code-online/t2">online/Qwen3code-online/t2</a>
+### Experiment <a href="https://github.com/DrMicrobit/lllm_suit/blob/main/tests/SpaceInvaders/online/Qwen3code-online/t2">tests/SpaceInvaders/online/Qwen3code-online/t2</a>
 
-<a href="./online/Qwen3code-online/t2/space_invaders.html">
+<a href="https://drmicrobit.github.io/lllm_suit/tests/SpaceInvaders/online/Qwen3code-online/t2/space_invaders.html">
   <img src="online/Qwen3code-online/t2/thumb.png" style="vertical-align: middle;">
 </a>
 
@@ -223,9 +223,9 @@ I would not recommend using 3-bit models, and certainly not 2-bit models. One ca
 - Graphics: simplistic basic shapes. Smooth animation.
 - Comments: very basic, but works.
 
-### Experiment <a href="./online/Sonnet45/t1">online/Sonnet45/t1</a>
+### Experiment <a href="https://github.com/DrMicrobit/lllm_suit/blob/main/tests/SpaceInvaders/online/Sonnet45/t1">tests/SpaceInvaders/online/Sonnet45/t1</a>
 
-<a href="./online/Sonnet45/t1/space_invaders.html">
+<a href="https://drmicrobit.github.io/lllm_suit/tests/SpaceInvaders/online/Sonnet45/t1/space_invaders.html">
   <img src="online/Sonnet45/t1/thumb.png" style="vertical-align: middle;">
 </a>
 
@@ -234,9 +234,9 @@ I would not recommend using 3-bit models, and certainly not 2-bit models. One ca
 - Graphics: simplistic basic shapes. Smooth animation.
 - Comments: very basic, but works.
 
-### Experiment <a href="./online/Sonnet45/t2">online/Sonnet45/t2</a>
+### Experiment <a href="https://github.com/DrMicrobit/lllm_suit/blob/main/tests/SpaceInvaders/online/Sonnet45/t2">tests/SpaceInvaders/online/Sonnet45/t2</a>
 
-<a href="./online/Sonnet45/t2/space_invaders.html">
+<a href="https://drmicrobit.github.io/lllm_suit/tests/SpaceInvaders/online/Sonnet45/t2/space_invaders.html">
   <img src="online/Sonnet45/t2/thumb.png" style="vertical-align: middle;">
 </a>
 
@@ -247,9 +247,9 @@ I would not recommend using 3-bit models, and certainly not 2-bit models. One ca
 
 ## Local model experiments for Space Invaders
 
-### Experiment <a href="./local/qwen3-coder-30B-ollama/4bit_t1">local/qwen3-coder-30B-ollama/4bit_t1</a>
+### Experiment <a href="https://github.com/DrMicrobit/lllm_suit/blob/main/tests/SpaceInvaders/local/qwen3-coder-30B-ollama/4bit_t1">tests/SpaceInvaders/local/qwen3-coder-30B-ollama/4bit_t1</a>
 
-<a href="./local/qwen3-coder-30B-ollama/4bit_t1/space_invaders.html">
+<a href="https://drmicrobit.github.io/lllm_suit/tests/SpaceInvaders/local/qwen3-coder-30B-ollama/4bit_t1/space_invaders.html">
   <img src="local/qwen3-coder-30B-ollama/4bit_t1/thumb.png" style="vertical-align: middle;">
 </a>
 
@@ -257,9 +257,9 @@ Very basic. Title screen, restart after game over. Smooth anim.
 Continuous autofire, 1 life.  Alien projectiles spawn in any row.
 Needed 3 bugfixing iterations, inlcuding 1 game breaking (game did not start).
 
-### Experiment <a href="./local/qwen3-coder-30B-ollama/4bit_t2">local/qwen3-coder-30B-ollama/4bit_t2</a>
+### Experiment <a href="https://github.com/DrMicrobit/lllm_suit/blob/main/tests/SpaceInvaders/local/qwen3-coder-30B-ollama/4bit_t2">tests/SpaceInvaders/local/qwen3-coder-30B-ollama/4bit_t2</a>
 
-<a href="./local/qwen3-coder-30B-ollama/4bit_t2/space_invaders.html">
+<a href="https://drmicrobit.github.io/lllm_suit/tests/SpaceInvaders/local/qwen3-coder-30B-ollama/4bit_t2/space_invaders.html">
   <img src="local/qwen3-coder-30B-ollama/4bit_t2/thumb.png" style="vertical-align: middle;">
 </a>
 
@@ -267,9 +267,9 @@ Very basic. Title screen, restart after game over. Smooth anim.
 Continuous autofire, 3 lives. Alien projectiles spawn in any row.
 Needed 2 bugfixing iterations.
 
-### Experiment <a href="./local/qwen3-coder-30B-ollama/4bit_t3">local/qwen3-coder-30B-ollama/4bit_t3</a>
+### Experiment <a href="https://github.com/DrMicrobit/lllm_suit/blob/main/tests/SpaceInvaders/local/qwen3-coder-30B-ollama/4bit_t3">tests/SpaceInvaders/local/qwen3-coder-30B-ollama/4bit_t3</a>
 
-<a href="./local/qwen3-coder-30B-ollama/4bit_t3/space_invaders.html">
+<a href="https://drmicrobit.github.io/lllm_suit/tests/SpaceInvaders/local/qwen3-coder-30B-ollama/4bit_t3/space_invaders.html">
   <img src="local/qwen3-coder-30B-ollama/4bit_t3/thumb.png" style="vertical-align: middle;">
 </a>
 
@@ -277,9 +277,9 @@ Very basic. Title screen, restart after game over. Smooth anim.
 Continuous autofire, 1 life. Alien projectiles spawn in any row. Player projectiles are
 circles instead of lines like in other versions.
 One-shot: no bugfixing.
-### Experiment <a href="./local/qwen3-coder-30B-ollama/4bit_t4">local/qwen3-coder-30B-ollama/4bit_t4</a>
+### Experiment <a href="https://github.com/DrMicrobit/lllm_suit/blob/main/tests/SpaceInvaders/local/qwen3-coder-30B-ollama/4bit_t4">tests/SpaceInvaders/local/qwen3-coder-30B-ollama/4bit_t4</a>
 
-<a href="./local/qwen3-coder-30B-ollama/4bit_t4/space_invaders.html">
+<a href="https://drmicrobit.github.io/lllm_suit/tests/SpaceInvaders/local/qwen3-coder-30B-ollama/4bit_t4/space_invaders.html">
   <img src="local/qwen3-coder-30B-ollama/4bit_t4/thumb.png" style="vertical-align: middle;">
 </a>
 
@@ -287,9 +287,9 @@ Very basic. No title screen, restart after game over.
 Continuous autofire, 3 lives. Alien projectiles spawn in any row.
 Could not get smooth animation even after 3 bugfixing iterations.
 
-### Experiment <a href="./local/qwen3-coder-30B-ollama/4bit_t5">local/qwen3-coder-30B-ollama/4bit_t5</a>
+### Experiment <a href="https://github.com/DrMicrobit/lllm_suit/blob/main/tests/SpaceInvaders/local/qwen3-coder-30B-ollama/4bit_t5">tests/SpaceInvaders/local/qwen3-coder-30B-ollama/4bit_t5</a>
 
-<a href="./local/qwen3-coder-30B-ollama/4bit_t5/space_invaders.html">
+<a href="https://drmicrobit.github.io/lllm_suit/tests/SpaceInvaders/local/qwen3-coder-30B-ollama/4bit_t5/space_invaders.html">
   <img src="local/qwen3-coder-30B-ollama/4bit_t5/thumb.png" style="vertical-align: middle;">
 </a>
 
@@ -297,43 +297,43 @@ Very basic. Title screen, restart after game over.
 Continuous autofire, 3 lives. Aliens don't shoot.
 Could not get smooth anim after 3 bugfixing iterations.
 
-### Experiment <a href="./local/qwen3-coder-30B-unsloth/2bit_t1">local/qwen3-coder-30B-unsloth/2bit_t1</a>
+### Experiment <a href="https://github.com/DrMicrobit/lllm_suit/blob/main/tests/SpaceInvaders/local/qwen3-coder-30B-unsloth/2bit_t1">tests/SpaceInvaders/local/qwen3-coder-30B-unsloth/2bit_t1</a>
 
-<a href="./local/qwen3-coder-30B-unsloth/2bit_t1/space_invaders.html">
+<a href="https://drmicrobit.github.io/lllm_suit/tests/SpaceInvaders/local/qwen3-coder-30B-unsloth/2bit_t1/space_invaders.html">
   <img src="local/qwen3-coder-30B-unsloth/2bit_t1/thumb.png" style="vertical-align: middle;">
 </a>
 
 Extremely basic. No Title screen. Smooth anim.
 Riddled with bugs: alien movement; player cannot be killed.
 
-### Experiment <a href="./local/qwen3-coder-30B-unsloth/2bit_t2">local/qwen3-coder-30B-unsloth/2bit_t2</a>
+### Experiment <a href="https://github.com/DrMicrobit/lllm_suit/blob/main/tests/SpaceInvaders/local/qwen3-coder-30B-unsloth/2bit_t2">tests/SpaceInvaders/local/qwen3-coder-30B-unsloth/2bit_t2</a>
 
-<a href="./local/qwen3-coder-30B-unsloth/2bit_t2/space_invaders.html">
+<a href="https://drmicrobit.github.io/lllm_suit/tests/SpaceInvaders/local/qwen3-coder-30B-unsloth/2bit_t2/space_invaders.html">
   <img src="local/qwen3-coder-30B-unsloth/2bit_t2/thumb.png" style="vertical-align: middle;">
 </a>
 
 Extremely basic. Title screen. Smooth anim.
 Bugs: alien movement; aliens don't shoot.
-### Experiment <a href="./local/qwen3-coder-30B-unsloth/3bit_t1">local/qwen3-coder-30B-unsloth/3bit_t1</a>
+### Experiment <a href="https://github.com/DrMicrobit/lllm_suit/blob/main/tests/SpaceInvaders/local/qwen3-coder-30B-unsloth/3bit_t1">tests/SpaceInvaders/local/qwen3-coder-30B-unsloth/3bit_t1</a>
 
-<a href="./local/qwen3-coder-30B-unsloth/3bit_t1/space_invaders.html">
+<a href="https://drmicrobit.github.io/lllm_suit/tests/SpaceInvaders/local/qwen3-coder-30B-unsloth/3bit_t1/space_invaders.html">
   <img src="local/qwen3-coder-30B-unsloth/3bit_t1/thumb.png" style="vertical-align: middle;">
 </a>
 
 Weird mixture of modernised and retro graphics. Title screen. Smooth anim.
 Riddled with bugs: Game did not start (needed bugfixing) alien movement; graphics scaling;
 jagged animation.
-### Experiment <a href="./local/qwen3-coder-30B-unsloth/3bit_t2">local/qwen3-coder-30B-unsloth/3bit_t2</a>
+### Experiment <a href="https://github.com/DrMicrobit/lllm_suit/blob/main/tests/SpaceInvaders/local/qwen3-coder-30B-unsloth/3bit_t2">tests/SpaceInvaders/local/qwen3-coder-30B-unsloth/3bit_t2</a>
 
-<a href="./local/qwen3-coder-30B-unsloth/3bit_t2/space_invaders.html">
+<a href="https://drmicrobit.github.io/lllm_suit/tests/SpaceInvaders/local/qwen3-coder-30B-unsloth/3bit_t2/space_invaders.html">
   <img src="local/qwen3-coder-30B-unsloth/3bit_t2/thumb.png" style="vertical-align: middle;">
 </a>
 
 Basic version. Title screen, restart after Game Over. Smooth alian anim, jagged player anim.
 Buggy player anim and response to keypresses (delays).
-### Experiment <a href="./local/qwen3-coder-30B-unsloth/4bit_t1">local/qwen3-coder-30B-unsloth/4bit_t1</a>
+### Experiment <a href="https://github.com/DrMicrobit/lllm_suit/blob/main/tests/SpaceInvaders/local/qwen3-coder-30B-unsloth/4bit_t1">tests/SpaceInvaders/local/qwen3-coder-30B-unsloth/4bit_t1</a>
 
-<a href="./local/qwen3-coder-30B-unsloth/4bit_t1/space_invaders.html">
+<a href="https://drmicrobit.github.io/lllm_suit/tests/SpaceInvaders/local/qwen3-coder-30B-unsloth/4bit_t1/space_invaders.html">
   <img src="local/qwen3-coder-30B-unsloth/4bit_t1/thumb.png" style="vertical-align: middle;">
 </a>
 
@@ -350,18 +350,18 @@ Bugs:
 - the start button is too low on some browsers, almost hidden
 - there are no waves: when the player has shot all aliens, a message appears with "You win", and the possibility to restart the game
 
-### Experiment <a href="./local/qwen3-coder-30B-unsloth/4bit_t2">local/qwen3-coder-30B-unsloth/4bit_t2</a>
+### Experiment <a href="https://github.com/DrMicrobit/lllm_suit/blob/main/tests/SpaceInvaders/local/qwen3-coder-30B-unsloth/4bit_t2">tests/SpaceInvaders/local/qwen3-coder-30B-unsloth/4bit_t2</a>
 
-<a href="./local/qwen3-coder-30B-unsloth/4bit_t2/space_invaders.html">
+<a href="https://drmicrobit.github.io/lllm_suit/tests/SpaceInvaders/local/qwen3-coder-30B-unsloth/4bit_t2/space_invaders.html">
   <img src="local/qwen3-coder-30B-unsloth/4bit_t2/thumb.png" style="vertical-align: middle;">
 </a>
 
 Very basic version.
 Bugs: aliens don't shoot, aliens move way too slow, game does not recognise player having shot all aliens.
 
-### Experiment <a href="./local/qwen3-coder-30B-unsloth/4bitUD_t1">local/qwen3-coder-30B-unsloth/4bitUD_t1</a>
+### Experiment <a href="https://github.com/DrMicrobit/lllm_suit/blob/main/tests/SpaceInvaders/local/qwen3-coder-30B-unsloth/4bitUD_t1">tests/SpaceInvaders/local/qwen3-coder-30B-unsloth/4bitUD_t1</a>
 
-<a href="./local/qwen3-coder-30B-unsloth/4bitUD_t1/space_invaders.html">
+<a href="https://drmicrobit.github.io/lllm_suit/tests/SpaceInvaders/local/qwen3-coder-30B-unsloth/4bitUD_t1/space_invaders.html">
   <img src="local/qwen3-coder-30B-unsloth/4bitUD_t1/thumb.png" style="vertical-align: middle;">
 </a>
 
@@ -370,9 +370,9 @@ initial version 1 minutes 13 seconds. Nice aesthetics, but aliens move too slow.
 - then: bug uncovered, when all aliens are shot no next wave appears. Fixing this took 20s.
 - then: I notice that the wave difficulty does not increase, every wave runs at the same speed. Asking the model to "add a display for alien speed" not only adds said display, but the model suddenly realises the bug all by itself and fixes it. Oh wow.
 - one last try to fix the jerky movement being unsuccessful (1 minute 45 seconds)
-### Experiment <a href="./local/qwen3-coder-30B-unsloth/4bitUD_t2">local/qwen3-coder-30B-unsloth/4bitUD_t2</a>
+### Experiment <a href="https://github.com/DrMicrobit/lllm_suit/blob/main/tests/SpaceInvaders/local/qwen3-coder-30B-unsloth/4bitUD_t2">tests/SpaceInvaders/local/qwen3-coder-30B-unsloth/4bitUD_t2</a>
 
-<a href="./local/qwen3-coder-30B-unsloth/4bitUD_t2/space_invaders.html">
+<a href="https://drmicrobit.github.io/lllm_suit/tests/SpaceInvaders/local/qwen3-coder-30B-unsloth/4bitUD_t2/space_invaders.html">
   <img src="local/qwen3-coder-30B-unsloth/4bitUD_t2/thumb.png" style="vertical-align: middle;">
 </a>
 
