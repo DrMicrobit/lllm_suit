@@ -30,7 +30,9 @@ for file in "${files[@]}"; do
         echo "Must rename $file_name"
         mv "$file_name" Screenshot.png
     fi
-    convert Screenshot.png -resize 250x thumb.png
+    if [ ! -e thumb.png ]; then
+        convert Screenshot.png -resize 250x thumb.png
+    fi
     cd $tpath
     echo "--------------------"
 done

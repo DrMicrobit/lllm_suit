@@ -3,9 +3,12 @@
 # This adds a list of experiment trials and thumbnails to the README.md
 #  of each experiment to help navigation and visualisation
 
+# set deploy to 0 when testing file generatrion locally
+# set deploy to 1 for files uploaded to GitHub
+
 deploy=1
 
-# Nothing bewlo this line to adapt
+# Nothing below this line to adapt
 
 cwdir=`pwd`
 autoline="<!-- Everything below this line is generated automatically, do not change -->"
@@ -13,8 +16,23 @@ autoline="<!-- Everything below this line is generated automatically, do not cha
 trunc_README (){
     # Truncate old README
     awk "/$autoline/ {exit} {print}" README.md >ttt
-    echo "$autoline" >>ttt
-    echo "" >>ttt
+
+    cat << EOF >> ttt
+$autoline
+
+---
+---
+---
+
+> [!IMPORTANT]
+> In the list of experiments below, click on the thumbnail to test - in your browser - the examples built by the LLMs.
+> Clicking on the experiment name (left of thumbnail) brings you to the GitHub directory for
+> the given experiment.
+
+EOF
+
+
+
     cp ttt README.md
     rm ttt
 }
@@ -63,8 +81,6 @@ list_these () {
 EOF
         if [ -s $ldir_path/annot.md ] ; then
             cat $ldir_path/annot.md >> README.md
-            echo "Found"
-            cat $ldir_path/annot.md
         else
             touch $ldir_path/annot.md
         fi
@@ -100,10 +116,12 @@ go_through_expdirs() {
         cd $edir
         if [ ! -s $fgamename ] ; then
             echo "Missing $fgamename in $edir"
+            echo "Stopping $edir"
             exit
         fi
         if [ ! -s $fgamefile ] ; then
             echo "Missing $fgamefile in $edir"
+            echo "Stopping $edir"
             exit
         fi
 

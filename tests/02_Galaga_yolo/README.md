@@ -1,8 +1,10 @@
+# Building a Galaga game with AI, the YOLO approach
+
 ## Models tested
 
 Online models I tested (via web interfaces) to establish a base line:
 
-- Gemini 2.5 Pro versions
+- Gemini 2.5 Pro
 - GPT5
 - Sonnet 4.5
 - Qwen 3 coder and Qwen 3 max
@@ -21,38 +23,73 @@ Local models:
 
 ## Why Galaga?
 
-Contrary to Space Invaders, I suspect there are a lot less examples online regarding Galaga.
+Contrary to Space Invaders, I suspect there are a lot less examples online regarding Galaga. Which makes it more demanding for any model to do "the right thing" in YOLO mode without further information.
 
+For a short refresher on what the arcade Galaga version looked like, see [this video](https://www.youtube.com/watch?v=dvjapcHsqXY).
+
+## Prompt
+
+The LLMs all got this simple command `Write a Galaga game, contained in a single HTML file.`
+
+## Results at a glance
+
+(To be expanded)
+
+In a nutshell: it is clear that, compared to Space Invaders, the large online models had not as well an idea of what constitutes a Galaga game. Some of them created a Space Invaders game with a bit of alien wiggle, a few added alien attacks. But none of them had the characteristic alien formation buildup by alien squads flying in in figures resembling partial Lissajous curves.
+
+### Results online models
+
+- Gemini 2.5 pro: both trials looked either exactly like a Space Invaders or a Space Invaders+
+- GPT 5: almost Galaga, but still quite far off the original
+- Qwen 3 coder: pure Space Invaders
+- Qwen 3 max: one pure Space Invaders, one a mixture Galaga and Space Invaders
+- Sonnet 4.5: almost Galaga, but still quite far off the original
+
+### Results local models
+
+Being descendents of Qwen 3 coder (which had apparently no idea what Galaga is), the results were predictably bad in a sense that they were more Space Invaders than Galaga.
 
 <!-- Everything below this line is generated automatically, do not change -->
 
+---
+---
+---
+
+> [!IMPORTANT]
+> In the list of experiments below, click on the thumbnail to test - in your browser - the examples built by the LLMs.
+> Clicking on the experiment name (left of thumbnail) brings you to the GitHub directory for
+> the given experiment.
+
 ## Online model experiments for Galaga
 
-### Experiment <a href="https://github.com/DrMicrobit/lllm_suit/blob/main/tests/Galaga/online/Gemini25pro/t1">tests/Galaga/online/Gemini25pro/t1</a>
+### Experiment <a href="https://github.com/DrMicrobit/lllm_suit/blob/main/tests/02_Galaga_yolo/online/Gemini25pro/t1">tests/02_Galaga_yolo/online/Gemini25pro/t1</a>
 
-<a href="https://drmicrobit.github.io/lllm_suit/tests/Galaga/online/Gemini25pro/t1/galaga.html">
+<a href="https://drmicrobit.github.io/lllm_suit/tests/02_Galaga_yolo/online/Gemini25pro/t1/galaga.html">
   <img src="online/Gemini25pro/t1/thumb.png" style="vertical-align: middle;">
 </a>
 
-Almost a "Space Invaders"
-Smooth player and alien anim.
+Almost a "Space Invaders".
+Smooth player and alien anim. Sound.
 Bugs:
-- very little alien shots
-- very little alien attacks
+- very few alien shots
+- very few alien attacks
+- aliens performing an attack leave a copy of themselves at the original formation position
 - aliens don't move after a game over.
+- aliens don't move in new level
 
-### Experiment <a href="https://github.com/DrMicrobit/lllm_suit/blob/main/tests/Galaga/online/Gemini25pro/t2">tests/Galaga/online/Gemini25pro/t2</a>
 
-<a href="https://drmicrobit.github.io/lllm_suit/tests/Galaga/online/Gemini25pro/t2/galaga.html">
+### Experiment <a href="https://github.com/DrMicrobit/lllm_suit/blob/main/tests/02_Galaga_yolo/online/Gemini25pro/t2">tests/02_Galaga_yolo/online/Gemini25pro/t2</a>
+
+<a href="https://drmicrobit.github.io/lllm_suit/tests/02_Galaga_yolo/online/Gemini25pro/t2/galaga.html">
   <img src="online/Gemini25pro/t2/thumb.png" style="vertical-align: middle;">
 </a>
 
 Not a Galaga game, but "Space Invaders"
 Smooth player and alien anim.
 A bit of a bullet hell.
-### Experiment <a href="https://github.com/DrMicrobit/lllm_suit/blob/main/tests/Galaga/online/GPT5/t1">tests/Galaga/online/GPT5/t1</a>
+### Experiment <a href="https://github.com/DrMicrobit/lllm_suit/blob/main/tests/02_Galaga_yolo/online/GPT5/t1">tests/02_Galaga_yolo/online/GPT5/t1</a>
 
-<a href="https://drmicrobit.github.io/lllm_suit/tests/Galaga/online/GPT5/t1/galaga.html">
+<a href="https://drmicrobit.github.io/lllm_suit/tests/02_Galaga_yolo/online/GPT5/t1/galaga.html">
   <img src="online/GPT5/t1/thumb.png" style="vertical-align: middle;">
 </a>
 
@@ -62,9 +99,9 @@ Bugs:
 - enemies in attack go to random position after attack if they did not reach bottom of screen
 - clearing the first wave, gane jumps to wave 49 or 50
 - some enemies in later waves outside screen
-### Experiment <a href="https://github.com/DrMicrobit/lllm_suit/blob/main/tests/Galaga/online/GPT5/t2">tests/Galaga/online/GPT5/t2</a>
+### Experiment <a href="https://github.com/DrMicrobit/lllm_suit/blob/main/tests/02_Galaga_yolo/online/GPT5/t2">tests/02_Galaga_yolo/online/GPT5/t2</a>
 
-<a href="https://drmicrobit.github.io/lllm_suit/tests/Galaga/online/GPT5/t2/galaga.html">
+<a href="https://drmicrobit.github.io/lllm_suit/tests/02_Galaga_yolo/online/GPT5/t2/galaga.html">
   <img src="online/GPT5/t2/thumb.png" style="vertical-align: middle;">
 </a>
 
@@ -75,18 +112,18 @@ Bugs:
 - some UI elements overlap playing field
 - absolute bullet hell
 - Sound not on by default
-### Experiment <a href="https://github.com/DrMicrobit/lllm_suit/blob/main/tests/Galaga/online/Qwen3coder/t1">tests/Galaga/online/Qwen3coder/t1</a>
+### Experiment <a href="https://github.com/DrMicrobit/lllm_suit/blob/main/tests/02_Galaga_yolo/online/Qwen3coder/t1">tests/02_Galaga_yolo/online/Qwen3coder/t1</a>
 
-<a href="https://drmicrobit.github.io/lllm_suit/tests/Galaga/online/Qwen3coder/t1/galaga.html">
+<a href="https://drmicrobit.github.io/lllm_suit/tests/02_Galaga_yolo/online/Qwen3coder/t1/galaga.html">
   <img src="online/Qwen3coder/t1/thumb.png" style="vertical-align: middle;">
 </a>
 
 Not Galaga, but Space Invaders.
 Smooth anims, particle explosions.
 
-### Experiment <a href="https://github.com/DrMicrobit/lllm_suit/blob/main/tests/Galaga/online/Qwen3coder/t2">tests/Galaga/online/Qwen3coder/t2</a>
+### Experiment <a href="https://github.com/DrMicrobit/lllm_suit/blob/main/tests/02_Galaga_yolo/online/Qwen3coder/t2">tests/02_Galaga_yolo/online/Qwen3coder/t2</a>
 
-<a href="https://drmicrobit.github.io/lllm_suit/tests/Galaga/online/Qwen3coder/t2/galaga.html">
+<a href="https://drmicrobit.github.io/lllm_suit/tests/02_Galaga_yolo/online/Qwen3coder/t2/galaga.html">
   <img src="online/Qwen3coder/t2/thumb.png" style="vertical-align: middle;">
 </a>
 
@@ -95,9 +132,9 @@ Jagged alien movement.
 Bugs:
 - does not restart correctly after a game over
 
-### Experiment <a href="https://github.com/DrMicrobit/lllm_suit/blob/main/tests/Galaga/online/Qwen3coder/t3">tests/Galaga/online/Qwen3coder/t3</a>
+### Experiment <a href="https://github.com/DrMicrobit/lllm_suit/blob/main/tests/02_Galaga_yolo/online/Qwen3coder/t3">tests/02_Galaga_yolo/online/Qwen3coder/t3</a>
 
-<a href="https://drmicrobit.github.io/lllm_suit/tests/Galaga/online/Qwen3coder/t3/galaga.html">
+<a href="https://drmicrobit.github.io/lllm_suit/tests/02_Galaga_yolo/online/Qwen3coder/t3/galaga.html">
   <img src="online/Qwen3coder/t3/thumb.png" style="vertical-align: middle;">
 </a>
 
@@ -107,9 +144,9 @@ Bugs:
 - some UI elements overlap player
 - a bit bullet hell
 
-### Experiment <a href="https://github.com/DrMicrobit/lllm_suit/blob/main/tests/Galaga/online/Qwen3Max/t1">tests/Galaga/online/Qwen3Max/t1</a>
+### Experiment <a href="https://github.com/DrMicrobit/lllm_suit/blob/main/tests/02_Galaga_yolo/online/Qwen3Max/t1">tests/02_Galaga_yolo/online/Qwen3Max/t1</a>
 
-<a href="https://drmicrobit.github.io/lllm_suit/tests/Galaga/online/Qwen3Max/t1/galaga.html">
+<a href="https://drmicrobit.github.io/lllm_suit/tests/02_Galaga_yolo/online/Qwen3Max/t1/galaga.html">
   <img src="online/Qwen3Max/t1/thumb.png" style="vertical-align: middle;">
 </a>
 
@@ -117,9 +154,9 @@ Not Galaga, but Space Invaders
 Bugs:
 - alien movement logic (game breaking)
 - bullet hell
-### Experiment <a href="https://github.com/DrMicrobit/lllm_suit/blob/main/tests/Galaga/online/Qwen3Max/t2">tests/Galaga/online/Qwen3Max/t2</a>
+### Experiment <a href="https://github.com/DrMicrobit/lllm_suit/blob/main/tests/02_Galaga_yolo/online/Qwen3Max/t2">tests/02_Galaga_yolo/online/Qwen3Max/t2</a>
 
-<a href="https://drmicrobit.github.io/lllm_suit/tests/Galaga/online/Qwen3Max/t2/galaga.html">
+<a href="https://drmicrobit.github.io/lllm_suit/tests/02_Galaga_yolo/online/Qwen3Max/t2/galaga.html">
   <img src="online/Qwen3Max/t2/thumb.png" style="vertical-align: middle;">
 </a>
 
@@ -128,9 +165,9 @@ Smooth animations, sound.
 Has sort of double ship, triple shots upgrade mechanics.
 Bugs:
 - first iteration had a game breaking freeze when player picked up additional ship, needed additional bugfixing round
-### Experiment <a href="https://github.com/DrMicrobit/lllm_suit/blob/main/tests/Galaga/online/Sonnet45/t1">tests/Galaga/online/Sonnet45/t1</a>
+### Experiment <a href="https://github.com/DrMicrobit/lllm_suit/blob/main/tests/02_Galaga_yolo/online/Sonnet45/t1">tests/02_Galaga_yolo/online/Sonnet45/t1</a>
 
-<a href="https://drmicrobit.github.io/lllm_suit/tests/Galaga/online/Sonnet45/t1/galaga.html">
+<a href="https://drmicrobit.github.io/lllm_suit/tests/02_Galaga_yolo/online/Sonnet45/t1/galaga.html">
   <img src="online/Sonnet45/t1/thumb.png" style="vertical-align: middle;">
 </a>
 
@@ -139,9 +176,9 @@ Smooth retrographics, particle animation explosions.
 Bugs:
 - alien attack movement logic
 
-### Experiment <a href="https://github.com/DrMicrobit/lllm_suit/blob/main/tests/Galaga/online/Sonnet45/t2">tests/Galaga/online/Sonnet45/t2</a>
+### Experiment <a href="https://github.com/DrMicrobit/lllm_suit/blob/main/tests/02_Galaga_yolo/online/Sonnet45/t2">tests/02_Galaga_yolo/online/Sonnet45/t2</a>
 
-<a href="https://drmicrobit.github.io/lllm_suit/tests/Galaga/online/Sonnet45/t2/galaga.html">
+<a href="https://drmicrobit.github.io/lllm_suit/tests/02_Galaga_yolo/online/Sonnet45/t2/galaga.html">
   <img src="online/Sonnet45/t2/thumb.png" style="vertical-align: middle;">
 </a>
 
@@ -154,16 +191,20 @@ Bugs:
 
 ## Local model experiments for Galaga
 
-### Experiment <a href="https://github.com/DrMicrobit/lllm_suit/blob/main/tests/Galaga/local/qwen3-coder-30B-ollama/4bit_t1">tests/Galaga/local/qwen3-coder-30B-ollama/4bit_t1</a>
+### Experiment <a href="https://github.com/DrMicrobit/lllm_suit/blob/main/tests/02_Galaga_yolo/local/qwen3-coder-30B-ollama/4bit_t1">tests/02_Galaga_yolo/local/qwen3-coder-30B-ollama/4bit_t1</a>
 
-<a href="https://drmicrobit.github.io/lllm_suit/tests/Galaga/local/qwen3-coder-30B-ollama/4bit_t1/galaga.html">
+<a href="https://drmicrobit.github.io/lllm_suit/tests/02_Galaga_yolo/local/qwen3-coder-30B-ollama/4bit_t1/galaga.html">
   <img src="local/qwen3-coder-30B-ollama/4bit_t1/thumb.png" style="vertical-align: middle;">
 </a>
 
+I lost my notes for this experiment, it was the very first I made.
 
-### Experiment <a href="https://github.com/DrMicrobit/lllm_suit/blob/main/tests/Galaga/local/qwen3-coder-30B-ollama/4bit_t2">tests/Galaga/local/qwen3-coder-30B-ollama/4bit_t2</a>
+I remember getting a pretty good Space Invaders clone without  obvious errors. I then decided to write something like this to the model "This is not Galaga, this is Space Invaders." I did tghis in several iterations, in each the model added progressively complex alien movement patterns, but no attack patterns.
 
-<a href="https://drmicrobit.github.io/lllm_suit/tests/Galaga/local/qwen3-coder-30B-ollama/4bit_t2/galaga.html">
+Interesting result, albeit not Galaga :-)
+### Experiment <a href="https://github.com/DrMicrobit/lllm_suit/blob/main/tests/02_Galaga_yolo/local/qwen3-coder-30B-ollama/4bit_t2">tests/02_Galaga_yolo/local/qwen3-coder-30B-ollama/4bit_t2</a>
+
+<a href="https://drmicrobit.github.io/lllm_suit/tests/02_Galaga_yolo/local/qwen3-coder-30B-ollama/4bit_t2/galaga.html">
   <img src="local/qwen3-coder-30B-ollama/4bit_t2/thumb.png" style="vertical-align: middle;">
 </a>
 
@@ -172,9 +213,9 @@ Bugs:
 - first iteration (1:07 minutes) resulted in non-functional game, needed bugfixing (50 seconds)
 - some player shots do not connect with (kill) aliens
 
-### Experiment <a href="https://github.com/DrMicrobit/lllm_suit/blob/main/tests/Galaga/local/qwen3-coder-30B-ollama/4bit_t3">tests/Galaga/local/qwen3-coder-30B-ollama/4bit_t3</a>
+### Experiment <a href="https://github.com/DrMicrobit/lllm_suit/blob/main/tests/02_Galaga_yolo/local/qwen3-coder-30B-ollama/4bit_t3">tests/02_Galaga_yolo/local/qwen3-coder-30B-ollama/4bit_t3</a>
 
-<a href="https://drmicrobit.github.io/lllm_suit/tests/Galaga/local/qwen3-coder-30B-ollama/4bit_t3/galaga.html">
+<a href="https://drmicrobit.github.io/lllm_suit/tests/02_Galaga_yolo/local/qwen3-coder-30B-ollama/4bit_t3/galaga.html">
   <img src="local/qwen3-coder-30B-ollama/4bit_t3/thumb.png" style="vertical-align: middle;">
 </a>
 
@@ -186,9 +227,9 @@ Bugs:
 
 Stopped experiment.
 
-### Experiment <a href="https://github.com/DrMicrobit/lllm_suit/blob/main/tests/Galaga/local/qwen3-coder-30B-unsloth/4bit_t1">tests/Galaga/local/qwen3-coder-30B-unsloth/4bit_t1</a>
+### Experiment <a href="https://github.com/DrMicrobit/lllm_suit/blob/main/tests/02_Galaga_yolo/local/qwen3-coder-30B-unsloth/4bit_t1">tests/02_Galaga_yolo/local/qwen3-coder-30B-unsloth/4bit_t1</a>
 
-<a href="https://drmicrobit.github.io/lllm_suit/tests/Galaga/local/qwen3-coder-30B-unsloth/4bit_t1/galaga.html">
+<a href="https://drmicrobit.github.io/lllm_suit/tests/02_Galaga_yolo/local/qwen3-coder-30B-unsloth/4bit_t1/galaga.html">
   <img src="local/qwen3-coder-30B-unsloth/4bit_t1/thumb.png" style="vertical-align: middle;">
 </a>
 
@@ -196,9 +237,9 @@ Stopped experiment.
 
 2nd iteration (endless loop): initial response came after 1:56 minutes, but contained non-HTML, non-JavaScript text ("++REPLACE"). Cline then went into endless loop trying to fix it. Manual stop and fix resulted in still Space Invaders game, with same bugs.
 
-### Experiment <a href="https://github.com/DrMicrobit/lllm_suit/blob/main/tests/Galaga/local/qwen3-coder-30B-unsloth/4bitUD_t1">tests/Galaga/local/qwen3-coder-30B-unsloth/4bitUD_t1</a>
+### Experiment <a href="https://github.com/DrMicrobit/lllm_suit/blob/main/tests/02_Galaga_yolo/local/qwen3-coder-30B-unsloth/4bitUD_t1">tests/02_Galaga_yolo/local/qwen3-coder-30B-unsloth/4bitUD_t1</a>
 
-<a href="https://drmicrobit.github.io/lllm_suit/tests/Galaga/local/qwen3-coder-30B-unsloth/4bitUD_t1/galaga.html">
+<a href="https://drmicrobit.github.io/lllm_suit/tests/02_Galaga_yolo/local/qwen3-coder-30B-unsloth/4bitUD_t1/galaga.html">
   <img src="local/qwen3-coder-30B-unsloth/4bitUD_t1/thumb.png" style="vertical-align: middle;">
 </a>
 

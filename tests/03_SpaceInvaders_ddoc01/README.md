@@ -151,9 +151,9 @@ Qwen 3 coder descendents that have been pruned or mixed seem to be worse than th
 
 ## Online model experiments for Space Invaders
 
-### Experiment <a href="https://github.com/DrMicrobit/lllm_suit/blob/main/tests/SpaceInvaders_det01/online/GPT5/t1">tests/SpaceInvaders_det01/online/GPT5/t1</a>
+### Experiment <a href="https://github.com/DrMicrobit/lllm_suit/blob/main/tests/03_SpaceInvaders_ddoc01/online/GPT5/t1">tests/03_SpaceInvaders_ddoc01/online/GPT5/t1</a>
 
-<a href="https://drmicrobit.github.io/lllm_suit/tests/SpaceInvaders_det01/online/GPT5/t1/space_invaders.html">
+<a href="https://drmicrobit.github.io/lllm_suit/tests/03_SpaceInvaders_ddoc01/online/GPT5/t1/space_invaders.html">
   <img src="online/GPT5/t1/thumb.png" style="vertical-align: middle;">
 </a>
 
@@ -161,9 +161,9 @@ Qwen 3 coder descendents that have been pruned or mixed seem to be worse than th
 
 Answer was broken fragments of code for "what to fix". Stopped experiment.
 
-### Experiment <a href="https://github.com/DrMicrobit/lllm_suit/blob/main/tests/SpaceInvaders_det01/online/GPT5/t2">tests/SpaceInvaders_det01/online/GPT5/t2</a>
+### Experiment <a href="https://github.com/DrMicrobit/lllm_suit/blob/main/tests/03_SpaceInvaders_ddoc01/online/GPT5/t2">tests/03_SpaceInvaders_ddoc01/online/GPT5/t2</a>
 
-<a href="https://drmicrobit.github.io/lllm_suit/tests/SpaceInvaders_det01/online/GPT5/t2/space_invaders.html">
+<a href="https://drmicrobit.github.io/lllm_suit/tests/03_SpaceInvaders_ddoc01/online/GPT5/t2/space_invaders.html">
   <img src="online/GPT5/t2/thumb.png" style="vertical-align: middle;">
 </a>
 
@@ -172,9 +172,9 @@ Answer was broken fragments of code for "what to fix". Stopped experiment.
 - Graphics: nice animated shapes. Starfield parallax, right to left (funny).
 - Comments: Initial version took 2:27. Very playable.
 
-### Experiment <a href="https://github.com/DrMicrobit/lllm_suit/blob/main/tests/SpaceInvaders_det01/online/grok/t1">tests/SpaceInvaders_det01/online/grok/t1</a>
+### Experiment <a href="https://github.com/DrMicrobit/lllm_suit/blob/main/tests/03_SpaceInvaders_ddoc01/online/grok/t1">tests/03_SpaceInvaders_ddoc01/online/grok/t1</a>
 
-<a href="https://drmicrobit.github.io/lllm_suit/tests/SpaceInvaders_det01/online/grok/t1/space_invaders.html">
+<a href="https://drmicrobit.github.io/lllm_suit/tests/03_SpaceInvaders_ddoc01/online/grok/t1/space_invaders.html">
   <img src="online/grok/t1/thumb.png" style="vertical-align: middle;">
 </a>
 
@@ -183,9 +183,9 @@ Initial version in under 2 minutes. However, non-functional. Indeed, Grok showed
 2 minutes later, still not functional. --> When I open the file in a browser, I just see a dark blue background and a white rectangle frame, nothing else.
 
 Another ~2 minutes later ... still non functional. Stopped this experiment.
-### Experiment <a href="https://github.com/DrMicrobit/lllm_suit/blob/main/tests/SpaceInvaders_det01/online/grok/t2">tests/SpaceInvaders_det01/online/grok/t2</a>
+### Experiment <a href="https://github.com/DrMicrobit/lllm_suit/blob/main/tests/03_SpaceInvaders_ddoc01/online/grok/t2">tests/03_SpaceInvaders_ddoc01/online/grok/t2</a>
 
-<a href="https://drmicrobit.github.io/lllm_suit/tests/SpaceInvaders_det01/online/grok/t2/space_invaders.html">
+<a href="https://drmicrobit.github.io/lllm_suit/tests/03_SpaceInvaders_ddoc01/online/grok/t2/space_invaders.html">
   <img src="online/grok/t2/thumb.png" style="vertical-align: middle;">
 </a>
 
@@ -194,9 +194,9 @@ Another ~2 minutes later ... still non functional. Stopped this experiment.
 - Graphics: very, very simplistic shapes. Starfield, but no parallax.
 - Comments: Initial version took 2:27. Very playable.
 
-### Experiment <a href="https://github.com/DrMicrobit/lllm_suit/blob/main/tests/SpaceInvaders_det01/online/qwen3-coder/t1">tests/SpaceInvaders_det01/online/qwen3-coder/t1</a>
+### Experiment <a href="https://github.com/DrMicrobit/lllm_suit/blob/main/tests/03_SpaceInvaders_ddoc01/online/qwen3-coder/t1">tests/03_SpaceInvaders_ddoc01/online/qwen3-coder/t1</a>
 
-<a href="https://drmicrobit.github.io/lllm_suit/tests/SpaceInvaders_det01/online/qwen3-coder/t1/space_invaders.html">
+<a href="https://drmicrobit.github.io/lllm_suit/tests/03_SpaceInvaders_ddoc01/online/qwen3-coder/t1/space_invaders.html">
   <img src="online/qwen3-coder/t1/thumb.png" style="vertical-align: middle;">
 </a>
 
@@ -215,9 +215,9 @@ To keep in mind: the above error cause will strike again in multiple trials with
 - Bugs: None after above bugfix.
 - Graphics: very simplistic shapes, ok-ish. Starfield parallax.
 - Comments: Very playable, albeit speed increase of alien formation a bit too steep.
-### Experiment <a href="https://github.com/DrMicrobit/lllm_suit/blob/main/tests/SpaceInvaders_det01/online/qwen3-coder/t2">tests/SpaceInvaders_det01/online/qwen3-coder/t2</a>
+### Experiment <a href="https://github.com/DrMicrobit/lllm_suit/blob/main/tests/03_SpaceInvaders_ddoc01/online/qwen3-coder/t2">tests/03_SpaceInvaders_ddoc01/online/qwen3-coder/t2</a>
 
-<a href="https://drmicrobit.github.io/lllm_suit/tests/SpaceInvaders_det01/online/qwen3-coder/t2/space_invaders.html">
+<a href="https://drmicrobit.github.io/lllm_suit/tests/03_SpaceInvaders_ddoc01/online/qwen3-coder/t2/space_invaders.html">
   <img src="online/qwen3-coder/t2/thumb.png" style="vertical-align: middle;">
 </a>
 
@@ -227,9 +227,9 @@ To keep in mind: the above error cause will strike again in multiple trials with
 - Bugs: minor after above bugfix. Aliens don't increase speed during level.
 - Graphics: interesting alien shapes. Starfield parallax.
 - Comments: Very playable.
-### Experiment <a href="https://github.com/DrMicrobit/lllm_suit/blob/main/tests/SpaceInvaders_det01/online/qwen3-max/t0">tests/SpaceInvaders_det01/online/qwen3-max/t0</a>
+### Experiment <a href="https://github.com/DrMicrobit/lllm_suit/blob/main/tests/03_SpaceInvaders_ddoc01/online/qwen3-max/t0">tests/03_SpaceInvaders_ddoc01/online/qwen3-max/t0</a>
 
-<a href="https://drmicrobit.github.io/lllm_suit/tests/SpaceInvaders_det01/online/qwen3-max/t0/space_invaders.html">
+<a href="https://drmicrobit.github.io/lllm_suit/tests/03_SpaceInvaders_ddoc01/online/qwen3-max/t0/space_invaders.html">
   <img src="online/qwen3-max/t0/thumb.png" style="vertical-align: middle;">
 </a>
 
@@ -240,9 +240,9 @@ To keep in mind: the above error cause will strike again in multiple trials with
 
 
 Didn't give Qwen3 Max the benefit of the doubt ... forgot to ask for corrections. Will redo.
-### Experiment <a href="https://github.com/DrMicrobit/lllm_suit/blob/main/tests/SpaceInvaders_det01/online/qwen3-max/t1">tests/SpaceInvaders_det01/online/qwen3-max/t1</a>
+### Experiment <a href="https://github.com/DrMicrobit/lllm_suit/blob/main/tests/03_SpaceInvaders_ddoc01/online/qwen3-max/t1">tests/03_SpaceInvaders_ddoc01/online/qwen3-max/t1</a>
 
-<a href="https://drmicrobit.github.io/lllm_suit/tests/SpaceInvaders_det01/online/qwen3-max/t1/space_invaders.html">
+<a href="https://drmicrobit.github.io/lllm_suit/tests/03_SpaceInvaders_ddoc01/online/qwen3-max/t1/space_invaders.html">
   <img src="online/qwen3-max/t1/thumb.png" style="vertical-align: middle;">
 </a>
 
@@ -251,9 +251,9 @@ Didn't give Qwen3 Max the benefit of the doubt ... forgot to ask for corrections
 - Graphics: simple aesthetics, animated aliens. Player ship with temporary shield shown, nice.
 - Comments: Initial version very playable, did not ask for bugfix.
 
-### Experiment <a href="https://github.com/DrMicrobit/lllm_suit/blob/main/tests/SpaceInvaders_det01/online/qwen3-max/t2">tests/SpaceInvaders_det01/online/qwen3-max/t2</a>
+### Experiment <a href="https://github.com/DrMicrobit/lllm_suit/blob/main/tests/03_SpaceInvaders_ddoc01/online/qwen3-max/t2">tests/03_SpaceInvaders_ddoc01/online/qwen3-max/t2</a>
 
-<a href="https://drmicrobit.github.io/lllm_suit/tests/SpaceInvaders_det01/online/qwen3-max/t2/space_invaders.html">
+<a href="https://drmicrobit.github.io/lllm_suit/tests/03_SpaceInvaders_ddoc01/online/qwen3-max/t2/space_invaders.html">
   <img src="online/qwen3-max/t2/thumb.png" style="vertical-align: middle;">
 </a>
 
@@ -266,9 +266,9 @@ Another ~3 minutes later, works.
 - Graphics: very blocky aesthetics. But shapes are nice, 1st time I see different alien shapes. Starfield, but no parallax.
 - Comments: Very playable, no remaining bugs.
 
-### Experiment <a href="https://github.com/DrMicrobit/lllm_suit/blob/main/tests/SpaceInvaders_det01/online/sonnet45/t1">tests/SpaceInvaders_det01/online/sonnet45/t1</a>
+### Experiment <a href="https://github.com/DrMicrobit/lllm_suit/blob/main/tests/03_SpaceInvaders_ddoc01/online/sonnet45/t1">tests/03_SpaceInvaders_ddoc01/online/sonnet45/t1</a>
 
-<a href="https://drmicrobit.github.io/lllm_suit/tests/SpaceInvaders_det01/online/sonnet45/t1/space_invaders.html">
+<a href="https://drmicrobit.github.io/lllm_suit/tests/03_SpaceInvaders_ddoc01/online/sonnet45/t1/space_invaders.html">
   <img src="online/sonnet45/t1/thumb.png" style="vertical-align: middle;">
 </a>
 
@@ -277,9 +277,9 @@ Another ~3 minutes later, works.
 - Graphics: Sprites and font seem 'blocky'. Smooth animation. Starfield parallax.
 - Comments: Very playable, more than good enough.
 
-### Experiment <a href="https://github.com/DrMicrobit/lllm_suit/blob/main/tests/SpaceInvaders_det01/online/sonnet45/t2">tests/SpaceInvaders_det01/online/sonnet45/t2</a>
+### Experiment <a href="https://github.com/DrMicrobit/lllm_suit/blob/main/tests/03_SpaceInvaders_ddoc01/online/sonnet45/t2">tests/03_SpaceInvaders_ddoc01/online/sonnet45/t2</a>
 
-<a href="https://drmicrobit.github.io/lllm_suit/tests/SpaceInvaders_det01/online/sonnet45/t2/space_invaders.html">
+<a href="https://drmicrobit.github.io/lllm_suit/tests/03_SpaceInvaders_ddoc01/online/sonnet45/t2/space_invaders.html">
   <img src="online/sonnet45/t2/thumb.png" style="vertical-align: middle;">
 </a>
 
@@ -296,9 +296,9 @@ Fixed in ~0:10. Did not ask to resolve remaining problems.
 
 ## Local model experiments for Space Invaders
 
-### Experiment <a href="https://github.com/DrMicrobit/lllm_suit/blob/main/tests/SpaceInvaders_det01/local/devstral-24B-ollama/4bit_t1">tests/SpaceInvaders_det01/local/devstral-24B-ollama/4bit_t1</a>
+### Experiment <a href="https://github.com/DrMicrobit/lllm_suit/blob/main/tests/03_SpaceInvaders_ddoc01/local/devstral-24B-ollama/4bit_t1">tests/03_SpaceInvaders_ddoc01/local/devstral-24B-ollama/4bit_t1</a>
 
-<a href="https://drmicrobit.github.io/lllm_suit/tests/SpaceInvaders_det01/local/devstral-24B-ollama/4bit_t1/space_invaders.html">
+<a href="https://drmicrobit.github.io/lllm_suit/tests/03_SpaceInvaders_ddoc01/local/devstral-24B-ollama/4bit_t1/space_invaders.html">
   <img src="local/devstral-24B-ollama/4bit_t1/thumb.png" style="vertical-align: middle;">
 </a>
 
@@ -310,9 +310,9 @@ Buggy (objects almost don't move), completely overloads the browser in terms of 
 
 Stopped experiment here.
 
-### Experiment <a href="https://github.com/DrMicrobit/lllm_suit/blob/main/tests/SpaceInvaders_det01/local/nemotron-nano-9B-v2-bartowski/8bit_t1">tests/SpaceInvaders_det01/local/nemotron-nano-9B-v2-bartowski/8bit_t1</a>
+### Experiment <a href="https://github.com/DrMicrobit/lllm_suit/blob/main/tests/03_SpaceInvaders_ddoc01/local/nemotron-nano-9B-v2-bartowski/8bit_t1">tests/03_SpaceInvaders_ddoc01/local/nemotron-nano-9B-v2-bartowski/8bit_t1</a>
 
-<a href="https://drmicrobit.github.io/lllm_suit/tests/SpaceInvaders_det01/local/nemotron-nano-9B-v2-bartowski/8bit_t1/space_invaders.html">
+<a href="https://drmicrobit.github.io/lllm_suit/tests/03_SpaceInvaders_ddoc01/local/nemotron-nano-9B-v2-bartowski/8bit_t1/space_invaders.html">
   <img src="local/nemotron-nano-9B-v2-bartowski/8bit_t1/thumb.png" style="vertical-align: middle;">
 </a>
 
@@ -325,9 +325,9 @@ Next trial with following prompt: Implement the game given in @/designdoc.md . D
 Produced syntactically wrong code after 3 or 4 minutes ("if (AABB collision(bullet, target)) { ..."). Trying to fix that ... led to the thing spiraling out of control, adding free flow text into code, which led to further syntax errors which it could not fix and so on.
 
 Stopped experiment after 50 minutes.
-### Experiment <a href="https://github.com/DrMicrobit/lllm_suit/blob/main/tests/SpaceInvaders_det01/local/qwen3-30B-a3b-instruct-2507-lmstudio/4bit_t1">tests/SpaceInvaders_det01/local/qwen3-30B-a3b-instruct-2507-lmstudio/4bit_t1</a>
+### Experiment <a href="https://github.com/DrMicrobit/lllm_suit/blob/main/tests/03_SpaceInvaders_ddoc01/local/qwen3-30B-a3b-instruct-2507-lmstudio/4bit_t1">tests/03_SpaceInvaders_ddoc01/local/qwen3-30B-a3b-instruct-2507-lmstudio/4bit_t1</a>
 
-<a href="https://drmicrobit.github.io/lllm_suit/tests/SpaceInvaders_det01/local/qwen3-30B-a3b-instruct-2507-lmstudio/4bit_t1/space_invaders.html">
+<a href="https://drmicrobit.github.io/lllm_suit/tests/03_SpaceInvaders_ddoc01/local/qwen3-30B-a3b-instruct-2507-lmstudio/4bit_t1/space_invaders.html">
   <img src="local/qwen3-30B-a3b-instruct-2507-lmstudio/4bit_t1/thumb.png" style="vertical-align: middle;">
 </a>
 
@@ -344,9 +344,9 @@ Tried bug fixing --> The aliens are not moving.
 Leads to looping cline API calls (like this and similar): "Cline wants to search this directory for `move.*?invaders.*?update`:", seemingly forever
 
 Stopping experiment here.
-### Experiment <a href="https://github.com/DrMicrobit/lllm_suit/blob/main/tests/SpaceInvaders_det01/local/qwen3-30B-a3b-instruct-2507-lmstudio/6bit_t1">tests/SpaceInvaders_det01/local/qwen3-30B-a3b-instruct-2507-lmstudio/6bit_t1</a>
+### Experiment <a href="https://github.com/DrMicrobit/lllm_suit/blob/main/tests/03_SpaceInvaders_ddoc01/local/qwen3-30B-a3b-instruct-2507-lmstudio/6bit_t1">tests/03_SpaceInvaders_ddoc01/local/qwen3-30B-a3b-instruct-2507-lmstudio/6bit_t1</a>
 
-<a href="https://drmicrobit.github.io/lllm_suit/tests/SpaceInvaders_det01/local/qwen3-30B-a3b-instruct-2507-lmstudio/6bit_t1/space_invaders.html">
+<a href="https://drmicrobit.github.io/lllm_suit/tests/03_SpaceInvaders_ddoc01/local/qwen3-30B-a3b-instruct-2507-lmstudio/6bit_t1/space_invaders.html">
   <img src="local/qwen3-30B-a3b-instruct-2507-lmstudio/6bit_t1/thumb.png" style="vertical-align: middle;">
 </a>
 
@@ -357,9 +357,9 @@ Additional bugs:
 - alien shots do not destroy bunker
 
 Stopped experiment.
-### Experiment <a href="https://github.com/DrMicrobit/lllm_suit/blob/main/tests/SpaceInvaders_det01/local/qwen3-30B-a3b-ollama/4bit_t1">tests/SpaceInvaders_det01/local/qwen3-30B-a3b-ollama/4bit_t1</a>
+### Experiment <a href="https://github.com/DrMicrobit/lllm_suit/blob/main/tests/03_SpaceInvaders_ddoc01/local/qwen3-30B-a3b-ollama/4bit_t1">tests/03_SpaceInvaders_ddoc01/local/qwen3-30B-a3b-ollama/4bit_t1</a>
 
-<a href="https://drmicrobit.github.io/lllm_suit/tests/SpaceInvaders_det01/local/qwen3-30B-a3b-ollama/4bit_t1/space_invaders.html">
+<a href="https://drmicrobit.github.io/lllm_suit/tests/03_SpaceInvaders_ddoc01/local/qwen3-30B-a3b-ollama/4bit_t1/space_invaders.html">
   <img src="local/qwen3-30B-a3b-ollama/4bit_t1/thumb.png" style="vertical-align: middle;">
 </a>
 
@@ -369,9 +369,9 @@ Complete fail. No menu, does not react to key presses.
 
 Stopped experiment.
 
-### Experiment <a href="https://github.com/DrMicrobit/lllm_suit/blob/main/tests/SpaceInvaders_det01/local/qwen3-30B-instruct-ollama/4bit_t1">tests/SpaceInvaders_det01/local/qwen3-30B-instruct-ollama/4bit_t1</a>
+### Experiment <a href="https://github.com/DrMicrobit/lllm_suit/blob/main/tests/03_SpaceInvaders_ddoc01/local/qwen3-30B-instruct-ollama/4bit_t1">tests/03_SpaceInvaders_ddoc01/local/qwen3-30B-instruct-ollama/4bit_t1</a>
 
-<a href="https://drmicrobit.github.io/lllm_suit/tests/SpaceInvaders_det01/local/qwen3-30B-instruct-ollama/4bit_t1/space_invaders.html">
+<a href="https://drmicrobit.github.io/lllm_suit/tests/03_SpaceInvaders_ddoc01/local/qwen3-30B-instruct-ollama/4bit_t1/space_invaders.html">
   <img src="local/qwen3-30B-instruct-ollama/4bit_t1/thumb.png" style="vertical-align: middle;">
 </a>
 
@@ -381,9 +381,9 @@ Cline / model got stuck in neverending loop. Multiple messages "The model used s
 
 Stopped experiment.
 
-### Experiment <a href="https://github.com/DrMicrobit/lllm_suit/blob/main/tests/SpaceInvaders_det01/local/qwen3-30B-instruct-ollama/4bit_t2">tests/SpaceInvaders_det01/local/qwen3-30B-instruct-ollama/4bit_t2</a>
+### Experiment <a href="https://github.com/DrMicrobit/lllm_suit/blob/main/tests/03_SpaceInvaders_ddoc01/local/qwen3-30B-instruct-ollama/4bit_t2">tests/03_SpaceInvaders_ddoc01/local/qwen3-30B-instruct-ollama/4bit_t2</a>
 
-<a href="https://drmicrobit.github.io/lllm_suit/tests/SpaceInvaders_det01/local/qwen3-30B-instruct-ollama/4bit_t2/space_invaders.html">
+<a href="https://drmicrobit.github.io/lllm_suit/tests/03_SpaceInvaders_ddoc01/local/qwen3-30B-instruct-ollama/4bit_t2/space_invaders.html">
   <img src="local/qwen3-30B-instruct-ollama/4bit_t2/thumb.png" style="vertical-align: middle;">
 </a>
 
@@ -396,9 +396,9 @@ Programming / logic error of the model: INVADER_ROWS and INVADER_COLS were not d
 When fixing the bug by hand, game starts bug several other bugs appear: player cannot shoot, alien shots go through bunker, etc.
 
 Stopping this experiment.
-### Experiment <a href="https://github.com/DrMicrobit/lllm_suit/blob/main/tests/SpaceInvaders_det01/local/qwen3-coder-30B-cerebrasreap25B/4bit_t1">tests/SpaceInvaders_det01/local/qwen3-coder-30B-cerebrasreap25B/4bit_t1</a>
+### Experiment <a href="https://github.com/DrMicrobit/lllm_suit/blob/main/tests/03_SpaceInvaders_ddoc01/local/qwen3-coder-30B-cerebrasreap25B/4bit_t1">tests/03_SpaceInvaders_ddoc01/local/qwen3-coder-30B-cerebrasreap25B/4bit_t1</a>
 
-<a href="https://drmicrobit.github.io/lllm_suit/tests/SpaceInvaders_det01/local/qwen3-coder-30B-cerebrasreap25B/4bit_t1/space_invaders.html">
+<a href="https://drmicrobit.github.io/lllm_suit/tests/03_SpaceInvaders_ddoc01/local/qwen3-coder-30B-cerebrasreap25B/4bit_t1/space_invaders.html">
   <img src="local/qwen3-coder-30B-cerebrasreap25B/4bit_t1/thumb.png" style="vertical-align: middle;">
 </a>
 
@@ -410,9 +410,9 @@ Bugs:
 
 Too buggy, stopping experiment.
 
-### Experiment <a href="https://github.com/DrMicrobit/lllm_suit/blob/main/tests/SpaceInvaders_det01/local/qwen3-coder-30B-cerebrasreap25B/4bit_t2">tests/SpaceInvaders_det01/local/qwen3-coder-30B-cerebrasreap25B/4bit_t2</a>
+### Experiment <a href="https://github.com/DrMicrobit/lllm_suit/blob/main/tests/03_SpaceInvaders_ddoc01/local/qwen3-coder-30B-cerebrasreap25B/4bit_t2">tests/03_SpaceInvaders_ddoc01/local/qwen3-coder-30B-cerebrasreap25B/4bit_t2</a>
 
-<a href="https://drmicrobit.github.io/lllm_suit/tests/SpaceInvaders_det01/local/qwen3-coder-30B-cerebrasreap25B/4bit_t2/space_invaders.html">
+<a href="https://drmicrobit.github.io/lllm_suit/tests/03_SpaceInvaders_ddoc01/local/qwen3-coder-30B-cerebrasreap25B/4bit_t2/space_invaders.html">
   <img src="local/qwen3-coder-30B-cerebrasreap25B/4bit_t2/thumb.png" style="vertical-align: middle;">
 </a>
 
@@ -422,17 +422,17 @@ Not fixed, 2:47. Trying --> When reaching border, the alien formation does not r
 
 2:17. Not fixed. Stopping experiment.
 
-### Experiment <a href="https://github.com/DrMicrobit/lllm_suit/blob/main/tests/SpaceInvaders_det01/local/qwen3-coder-30B-cerebrasreap25B/4bit_t3">tests/SpaceInvaders_det01/local/qwen3-coder-30B-cerebrasreap25B/4bit_t3</a>
+### Experiment <a href="https://github.com/DrMicrobit/lllm_suit/blob/main/tests/03_SpaceInvaders_ddoc01/local/qwen3-coder-30B-cerebrasreap25B/4bit_t3">tests/03_SpaceInvaders_ddoc01/local/qwen3-coder-30B-cerebrasreap25B/4bit_t3</a>
 
-<a href="https://drmicrobit.github.io/lllm_suit/tests/SpaceInvaders_det01/local/qwen3-coder-30B-cerebrasreap25B/4bit_t3/space_invaders.html">
+<a href="https://drmicrobit.github.io/lllm_suit/tests/03_SpaceInvaders_ddoc01/local/qwen3-coder-30B-cerebrasreap25B/4bit_t3/space_invaders.html">
   <img src="local/qwen3-coder-30B-cerebrasreap25B/4bit_t3/thumb.png" style="vertical-align: middle;">
 </a>
 
 Initial version 3:47. In a funny way buggy as hell, stopping experiment here.
 
-### Experiment <a href="https://github.com/DrMicrobit/lllm_suit/blob/main/tests/SpaceInvaders_det01/local/qwen3-coder-30B-cerebrasreap25B/6bitxl_t1">tests/SpaceInvaders_det01/local/qwen3-coder-30B-cerebrasreap25B/6bitxl_t1</a>
+### Experiment <a href="https://github.com/DrMicrobit/lllm_suit/blob/main/tests/03_SpaceInvaders_ddoc01/local/qwen3-coder-30B-cerebrasreap25B/6bitxl_t1">tests/03_SpaceInvaders_ddoc01/local/qwen3-coder-30B-cerebrasreap25B/6bitxl_t1</a>
 
-<a href="https://drmicrobit.github.io/lllm_suit/tests/SpaceInvaders_det01/local/qwen3-coder-30B-cerebrasreap25B/6bitxl_t1/space_invaders.html">
+<a href="https://drmicrobit.github.io/lllm_suit/tests/03_SpaceInvaders_ddoc01/local/qwen3-coder-30B-cerebrasreap25B/6bitxl_t1/space_invaders.html">
   <img src="local/qwen3-coder-30B-cerebrasreap25B/6bitxl_t1/thumb.png" style="vertical-align: middle;">
 </a>
 
@@ -445,9 +445,9 @@ Remaining bugs:
 - UFO cannot be killed
 
 Graphics simple, but functional. Very playable.
-### Experiment <a href="https://github.com/DrMicrobit/lllm_suit/blob/main/tests/SpaceInvaders_det01/local/qwen3-coder-30B-cerebrasreap25B/6bitxl_t2">tests/SpaceInvaders_det01/local/qwen3-coder-30B-cerebrasreap25B/6bitxl_t2</a>
+### Experiment <a href="https://github.com/DrMicrobit/lllm_suit/blob/main/tests/03_SpaceInvaders_ddoc01/local/qwen3-coder-30B-cerebrasreap25B/6bitxl_t2">tests/03_SpaceInvaders_ddoc01/local/qwen3-coder-30B-cerebrasreap25B/6bitxl_t2</a>
 
-<a href="https://drmicrobit.github.io/lllm_suit/tests/SpaceInvaders_det01/local/qwen3-coder-30B-cerebrasreap25B/6bitxl_t2/space_invaders.html">
+<a href="https://drmicrobit.github.io/lllm_suit/tests/03_SpaceInvaders_ddoc01/local/qwen3-coder-30B-cerebrasreap25B/6bitxl_t2/space_invaders.html">
   <img src="local/qwen3-coder-30B-cerebrasreap25B/6bitxl_t2/thumb.png" style="vertical-align: middle;">
 </a>
 
@@ -460,9 +460,9 @@ Good enough, but still buggy.
 Bugs remaining:
 - still sometimes sliding error.
 - alien shots traverse bunkers
-### Experiment <a href="https://github.com/DrMicrobit/lllm_suit/blob/main/tests/SpaceInvaders_det01/local/qwen3-coder-30B-cerebrasreap25B/6bitxl_t3">tests/SpaceInvaders_det01/local/qwen3-coder-30B-cerebrasreap25B/6bitxl_t3</a>
+### Experiment <a href="https://github.com/DrMicrobit/lllm_suit/blob/main/tests/03_SpaceInvaders_ddoc01/local/qwen3-coder-30B-cerebrasreap25B/6bitxl_t3">tests/03_SpaceInvaders_ddoc01/local/qwen3-coder-30B-cerebrasreap25B/6bitxl_t3</a>
 
-<a href="https://drmicrobit.github.io/lllm_suit/tests/SpaceInvaders_det01/local/qwen3-coder-30B-cerebrasreap25B/6bitxl_t3/space_invaders.html">
+<a href="https://drmicrobit.github.io/lllm_suit/tests/03_SpaceInvaders_ddoc01/local/qwen3-coder-30B-cerebrasreap25B/6bitxl_t3/space_invaders.html">
   <img src="local/qwen3-coder-30B-cerebrasreap25B/6bitxl_t3/thumb.png" style="vertical-align: middle;">
 </a>
 
@@ -471,9 +471,9 @@ Initial version 4:16. Not that great: alien placement bug, formation not moving.
 Did not debug.
 
 Nice: particle effect when hitting alien.
-### Experiment <a href="https://github.com/DrMicrobit/lllm_suit/blob/main/tests/SpaceInvaders_det01/local/qwen3-coder-30B-cerebrasreap25B/6bitxl_t4">tests/SpaceInvaders_det01/local/qwen3-coder-30B-cerebrasreap25B/6bitxl_t4</a>
+### Experiment <a href="https://github.com/DrMicrobit/lllm_suit/blob/main/tests/03_SpaceInvaders_ddoc01/local/qwen3-coder-30B-cerebrasreap25B/6bitxl_t4">tests/03_SpaceInvaders_ddoc01/local/qwen3-coder-30B-cerebrasreap25B/6bitxl_t4</a>
 
-<a href="https://drmicrobit.github.io/lllm_suit/tests/SpaceInvaders_det01/local/qwen3-coder-30B-cerebrasreap25B/6bitxl_t4/space_invaders.html">
+<a href="https://drmicrobit.github.io/lllm_suit/tests/03_SpaceInvaders_ddoc01/local/qwen3-coder-30B-cerebrasreap25B/6bitxl_t4/space_invaders.html">
   <img src="local/qwen3-coder-30B-cerebrasreap25B/6bitxl_t4/thumb.png" style="vertical-align: middle;">
 </a>
 
@@ -484,9 +484,9 @@ Buggy as hell: sound weird. Game freezes after a few seconds.
 Did not debug.
 
 
-### Experiment <a href="https://github.com/DrMicrobit/lllm_suit/blob/main/tests/SpaceInvaders_det01/local/qwen3-coder-30B-cerebrasreap25B/6bitxl_t5">tests/SpaceInvaders_det01/local/qwen3-coder-30B-cerebrasreap25B/6bitxl_t5</a>
+### Experiment <a href="https://github.com/DrMicrobit/lllm_suit/blob/main/tests/03_SpaceInvaders_ddoc01/local/qwen3-coder-30B-cerebrasreap25B/6bitxl_t5">tests/03_SpaceInvaders_ddoc01/local/qwen3-coder-30B-cerebrasreap25B/6bitxl_t5</a>
 
-<a href="https://drmicrobit.github.io/lllm_suit/tests/SpaceInvaders_det01/local/qwen3-coder-30B-cerebrasreap25B/6bitxl_t5/space_invaders.html">
+<a href="https://drmicrobit.github.io/lllm_suit/tests/03_SpaceInvaders_ddoc01/local/qwen3-coder-30B-cerebrasreap25B/6bitxl_t5/space_invaders.html">
   <img src="local/qwen3-coder-30B-cerebrasreap25B/6bitxl_t5/thumb.png" style="vertical-align: middle;">
 </a>
 
@@ -505,17 +505,17 @@ Took 2:07. Better, but not entirely fixed. Stopping experiment here.
 Remaining bugs:
 - on rare occasions typical "slide down of alien formation" problem of Qwen3-coder
 - player shooting unreliable
-### Experiment <a href="https://github.com/DrMicrobit/lllm_suit/blob/main/tests/SpaceInvaders_det01/local/qwen3-coder-30B-cerebrasreap25B/6bitxl_t6">tests/SpaceInvaders_det01/local/qwen3-coder-30B-cerebrasreap25B/6bitxl_t6</a>
+### Experiment <a href="https://github.com/DrMicrobit/lllm_suit/blob/main/tests/03_SpaceInvaders_ddoc01/local/qwen3-coder-30B-cerebrasreap25B/6bitxl_t6">tests/03_SpaceInvaders_ddoc01/local/qwen3-coder-30B-cerebrasreap25B/6bitxl_t6</a>
 
-<a href="https://drmicrobit.github.io/lllm_suit/tests/SpaceInvaders_det01/local/qwen3-coder-30B-cerebrasreap25B/6bitxl_t6/space_invaders.html">
+<a href="https://drmicrobit.github.io/lllm_suit/tests/03_SpaceInvaders_ddoc01/local/qwen3-coder-30B-cerebrasreap25B/6bitxl_t6/space_invaders.html">
   <img src="local/qwen3-coder-30B-cerebrasreap25B/6bitxl_t6/thumb.png" style="vertical-align: middle;">
 </a>
 
 Initial version 4:16. Lots of bugs (visuals, gameplay), stopping here.
 
-### Experiment <a href="https://github.com/DrMicrobit/lllm_suit/blob/main/tests/SpaceInvaders_det01/local/qwen3-coder-30B-ollama/4bit_t1">tests/SpaceInvaders_det01/local/qwen3-coder-30B-ollama/4bit_t1</a>
+### Experiment <a href="https://github.com/DrMicrobit/lllm_suit/blob/main/tests/03_SpaceInvaders_ddoc01/local/qwen3-coder-30B-ollama/4bit_t1">tests/03_SpaceInvaders_ddoc01/local/qwen3-coder-30B-ollama/4bit_t1</a>
 
-<a href="https://drmicrobit.github.io/lllm_suit/tests/SpaceInvaders_det01/local/qwen3-coder-30B-ollama/4bit_t1/space_invaders.html">
+<a href="https://drmicrobit.github.io/lllm_suit/tests/03_SpaceInvaders_ddoc01/local/qwen3-coder-30B-ollama/4bit_t1/space_invaders.html">
   <img src="local/qwen3-coder-30B-ollama/4bit_t1/thumb.png" style="vertical-align: middle;">
 </a>
 
@@ -536,9 +536,9 @@ Remaining bugs:
 - Graphics: nice shapes, though not animated. Starfield parallax.
 - Comments: very playable, but needed a few debug rounds.
 
-### Experiment <a href="https://github.com/DrMicrobit/lllm_suit/blob/main/tests/SpaceInvaders_det01/local/qwen3-coder-30B-ollama/4bit_t2">tests/SpaceInvaders_det01/local/qwen3-coder-30B-ollama/4bit_t2</a>
+### Experiment <a href="https://github.com/DrMicrobit/lllm_suit/blob/main/tests/03_SpaceInvaders_ddoc01/local/qwen3-coder-30B-ollama/4bit_t2">tests/03_SpaceInvaders_ddoc01/local/qwen3-coder-30B-ollama/4bit_t2</a>
 
-<a href="https://drmicrobit.github.io/lllm_suit/tests/SpaceInvaders_det01/local/qwen3-coder-30B-ollama/4bit_t2/space_invaders.html">
+<a href="https://drmicrobit.github.io/lllm_suit/tests/03_SpaceInvaders_ddoc01/local/qwen3-coder-30B-ollama/4bit_t2/space_invaders.html">
   <img src="local/qwen3-coder-30B-ollama/4bit_t2/thumb.png" style="vertical-align: middle;">
 </a>
 
@@ -548,9 +548,9 @@ After 3 minutes: broken HTML file. Then *The model used search patterns that don
 
 Stopped experiment
 
-### Experiment <a href="https://github.com/DrMicrobit/lllm_suit/blob/main/tests/SpaceInvaders_det01/local/qwen3-coder-30B-ollama/4bit_t3">tests/SpaceInvaders_det01/local/qwen3-coder-30B-ollama/4bit_t3</a>
+### Experiment <a href="https://github.com/DrMicrobit/lllm_suit/blob/main/tests/03_SpaceInvaders_ddoc01/local/qwen3-coder-30B-ollama/4bit_t3">tests/03_SpaceInvaders_ddoc01/local/qwen3-coder-30B-ollama/4bit_t3</a>
 
-<a href="https://drmicrobit.github.io/lllm_suit/tests/SpaceInvaders_det01/local/qwen3-coder-30B-ollama/4bit_t3/space_invaders.html">
+<a href="https://drmicrobit.github.io/lllm_suit/tests/03_SpaceInvaders_ddoc01/local/qwen3-coder-30B-ollama/4bit_t3/space_invaders.html">
   <img src="local/qwen3-coder-30B-ollama/4bit_t3/thumb.png" style="vertical-align: middle;">
 </a>
 
@@ -561,9 +561,9 @@ Initial 4:03 --> player can not move left or right with keyboard, just mouse
 Stopped experiment.
 
 Graphics looks simplistic, but nice. Particle effect for exploding aliens.
-### Experiment <a href="https://github.com/DrMicrobit/lllm_suit/blob/main/tests/SpaceInvaders_det01/local/qwen3-coder-30B-ollama/4bit_t4">tests/SpaceInvaders_det01/local/qwen3-coder-30B-ollama/4bit_t4</a>
+### Experiment <a href="https://github.com/DrMicrobit/lllm_suit/blob/main/tests/03_SpaceInvaders_ddoc01/local/qwen3-coder-30B-ollama/4bit_t4">tests/03_SpaceInvaders_ddoc01/local/qwen3-coder-30B-ollama/4bit_t4</a>
 
-<a href="https://drmicrobit.github.io/lllm_suit/tests/SpaceInvaders_det01/local/qwen3-coder-30B-ollama/4bit_t4/space_invaders.html">
+<a href="https://drmicrobit.github.io/lllm_suit/tests/03_SpaceInvaders_ddoc01/local/qwen3-coder-30B-ollama/4bit_t4/space_invaders.html">
   <img src="local/qwen3-coder-30B-ollama/4bit_t4/thumb.png" style="vertical-align: middle;">
 </a>
 
@@ -582,9 +582,9 @@ Still couple of bugs present: display placement, hit boxes not 100% accurate, UF
 - Graphics: simplistic shapes, animated. Starfield parallax.
 - Comments: very playable, but needed a few debug rounds.
 
-### Experiment <a href="https://github.com/DrMicrobit/lllm_suit/blob/main/tests/SpaceInvaders_det01/local/qwen3-coder-30B-ollama/4bit_t5">tests/SpaceInvaders_det01/local/qwen3-coder-30B-ollama/4bit_t5</a>
+### Experiment <a href="https://github.com/DrMicrobit/lllm_suit/blob/main/tests/03_SpaceInvaders_ddoc01/local/qwen3-coder-30B-ollama/4bit_t5">tests/03_SpaceInvaders_ddoc01/local/qwen3-coder-30B-ollama/4bit_t5</a>
 
-<a href="https://drmicrobit.github.io/lllm_suit/tests/SpaceInvaders_det01/local/qwen3-coder-30B-ollama/4bit_t5/space_invaders.html">
+<a href="https://drmicrobit.github.io/lllm_suit/tests/03_SpaceInvaders_ddoc01/local/qwen3-coder-30B-ollama/4bit_t5/space_invaders.html">
   <img src="local/qwen3-coder-30B-ollama/4bit_t5/thumb.png" style="vertical-align: middle;">
 </a>
 
@@ -592,9 +592,9 @@ Initial 3:15 --> The title screen appears, but pressing space or clicking leads 
 - 1:46 --> still same problem
 - 1:12 --> again, stopped experiment
 
-### Experiment <a href="https://github.com/DrMicrobit/lllm_suit/blob/main/tests/SpaceInvaders_det01/local/qwen3-coder-30B-ollama/4bit_t6">tests/SpaceInvaders_det01/local/qwen3-coder-30B-ollama/4bit_t6</a>
+### Experiment <a href="https://github.com/DrMicrobit/lllm_suit/blob/main/tests/03_SpaceInvaders_ddoc01/local/qwen3-coder-30B-ollama/4bit_t6">tests/03_SpaceInvaders_ddoc01/local/qwen3-coder-30B-ollama/4bit_t6</a>
 
-<a href="https://drmicrobit.github.io/lllm_suit/tests/SpaceInvaders_det01/local/qwen3-coder-30B-ollama/4bit_t6/space_invaders.html">
+<a href="https://drmicrobit.github.io/lllm_suit/tests/03_SpaceInvaders_ddoc01/local/qwen3-coder-30B-ollama/4bit_t6/space_invaders.html">
   <img src="local/qwen3-coder-30B-ollama/4bit_t6/thumb.png" style="vertical-align: middle;">
 </a>
 
@@ -609,9 +609,9 @@ Other bugs: starfield; aliens move too much down before killing player
 
 Ended experiment.
 
-### Experiment <a href="https://github.com/DrMicrobit/lllm_suit/blob/main/tests/SpaceInvaders_det01/local/qwen3-coder-30B-unsloth/4bit_t1">tests/SpaceInvaders_det01/local/qwen3-coder-30B-unsloth/4bit_t1</a>
+### Experiment <a href="https://github.com/DrMicrobit/lllm_suit/blob/main/tests/03_SpaceInvaders_ddoc01/local/qwen3-coder-30B-unsloth/4bit_t1">tests/03_SpaceInvaders_ddoc01/local/qwen3-coder-30B-unsloth/4bit_t1</a>
 
-<a href="https://drmicrobit.github.io/lllm_suit/tests/SpaceInvaders_det01/local/qwen3-coder-30B-unsloth/4bit_t1/space_invaders.html">
+<a href="https://drmicrobit.github.io/lllm_suit/tests/03_SpaceInvaders_ddoc01/local/qwen3-coder-30B-unsloth/4bit_t1/space_invaders.html">
   <img src="local/qwen3-coder-30B-unsloth/4bit_t1/thumb.png" style="vertical-align: middle;">
 </a>
 
@@ -625,9 +625,9 @@ Playable, but many things not implemented:
 - sound
 
 Did not continue experiment.
-### Experiment <a href="https://github.com/DrMicrobit/lllm_suit/blob/main/tests/SpaceInvaders_det01/local/qwen3-coder-30B-unsloth/4bit_t2">tests/SpaceInvaders_det01/local/qwen3-coder-30B-unsloth/4bit_t2</a>
+### Experiment <a href="https://github.com/DrMicrobit/lllm_suit/blob/main/tests/03_SpaceInvaders_ddoc01/local/qwen3-coder-30B-unsloth/4bit_t2">tests/03_SpaceInvaders_ddoc01/local/qwen3-coder-30B-unsloth/4bit_t2</a>
 
-<a href="https://drmicrobit.github.io/lllm_suit/tests/SpaceInvaders_det01/local/qwen3-coder-30B-unsloth/4bit_t2/space_invaders.html">
+<a href="https://drmicrobit.github.io/lllm_suit/tests/03_SpaceInvaders_ddoc01/local/qwen3-coder-30B-unsloth/4bit_t2/space_invaders.html">
   <img src="local/qwen3-coder-30B-unsloth/4bit_t2/thumb.png" style="vertical-align: middle;">
 </a>
 
@@ -637,9 +637,9 @@ Intial version 4:20. Had "typical down slide error." Fixed manually. Then manual
 - fixed in 3:08.
 
 Very playable, stopped experiment. Remaining problems: no restart, low alien shot frequency.
-### Experiment <a href="https://github.com/DrMicrobit/lllm_suit/blob/main/tests/SpaceInvaders_det01/local/qwen3-coder-30B-unsloth/4bitUD_t1">tests/SpaceInvaders_det01/local/qwen3-coder-30B-unsloth/4bitUD_t1</a>
+### Experiment <a href="https://github.com/DrMicrobit/lllm_suit/blob/main/tests/03_SpaceInvaders_ddoc01/local/qwen3-coder-30B-unsloth/4bitUD_t1">tests/03_SpaceInvaders_ddoc01/local/qwen3-coder-30B-unsloth/4bitUD_t1</a>
 
-<a href="https://drmicrobit.github.io/lllm_suit/tests/SpaceInvaders_det01/local/qwen3-coder-30B-unsloth/4bitUD_t1/space_invaders.html">
+<a href="https://drmicrobit.github.io/lllm_suit/tests/03_SpaceInvaders_ddoc01/local/qwen3-coder-30B-unsloth/4bitUD_t1/space_invaders.html">
   <img src="local/qwen3-coder-30B-unsloth/4bitUD_t1/thumb.png" style="vertical-align: middle;">
 </a>
 
@@ -649,9 +649,9 @@ Initial version 3:23. Typical "enemy slide down problem", semi-fixed by hand. Th
 
 Very playable. Remaining bugs: some display placements.
 
-### Experiment <a href="https://github.com/DrMicrobit/lllm_suit/blob/main/tests/SpaceInvaders_det01/local/qwen3-coder-30B-unsloth/4bitUD_t2">tests/SpaceInvaders_det01/local/qwen3-coder-30B-unsloth/4bitUD_t2</a>
+### Experiment <a href="https://github.com/DrMicrobit/lllm_suit/blob/main/tests/03_SpaceInvaders_ddoc01/local/qwen3-coder-30B-unsloth/4bitUD_t2">tests/03_SpaceInvaders_ddoc01/local/qwen3-coder-30B-unsloth/4bitUD_t2</a>
 
-<a href="https://drmicrobit.github.io/lllm_suit/tests/SpaceInvaders_det01/local/qwen3-coder-30B-unsloth/4bitUD_t2/space_invaders.html">
+<a href="https://drmicrobit.github.io/lllm_suit/tests/03_SpaceInvaders_ddoc01/local/qwen3-coder-30B-unsloth/4bitUD_t2/space_invaders.html">
   <img src="local/qwen3-coder-30B-unsloth/4bitUD_t2/thumb.png" style="vertical-align: middle;">
 </a>
 
@@ -665,9 +665,9 @@ Remnaining bugs:
 - only one wave, then automatic restart
 - sound in game over screen
 - nitpick: no starfield parallax
-### Experiment <a href="https://github.com/DrMicrobit/lllm_suit/blob/main/tests/SpaceInvaders_det01/local/qwen3-coder-30B-unsloth/6bitUD_t1">tests/SpaceInvaders_det01/local/qwen3-coder-30B-unsloth/6bitUD_t1</a>
+### Experiment <a href="https://github.com/DrMicrobit/lllm_suit/blob/main/tests/03_SpaceInvaders_ddoc01/local/qwen3-coder-30B-unsloth/6bitUD_t1">tests/03_SpaceInvaders_ddoc01/local/qwen3-coder-30B-unsloth/6bitUD_t1</a>
 
-<a href="https://drmicrobit.github.io/lllm_suit/tests/SpaceInvaders_det01/local/qwen3-coder-30B-unsloth/6bitUD_t1/space_invaders.html">
+<a href="https://drmicrobit.github.io/lllm_suit/tests/03_SpaceInvaders_ddoc01/local/qwen3-coder-30B-unsloth/6bitUD_t1/space_invaders.html">
   <img src="local/qwen3-coder-30B-unsloth/6bitUD_t1/thumb.png" style="vertical-align: middle;">
 </a>
 
@@ -676,9 +676,9 @@ Initial version: 35 minutes. (because model overspilled to CPU)
 Almost perfect?!? The starfield is scintillating instead of parallax, but apart from that ... ooof.
 
 Sound a bit harsh.
-### Experiment <a href="https://github.com/DrMicrobit/lllm_suit/blob/main/tests/SpaceInvaders_det01/local/qwen3-coder-30B-unsloth/6bitUD_t2">tests/SpaceInvaders_det01/local/qwen3-coder-30B-unsloth/6bitUD_t2</a>
+### Experiment <a href="https://github.com/DrMicrobit/lllm_suit/blob/main/tests/03_SpaceInvaders_ddoc01/local/qwen3-coder-30B-unsloth/6bitUD_t2">tests/03_SpaceInvaders_ddoc01/local/qwen3-coder-30B-unsloth/6bitUD_t2</a>
 
-<a href="https://drmicrobit.github.io/lllm_suit/tests/SpaceInvaders_det01/local/qwen3-coder-30B-unsloth/6bitUD_t2/space_invaders.html">
+<a href="https://drmicrobit.github.io/lllm_suit/tests/03_SpaceInvaders_ddoc01/local/qwen3-coder-30B-unsloth/6bitUD_t2/space_invaders.html">
   <img src="local/qwen3-coder-30B-unsloth/6bitUD_t2/thumb.png" style="vertical-align: middle;">
 </a>
 
@@ -688,9 +688,9 @@ Initial version: 31 minutes (overspill to CPU) --> When I start the game. the al
 - 8 minutes --> not the problem. "Apparently the aliens are all at position 0 after moving."
 
 Stopped experiment.
-### Experiment <a href="https://github.com/DrMicrobit/lllm_suit/blob/main/tests/SpaceInvaders_det01/local/qwen3-coder-30B-unsloth/6bitUD_t3">tests/SpaceInvaders_det01/local/qwen3-coder-30B-unsloth/6bitUD_t3</a>
+### Experiment <a href="https://github.com/DrMicrobit/lllm_suit/blob/main/tests/03_SpaceInvaders_ddoc01/local/qwen3-coder-30B-unsloth/6bitUD_t3">tests/03_SpaceInvaders_ddoc01/local/qwen3-coder-30B-unsloth/6bitUD_t3</a>
 
-<a href="https://drmicrobit.github.io/lllm_suit/tests/SpaceInvaders_det01/local/qwen3-coder-30B-unsloth/6bitUD_t3/space_invaders.html">
+<a href="https://drmicrobit.github.io/lllm_suit/tests/03_SpaceInvaders_ddoc01/local/qwen3-coder-30B-unsloth/6bitUD_t3/space_invaders.html">
   <img src="local/qwen3-coder-30B-unsloth/6bitUD_t3/thumb.png" style="vertical-align: middle;">
 </a>
 
@@ -701,9 +701,9 @@ Result very playable, bit low alien shoot frequency, not many bugs left:
 - start only via click, not via space
 
 Leaving as is.
-### Experiment <a href="https://github.com/DrMicrobit/lllm_suit/blob/main/tests/SpaceInvaders_det01/local/qwen3-coder-30B-unsloth/6bitUD_t4">tests/SpaceInvaders_det01/local/qwen3-coder-30B-unsloth/6bitUD_t4</a>
+### Experiment <a href="https://github.com/DrMicrobit/lllm_suit/blob/main/tests/03_SpaceInvaders_ddoc01/local/qwen3-coder-30B-unsloth/6bitUD_t4">tests/03_SpaceInvaders_ddoc01/local/qwen3-coder-30B-unsloth/6bitUD_t4</a>
 
-<a href="https://drmicrobit.github.io/lllm_suit/tests/SpaceInvaders_det01/local/qwen3-coder-30B-unsloth/6bitUD_t4/space_invaders.html">
+<a href="https://drmicrobit.github.io/lllm_suit/tests/03_SpaceInvaders_ddoc01/local/qwen3-coder-30B-unsloth/6bitUD_t4/space_invaders.html">
   <img src="local/qwen3-coder-30B-unsloth/6bitUD_t4/thumb.png" style="vertical-align: middle;">
 </a>
 
@@ -722,9 +722,9 @@ I need to fix the error in the collision detection code. The issue is that the c
 
 And ... same problem occurs again. Stopping experiment here.
 
-### Experiment <a href="https://github.com/DrMicrobit/lllm_suit/blob/main/tests/SpaceInvaders_det01/local/qwen3-coder-30B-unsloth/6bitUD_t5">tests/SpaceInvaders_det01/local/qwen3-coder-30B-unsloth/6bitUD_t5</a>
+### Experiment <a href="https://github.com/DrMicrobit/lllm_suit/blob/main/tests/03_SpaceInvaders_ddoc01/local/qwen3-coder-30B-unsloth/6bitUD_t5">tests/03_SpaceInvaders_ddoc01/local/qwen3-coder-30B-unsloth/6bitUD_t5</a>
 
-<a href="https://drmicrobit.github.io/lllm_suit/tests/SpaceInvaders_det01/local/qwen3-coder-30B-unsloth/6bitUD_t5/space_invaders.html">
+<a href="https://drmicrobit.github.io/lllm_suit/tests/03_SpaceInvaders_ddoc01/local/qwen3-coder-30B-unsloth/6bitUD_t5/space_invaders.html">
   <img src="local/qwen3-coder-30B-unsloth/6bitUD_t5/thumb.png" style="vertical-align: middle;">
 </a>
 
@@ -742,9 +742,9 @@ Remaining bugs:
 - player has laserlike autofire
 - player shots do not destroy bunker
 
-### Experiment <a href="https://github.com/DrMicrobit/lllm_suit/blob/main/tests/SpaceInvaders_det01/local/qwen3-coder-30B-yoyolin/4bit_t1">tests/SpaceInvaders_det01/local/qwen3-coder-30B-yoyolin/4bit_t1</a>
+### Experiment <a href="https://github.com/DrMicrobit/lllm_suit/blob/main/tests/03_SpaceInvaders_ddoc01/local/qwen3-coder-30B-yoyolin/4bit_t1">tests/03_SpaceInvaders_ddoc01/local/qwen3-coder-30B-yoyolin/4bit_t1</a>
 
-<a href="https://drmicrobit.github.io/lllm_suit/tests/SpaceInvaders_det01/local/qwen3-coder-30B-yoyolin/4bit_t1/space_invaders.html">
+<a href="https://drmicrobit.github.io/lllm_suit/tests/03_SpaceInvaders_ddoc01/local/qwen3-coder-30B-yoyolin/4bit_t1/space_invaders.html">
   <img src="local/qwen3-coder-30B-yoyolin/4bit_t1/thumb.png" style="vertical-align: middle;">
 </a>
 
@@ -757,9 +757,9 @@ Result however is a minuscule file, completely broken.
 
 Stopping here.
 
-### Experiment <a href="https://github.com/DrMicrobit/lllm_suit/blob/main/tests/SpaceInvaders_det01/local/skyfall-31B-v4-thedrummer/4bit_t1">tests/SpaceInvaders_det01/local/skyfall-31B-v4-thedrummer/4bit_t1</a>
+### Experiment <a href="https://github.com/DrMicrobit/lllm_suit/blob/main/tests/03_SpaceInvaders_ddoc01/local/skyfall-31B-v4-thedrummer/4bit_t1">tests/03_SpaceInvaders_ddoc01/local/skyfall-31B-v4-thedrummer/4bit_t1</a>
 
-<a href="https://drmicrobit.github.io/lllm_suit/tests/SpaceInvaders_det01/local/skyfall-31B-v4-thedrummer/4bit_t1/space_invaders.html">
+<a href="https://drmicrobit.github.io/lllm_suit/tests/03_SpaceInvaders_ddoc01/local/skyfall-31B-v4-thedrummer/4bit_t1/space_invaders.html">
   <img src="local/skyfall-31B-v4-thedrummer/4bit_t1/thumb.png" style="vertical-align: middle;">
 </a>
 
@@ -777,9 +777,9 @@ Bugs:
 - HUD displays are doubled
 
 Stopped experiment.
-### Experiment <a href="https://github.com/DrMicrobit/lllm_suit/blob/main/tests/SpaceInvaders_det01/local/skyfall-31B-v4-thedrummer/4bit_t2">tests/SpaceInvaders_det01/local/skyfall-31B-v4-thedrummer/4bit_t2</a>
+### Experiment <a href="https://github.com/DrMicrobit/lllm_suit/blob/main/tests/03_SpaceInvaders_ddoc01/local/skyfall-31B-v4-thedrummer/4bit_t2">tests/03_SpaceInvaders_ddoc01/local/skyfall-31B-v4-thedrummer/4bit_t2</a>
 
-<a href="https://drmicrobit.github.io/lllm_suit/tests/SpaceInvaders_det01/local/skyfall-31B-v4-thedrummer/4bit_t2/space_invaders.html">
+<a href="https://drmicrobit.github.io/lllm_suit/tests/03_SpaceInvaders_ddoc01/local/skyfall-31B-v4-thedrummer/4bit_t2/space_invaders.html">
   <img src="local/skyfall-31B-v4-thedrummer/4bit_t2/thumb.png" style="vertical-align: middle;">
 </a>
 
