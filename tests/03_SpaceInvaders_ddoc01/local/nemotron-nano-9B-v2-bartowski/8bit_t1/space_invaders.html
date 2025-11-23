@@ -1,0 +1,301 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Space Invaders</title>
+    <style>
+        body {
+            margin: 0;
+            overflow: hidden;
+            background: #071029;
+        }
+
+        canvas {
+            display: block;
+            background: #071029;
+            width: 100%;
+            max-width: 1200px;
+            height: auto;
+        }
+
+        .hud-bg {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 48px;
+            background: rgba(0, 0, 0, 0.5);
+            color: #FFFFFF;
+            font-family: sans-serif;
+            font-weight: bold;
+        }
+
+        .hud-bg div {
+            margin: 0 10px;
+            display: inline-block;
+        }
+    </style>
+</head>
+
+<body>
+    <canvas id="gameCanvas"></canvas>
+    <div class="hud-bg">
+        <div>Score: <span id="score">0</span></div>
+        <div>HIGH SCORE: <span id="highScore">0</span></div>
+        <div>LIVES: ♥♥♥ LEVEL: 1</div>
+    </div>
+    <script>
+        // Game configuration
+        const config = {
+            canvasWidth: 800,
+            canvasHeight: 600,
+            hudHeight: 48,
+            invaderCols: 11,
+            invaderRows: 5,
+            invaderCellSize: { w: 48, h: 42 },
+            player: {
+                width: 48,
+                height: 20,
+                y: 540
+            },
+            bulletSpeed: 420,
+            invaderSpeed: 22,
+            scorePerInvader: [30, 20, 20, 10, 10],
+            lives: 3,
+            highScore: parseInt(localStorage.getItem('space_invaders_highscore_v1') || 0),
+            currentLevel: 1
+        };
+
+        // Game objects
+        let player = { x: config.canvasWidth / 2 - config.player.width / 2, y: config.player.y };
+        let invaders = [];
+        let bullets = [];
+        let invaderBullets = [];
+        let explosions = [];
+
+        // Helper functions
+        function getRowColor(row) {
+            return ['#FF6B6B', '#FFB86B', '#FFD56B', '#6BFFB8'][row];
+        }
+
+        function offScreen(obj) {
+            return obj.y < 0 || obj.y > config.canvasHeight;
+        }
+
+        // Initialize game state
+        function init() {
+            for (let row = 0; row < config.invaderRows; row++) {
+                for (let col = 0; col < config.invaderCols; col++) {
+                    const x = (config.canvasWidth - (config.invaderCellSize.w + 8) * config.invaderCols) / 2 + col * (config.invaderCellSize.w + 8);
+                    invaders.push({
+                        x: x,
+                        y: config.hudHeight + row * (config.invaderCellSize.h + 12),
+                        color: getRowColor(row),
+                        alive: true
+                    });
+                }
+            }
+
+            startLoop();
+        }
+
+        // Game state machine
+        let currentState = 'TITLE';
+        function startLoop() {
+            if (currentState === 'PLAYING') mainLoop();
+        }
+
+        function mainLoop() {
+            const now = performance.now();
+            const dt = Math.min(0.033, (now - lastTime) / 1000);
+            lastTime = now;
+
+            handleInput(dt);
+            update(dt);
+            render();
+        }
+
+        // Input handling
+        let isMouseDown = false;
+        function handleInput(dt) {
+            // Keyboard controls
+            if (window.event.keyCode === 37 || window.event.key === 'a') movePlayer(-dt * config.playerSpeed);
+            if (window.event.keyCode === 39 || window.event.key === 'd') movePlayer(dt * config.playerSpeed);
+
+            // Mouse/touch controls
+            if (isMouseDown) {
+                const mouseX = getScaledMouseX();
+                movePlayer(mouseX - player.x, dt);
+                if (shouldShoot()) fireBullet();
+            }
+        }
+
+        function movePlayer(dx) {
+            player.x += dx;
+            player.x = Math.max(24, Math.min(player.x, config.canvasWidth - config.player.width - 24));
+        }
+
+        function shouldShoot() {
+            // Placeholder for actual shoot logic
+            return true; // Simplified for now
+        }
+
+        function fireBullet() {
+            if (!bullets.some(b => b.alive)) {
+                bullets.push({
+                    x: player.x + config.player.width / 2 - 2,
+                    y: player.y,
+                    speedY: -config.bulletSpeed,
+                    alive: true
+                });
+            }
+        }
+
+        // Update game state
+        function update(dt) {
+            moveInvaders(dt); // Now declared
+
+            bullets = bullets.filter(b => {
+                b.y += b.speedY * dt;
+                if (b.y < 0 || offScreen(b)) return false;
+                checkCollisions(b, 'playerBullets');
+                return true;
+            });
+
+            invaderBullets = invaderBullets.filter(ib => {
+                ib.y += config.invaderBulletSpeed * dt;
+                if (ib.y > config.canvasHeight || offScreen(ib)) return false;
+                checkCollisions(ib, 'invaderBullets');
+                return true;
+            });
+
+            // Check player collisions with invader bullets
+            checkPlayerCollision();
+
+            // Level progression
+            if (allInvadersDead()) {
+                levelUp();
+            }
+        }
+
+        // Collision detection
+        function checkCollisions(bullet, group) {
+            for (let i = 0; i < group.length; i++) {
+                const target = group[i];
+                if (!target.alive || !bullet.alive) continue;
+
+                // Placeholder AABB collision check
+                if (
+                    bullet.x < target.x + target.size.width &&
+                    bullet.x + bullet.size.width > target.x &&
+                    bullet.y < target.y + target.size.height &&
+                    bullet.y + bullet.size.height > target.y
+                ) {
+                    handleCollision(bullet, target);
+                    break;
+                }
+            }
+
+            // Missing implementations to be completed:
+            - moveInvaders(dt)
+                - levelUp()
+                - getRowColor()(partial)[already implemented]
+            - checkPlayerCollision()[to be added]
+            - drawHUD(), drawInvaders(), etc. [to be added]
+
+            // Declaration of missing functions (placeholders)
+            function moveInvaders(dt) {
+                // Implementation: Move invader formation horizontally with delta time
+                const speed = config.invaderSpeed * Math.pow(config.currentLevel, 1.2);
+
+                let direction = 1; // 1 for right, -1 for left
+
+                // Check if any invader is near the screen edge (with margin)
+                const margin = 16;
+                for (const invader of invaders) {
+                    if ((invader.x < margin && direction === -1) ||
+                        (invader.x + config.invaderCellSize.w > config.canvasWidth - margin && direction === 1)) {
+                        direction *= -1; // Reverse direction
+                        break;
+                    }
+                }
+
+                // Move all invaders in the new direction
+                for (const invader of invaders) {
+                    if (!invader.alive) continue;
+                    invader.x += speed * dt * direction;
+
+                    // Update animation frame every 0.45s or faster based on level
+                    const animInterval = Math.max(0.1, 0.45 - (config.currentLevel - 1) * 0.02);
+                    if (Math.random() < dt / animInterval) {
+                        invader.frame = !invader.frame; // Toggle between frames
+                    }
+                }
+
+                // Check for downward shift when hitting edges
+                if ((direction === -1 && anyInvaderNearLeftEdge()) ||
+                    (direction === 1 && anyInvaderNearRightEdge())) {
+                    shiftDown();
+                }
+            }
+
+            function levelUp() {
+                config.currentLevel++;
+
+                // Reset invaders
+                invaders = [];
+                init(); // Reinitialize entire formation
+
+                // Increase speed
+                config.invaderSpeed *= 1.12;
+
+                // Adjust animation speed
+                const animInterval = Math.max(0.1, 0.45 - (config.currentLevel - 1) * 0.02);
+
+                // Reset player position and update HUD
+                player.x = config.canvasWidth / 2 - config.player.width / 2;
+            }
+
+            function checkPlayerCollision() {
+                // Check bullets vs invaders
+                for (let i = bullets.length - 1; i >= 0; i--) {
+                    const bullet = bullets[i];
+                    if (!bullet.alive) continue;
+
+                    for (let j = invaders.length - 1; j >= 0; j--) {
+                        const invader = invaders[j];
+                        if (!invader.alive) continue;
+
+                        // Check collision with player
+                        if (
+                            bullet.x < player.x + config.player.width &&
+                            bullet.x + 4 > player.x &&
+                            bullet.y < player.y &&
+                            bullet.y + 12 > player.y
+                        ) {
+                            // Hit player
+                            bullets[i].alive = false;
+                            handlePlayerHit();
+                            break;
+                        }
+                    }
+                }
+
+                function allInvadersDead() {
+                    return invaders.every(invader => !invader.alive);
+                }
+
+                // HUD drawing functions (to be implemented)
+                function drawHUD() {
+                    // Draw score, level, lives
+                }
+
+                function drawInvaders() {
+                    // TODO: Implement invader rendering
+                }
+    </script>
+</body>
+
+</html>
+</final_file_content>

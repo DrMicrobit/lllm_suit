@@ -1,0 +1,863 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Space Invaders</title>
+<style>
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  background: #000;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 100vh;
+  font-family: 'Arial', sans-serif;
+  overflow: hidden;
+}
+
+#gameCanvas {
+  display: block;
+  max-width: 1200px;
+  width: 100%;
+  height: auto;
+  border: 2px solid #333;
+  box-shadow: 0 0 40px rgba(107, 156, 255, 0.3);
+}
+</style>
+</head>
+<body>
+<canvas id="gameCanvas"></canvas>
+
+<script>
+// ===== CONFIGURATION =====
+const CONFIG = {
+  CANVAS_W: 800,
+  CANVAS_H: 600,
+  HUD_HEIGHT: 48,
+  PLAYER_SPEED: 260,
+  PLAYER_BULLET_SPEED: 420,
+  INVADER_BASE_SPEED: 22,
+  INVADER_DROP: 18,
+  INVADER_BULLET_SPEED: 190,
+  INVADER_ROWS: 5,
+  INVADER_COLS: 11,
+  INVADER_W: 48,
+  INVADER_H: 42,
+  INVADER_GAP_X: 8,
+  INVADER_GAP_Y: 12,
+  PLAYER_Y: 540,
+  PLAYER_W: 48,
+  PLAYER_H: 20,
+  BUNKER_Y: 460,
+  BUNKER_BLOCK_W: 14,
+  BUNKER_BLOCK_H: 12,
+  BUNKER_ROWS: 4,
+  BUNKER_COLS: 5,
+  STARTING_LIVES: 3,
+  LEVEL_SPEED_MULT: 1.12,
+  ANIM_INTERVAL: 0.45
+};
+
+const COLORS = {
+  BG: '#071029',
+  ROWS: ['#FF6B6B', '#FFB86B', '#FFD56B', '#6BFFB8', '#6B9CFF'],
+  PLAYER: '#FFFFFF',
+  PLAYER_ACCENT: '#6B9CFF',
+  BUNKER: '#2E8B57',
+  TEXT: '#FFFFFF'
+};
+
+const SCORES = [30, 20, 20, 10, 10];
+
+// ===== GAME STATE =====
+const STATE = { TITLE: 0, PLAYING: 1, PAUSED: 2, GAMEOVER: 3 };
+let gameState = STATE.TITLE;
+let score = 0;
+let highScore = 0;
+let level = 1;
+let lives = CONFIG.STARTING_LIVES;
+let invaderSpeed = CONFIG.INVADER_BASE_SPEED;
+let animInterval = CONFIG.ANIM_INTERVAL;
+
+// ===== CANVAS SETUP =====
+const canvas = document.getElementById('gameCanvas');
+const ctx = canvas.getContext('2d');
+canvas.width = CONFIG.CANVAS_W;
+canvas.height = CONFIG.CANVAS_H;
+
+// Load high score
+try {
+  highScore = parseInt(localStorage.getItem('space_invaders_highscore_v1') || '0');
+} catch(e) {
+  highScore = 0;
+}
+
+// ===== AUDIO =====
+let audioCtx = null;
+let soundEnabled = true;
+
+function initAudio() {
+  if (!audioCtx) {
+    try {
+      audioCtx = new (window.AudioContext || window.webkitAudioContext)();
+    } catch(e) {
+      soundEnabled = false;
+    }
+  }
+}
+
+function playSFX(type) {
+  if (!soundEnabled || !audioCtx) return;
+  
+  try {
+    const now = audioCtx.currentTime;
+    const osc = audioCtx.createOscillator();
+    const gain = audioCtx.createGain();
+    
+    osc.connect(gain);
+    gain.connect(audioCtx.destination);
+    
+    switch(type) {
+      case 'shot':
+        osc.frequency.setValueAtTime(800, now);
+        osc.frequency.exponentialRampToValueAtTime(400, now + 0.1);
+        gain.gain.setValueAtTime(0.3, now);
+        gain.gain.exponentialRampToValueAtTime(0.01, now + 0.1);
+        osc.start(now);
+        osc.stop(now + 0.1);
+        break;
+      case 'invader-shot':
+        osc.frequency.setValueAtTime(200, now);
+        gain.gain.setValueAtTime(0.2, now);
+        gain.gain.exponentialRampToValueAtTime(0.01, now + 0.15);
+        osc.start(now);
+        osc.stop(now + 0.15);
+        break;
+      case 'invader-death':
+        osc.type = 'sawtooth';
+        osc.frequency.setValueAtTime(400, now);
+        osc.frequency.exponentialRampToValueAtTime(50, now + 0.3);
+        gain.gain.setValueAtTime(0.4, now);
+        gain.gain.exponentialRampToValueAtTime(0.01, now + 0.3);
+        osc.start(now);
+        osc.stop(now + 0.3);
+        break;
+      case 'player-death':
+        osc.type = 'sawtooth';
+        osc.frequency.setValueAtTime(600, now);
+        osc.frequency.exponentialRampToValueAtTime(100, now + 0.5);
+        gain.gain.setValueAtTime(0.5, now);
+        gain.gain.exponentialRampToValueAtTime(0.01, now + 0.5);
+        osc.start(now);
+        osc.stop(now + 0.5);
+        break;
+      case 'block-hit':
+        osc.frequency.setValueAtTime(150, now);
+        gain.gain.setValueAtTime(0.2, now);
+        gain.gain.exponentialRampToValueAtTime(0.01, now + 0.05);
+        osc.start(now);
+        osc.stop(now + 0.05);
+        break;
+    }
+  } catch(e) {
+    console.log('Audio error:', e);
+  }
+}
+
+// ===== INPUT =====
+const keys = {};
+let mouseX = CONFIG.CANVAS_W / 2;
+
+window.addEventListener('keydown', e => {
+  keys[e.key] = true;
+  
+  if (e.key === ' ' || e.key === 'Enter') {
+    initAudio();
+    if (gameState === STATE.TITLE) {
+      startGame();
+    } else if (gameState === STATE.GAMEOVER) {
+      restartGame();
+    }
+    e.preventDefault();
+  }
+  
+  if (e.key === 'p' || e.key === 'P' || e.key === 'Escape') {
+    if (gameState === STATE.PLAYING) gameState = STATE.PAUSED;
+    else if (gameState === STATE.PAUSED) gameState = STATE.PLAYING;
+  }
+});
+
+window.addEventListener('keyup', e => {
+  keys[e.key] = false;
+});
+
+canvas.addEventListener('click', () => {
+  initAudio();
+  if (gameState === STATE.TITLE) {
+    startGame();
+  } else if (gameState === STATE.GAMEOVER) {
+    restartGame();
+  } else if (gameState === STATE.PLAYING) {
+    shootPlayerBullet();
+  }
+});
+
+// ===== ENTITIES =====
+class Player {
+  constructor() {
+    this.x = CONFIG.CANVAS_W / 2;
+    this.y = CONFIG.PLAYER_Y;
+    this.w = CONFIG.PLAYER_W;
+    this.h = CONFIG.PLAYER_H;
+    this.invulnerable = 0;
+    this.shotCooldown = 0;
+  }
+  
+  update(dt) {
+    if (this.invulnerable > 0) this.invulnerable -= dt;
+    if (this.shotCooldown > 0) this.shotCooldown -= dt;
+    
+    if (keys['ArrowLeft'] || keys['a'] || keys['A']) {
+      this.x -= CONFIG.PLAYER_SPEED * dt;
+    }
+    if (keys['ArrowRight'] || keys['d'] || keys['D']) {
+      this.x += CONFIG.PLAYER_SPEED * dt;
+    }
+    
+    this.x = Math.max(24, Math.min(CONFIG.CANVAS_W - 24, this.x));
+    
+    if (keys[' '] || keys['w'] || keys['W'] || keys['k'] || keys['K']) {
+      if (this.shotCooldown <= 0) {
+        shootPlayerBullet();
+        this.shotCooldown = 0.3;
+      }
+    }
+  }
+  
+  draw() {
+    if (this.invulnerable > 0 && Math.floor(this.invulnerable * 10) % 2 === 0) return;
+    
+    ctx.save();
+    ctx.fillStyle = COLORS.PLAYER;
+    ctx.strokeStyle = COLORS.PLAYER_ACCENT;
+    ctx.lineWidth = 2;
+    
+    ctx.beginPath();
+    ctx.moveTo(this.x, this.y - this.h/2);
+    ctx.lineTo(this.x - this.w/2, this.y + this.h/2);
+    ctx.lineTo(this.x + this.w/2, this.y + this.h/2);
+    ctx.closePath();
+    ctx.fill();
+    ctx.stroke();
+    ctx.restore();
+  }
+  
+  hit() {
+    if (this.invulnerable > 0) return false;
+    playSFX('player-death');
+    lives--;
+    createExplosion(this.x, this.y, COLORS.PLAYER);
+    
+    if (lives > 0) {
+      this.x = CONFIG.CANVAS_W / 2;
+      this.invulnerable = 1.5;
+    } else {
+      gameState = STATE.GAMEOVER;
+      if (score > highScore) {
+        highScore = score;
+        try {
+          localStorage.setItem('space_invaders_highscore_v1', highScore.toString());
+        } catch(e) {}
+      }
+    }
+    return true;
+  }
+}
+
+class Invader {
+  constructor(row, col) {
+    this.row = row;
+    this.col = col;
+    this.alive = true;
+    this.frame = 0;
+  }
+  
+  draw(x, y, frame) {
+    if (!this.alive) return;
+    
+    const color = COLORS.ROWS[this.row];
+    const w = CONFIG.INVADER_W * 0.7;
+    const h = CONFIG.INVADER_H * 0.7;
+    
+    ctx.save();
+    ctx.shadowColor = color;
+    ctx.shadowBlur = 10;
+    
+    ctx.fillStyle = color;
+    ctx.strokeStyle = 'rgba(255,255,255,0.1)';
+    ctx.lineWidth = 1;
+    
+    if (frame === 0) {
+      ctx.fillRect(x - w/2, y - h/2, w, h);
+      ctx.strokeRect(x - w/2, y - h/2, w, h);
+    } else {
+      ctx.beginPath();
+      ctx.arc(x, y, w/2, 0, Math.PI * 2);
+      ctx.fill();
+      ctx.stroke();
+    }
+    ctx.restore();
+  }
+  
+  getScore() {
+    return SCORES[this.row];
+  }
+}
+
+class Bullet {
+  constructor(x, y, vy, isPlayer) {
+    this.x = x;
+    this.y = y;
+    this.vy = vy;
+    this.isPlayer = isPlayer;
+    this.w = 4;
+    this.h = 12;
+    this.active = true;
+  }
+  
+  update(dt) {
+    this.y += this.vy * dt;
+    if (this.y < 0 || this.y > CONFIG.CANVAS_H) this.active = false;
+  }
+  
+  draw() {
+    ctx.fillStyle = this.isPlayer ? '#FFFF00' : '#FF0000';
+    ctx.fillRect(this.x - this.w/2, this.y - this.h/2, this.w, this.h);
+  }
+}
+
+class Bunker {
+  constructor(x) {
+    this.x = x;
+    this.y = CONFIG.BUNKER_Y;
+    this.blocks = [];
+    for (let r = 0; r < CONFIG.BUNKER_ROWS; r++) {
+      this.blocks[r] = [];
+      for (let c = 0; c < CONFIG.BUNKER_COLS; c++) {
+        this.blocks[r][c] = true;
+      }
+    }
+  }
+  
+  draw() {
+    for (let r = 0; r < CONFIG.BUNKER_ROWS; r++) {
+      for (let c = 0; c < CONFIG.BUNKER_COLS; c++) {
+        if (!this.blocks[r][c]) continue;
+        
+        const x = this.x + c * (CONFIG.BUNKER_BLOCK_W + 2);
+        const y = this.y + r * (CONFIG.BUNKER_BLOCK_H + 2);
+        
+        ctx.fillStyle = COLORS.BUNKER;
+        ctx.fillRect(x, y, CONFIG.BUNKER_BLOCK_W, CONFIG.BUNKER_BLOCK_H);
+        ctx.fillStyle = 'rgba(0,0,0,0.3)';
+        ctx.fillRect(x, y + CONFIG.BUNKER_BLOCK_H/2, CONFIG.BUNKER_BLOCK_W, CONFIG.BUNKER_BLOCK_H/2);
+      }
+    }
+  }
+  
+  checkHit(bullet) {
+    for (let r = 0; r < CONFIG.BUNKER_ROWS; r++) {
+      for (let c = 0; c < CONFIG.BUNKER_COLS; c++) {
+        if (!this.blocks[r][c]) continue;
+        
+        const x = this.x + c * (CONFIG.BUNKER_BLOCK_W + 2);
+        const y = this.y + r * (CONFIG.BUNKER_BLOCK_H + 2);
+        
+        if (bullet.x > x && bullet.x < x + CONFIG.BUNKER_BLOCK_W &&
+            bullet.y > y && bullet.y < y + CONFIG.BUNKER_BLOCK_H) {
+          this.blocks[r][c] = false;
+          playSFX('block-hit');
+          return true;
+        }
+      }
+    }
+    return false;
+  }
+}
+
+class Explosion {
+  constructor(x, y, color) {
+    this.x = x;
+    this.y = y;
+    this.color = color;
+    this.life = 0.3;
+    this.maxLife = 0.3;
+    this.particles = [];
+    for (let i = 0; i < 12; i++) {
+      const angle = (Math.PI * 2 * i) / 12;
+      this.particles.push({
+        x: 0,
+        y: 0,
+        vx: Math.cos(angle) * 150,
+        vy: Math.sin(angle) * 150
+      });
+    }
+  }
+  
+  update(dt) {
+    this.life -= dt;
+    this.particles.forEach(p => {
+      p.x += p.vx * dt;
+      p.y += p.vy * dt;
+    });
+  }
+  
+  draw() {
+    const alpha = this.life / this.maxLife;
+    ctx.save();
+    ctx.globalAlpha = alpha;
+    ctx.fillStyle = this.color;
+    this.particles.forEach(p => {
+      ctx.fillRect(this.x + p.x - 2, this.y + p.y - 2, 4, 4);
+    });
+    ctx.restore();
+  }
+}
+
+// ===== GAME OBJECTS =====
+let player;
+let invaders = [];
+let invaderFormation = { x: 0, y: 80, dir: 1, animFrame: 0, animTimer: 0 };
+let bullets = [];
+let bunkers = [];
+let explosions = [];
+let invaderShootTimer = 0;
+
+function initGame() {
+  player = new Player();
+  
+  invaders = [];
+  for (let r = 0; r < CONFIG.INVADER_ROWS; r++) {
+    for (let c = 0; c < CONFIG.INVADER_COLS; c++) {
+      invaders.push(new Invader(r, c));
+    }
+  }
+  
+  const formationWidth = CONFIG.INVADER_COLS * CONFIG.INVADER_W + (CONFIG.INVADER_COLS - 1) * CONFIG.INVADER_GAP_X;
+  invaderFormation = { 
+    x: (CONFIG.CANVAS_W - formationWidth) / 2, 
+    y: 80, 
+    dir: 1, 
+    animFrame: 0, 
+    animTimer: 0 
+  };
+  
+  bunkers = [
+    new Bunker(100),
+    new Bunker(270),
+    new Bunker(530),
+    new Bunker(700)
+  ];
+  
+  bullets = [];
+  explosions = [];
+  invaderShootTimer = 0;
+}
+
+function startGame() {
+  gameState = STATE.PLAYING;
+  score = 0;
+  level = 1;
+  lives = CONFIG.STARTING_LIVES;
+  invaderSpeed = CONFIG.INVADER_BASE_SPEED;
+  animInterval = CONFIG.ANIM_INTERVAL;
+  initGame();
+}
+
+function restartGame() {
+  startGame();
+}
+
+function levelUp() {
+  level++;
+  invaderSpeed *= CONFIG.LEVEL_SPEED_MULT;
+  animInterval *= 0.92;
+  
+  invaders = [];
+  for (let r = 0; r < CONFIG.INVADER_ROWS; r++) {
+    for (let c = 0; c < CONFIG.INVADER_COLS; c++) {
+      invaders.push(new Invader(r, c));
+    }
+  }
+  
+  const formationWidth = CONFIG.INVADER_COLS * CONFIG.INVADER_W + (CONFIG.INVADER_COLS - 1) * CONFIG.INVADER_GAP_X;
+  invaderFormation = { 
+    x: (CONFIG.CANVAS_W - formationWidth) / 2, 
+    y: 80, 
+    dir: 1, 
+    animFrame: 0, 
+    animTimer: 0 
+  };
+  
+  bunkers = [
+    new Bunker(100),
+    new Bunker(270),
+    new Bunker(530),
+    new Bunker(700)
+  ];
+  
+  player.x = CONFIG.CANVAS_W / 2;
+}
+
+function shootPlayerBullet() {
+  if (gameState !== STATE.PLAYING) return;
+  if (bullets.filter(b => b.isPlayer).length > 0) return;
+  bullets.push(new Bullet(player.x, player.y - player.h/2, -CONFIG.PLAYER_BULLET_SPEED, true));
+  playSFX('shot');
+}
+
+function createExplosion(x, y, color) {
+  explosions.push(new Explosion(x, y, color));
+}
+
+// ===== STARFIELD =====
+const stars = [];
+for (let i = 0; i < 100; i++) {
+  stars.push({
+    x: Math.random() * CONFIG.CANVAS_W,
+    y: Math.random() * CONFIG.CANVAS_H,
+    speed: 10 + Math.random() * 20,
+    size: Math.random() * 2
+  });
+}
+
+function updateStars(dt) {
+  stars.forEach(star => {
+    star.y += star.speed * dt;
+    if (star.y > CONFIG.CANVAS_H) {
+      star.y = 0;
+      star.x = Math.random() * CONFIG.CANVAS_W;
+    }
+  });
+}
+
+function drawStars() {
+  ctx.fillStyle = 'rgba(255,255,255,0.6)';
+  stars.forEach(star => {
+    ctx.fillRect(star.x, star.y, star.size, star.size);
+  });
+}
+
+// ===== UPDATE =====
+function update(dt) {
+  if (gameState === STATE.TITLE) {
+    updateStars(dt * 0.5);
+    return;
+  }
+  
+  if (gameState === STATE.PAUSED || gameState === STATE.GAMEOVER) {
+    return;
+  }
+  
+  updateStars(dt);
+  player.update(dt);
+  
+  // Update bullets
+  bullets.forEach(b => b.update(dt));
+  bullets = bullets.filter(b => b.active);
+  
+  // Update explosions
+  explosions.forEach(e => e.update(dt));
+  explosions = explosions.filter(e => e.life > 0);
+  
+  // Update invader formation
+  const aliveInvaders = invaders.filter(i => i.alive);
+  if (aliveInvaders.length === 0) {
+    levelUp();
+    return;
+  }
+  
+  const speedScale = 1 + 0.9 * (1 - aliveInvaders.length / invaders.length);
+  const currentSpeed = invaderSpeed * speedScale;
+  
+  invaderFormation.animTimer += dt;
+  if (invaderFormation.animTimer >= animInterval / speedScale) {
+    invaderFormation.animTimer = 0;
+    invaderFormation.animFrame = 1 - invaderFormation.animFrame;
+  }
+  
+  invaderFormation.x += currentSpeed * invaderFormation.dir * dt;
+  
+  // Check edges
+  let leftmost = CONFIG.CANVAS_W, rightmost = 0;
+  invaders.forEach((inv, idx) => {
+    if (!inv.alive) return;
+    const col = idx % CONFIG.INVADER_COLS;
+    const x = invaderFormation.x + col * (CONFIG.INVADER_W + CONFIG.INVADER_GAP_X);
+    leftmost = Math.min(leftmost, x);
+    rightmost = Math.max(rightmost, x);
+  });
+  
+  if (leftmost < 16 || rightmost > CONFIG.CANVAS_W - 16) {
+    invaderFormation.y += CONFIG.INVADER_DROP;
+    invaderFormation.dir *= -1;
+  }
+  
+  // Check if invaders reached player
+  if (invaderFormation.y + CONFIG.INVADER_ROWS * (CONFIG.INVADER_H + CONFIG.INVADER_GAP_Y) >= player.y - 40) {
+    player.hit();
+  }
+  
+  // Invader shooting
+  invaderShootTimer -= dt;
+  if (invaderShootTimer <= 0) {
+    invaderShootTimer = 1.1 / (1 + level * 0.1);
+    
+    const bottomInvaders = [];
+    for (let c = 0; c < CONFIG.INVADER_COLS; c++) {
+      for (let r = CONFIG.INVADER_ROWS - 1; r >= 0; r--) {
+        const idx = r * CONFIG.INVADER_COLS + c;
+        if (invaders[idx].alive) {
+          bottomInvaders.push({ idx, col: c, row: r });
+          break;
+        }
+      }
+    }
+    
+    if (bottomInvaders.length > 0 && Math.random() < 0.4) {
+      const shooter = bottomInvaders[Math.floor(Math.random() * bottomInvaders.length)];
+      const x = invaderFormation.x + shooter.col * (CONFIG.INVADER_W + CONFIG.INVADER_GAP_X);
+      const y = invaderFormation.y + shooter.row * (CONFIG.INVADER_H + CONFIG.INVADER_GAP_Y);
+      bullets.push(new Bullet(x, y, CONFIG.INVADER_BULLET_SPEED, false));
+      playSFX('invader-shot');
+    }
+  }
+  
+  // Collisions
+  bullets.forEach(bullet => {
+    if (!bullet.active) return;
+    
+    if (bullet.isPlayer) {
+      // Check invaders
+      invaders.forEach((inv, idx) => {
+        if (!inv.alive || !bullet.active) return;
+        const col = idx % CONFIG.INVADER_COLS;
+        const row = Math.floor(idx / CONFIG.INVADER_COLS);
+        const x = invaderFormation.x + col * (CONFIG.INVADER_W + CONFIG.INVADER_GAP_X);
+        const y = invaderFormation.y + row * (CONFIG.INVADER_H + CONFIG.INVADER_GAP_Y);
+        
+        if (bullet.x > x - CONFIG.INVADER_W/2 && bullet.x < x + CONFIG.INVADER_W/2 &&
+            bullet.y > y - CONFIG.INVADER_H/2 && bullet.y < y + CONFIG.INVADER_H/2) {
+          inv.alive = false;
+          bullet.active = false;
+          score += inv.getScore();
+          playSFX('invader-death');
+          createExplosion(x, y, COLORS.ROWS[inv.row]);
+        }
+      });
+      
+      // Check bunkers
+      bunkers.forEach(bunker => {
+        if (bullet.active && bunker.checkHit(bullet)) {
+          bullet.active = false;
+        }
+      });
+    } else {
+      // Check player
+      if (bullet.active && 
+          bullet.x > player.x - player.w/2 && bullet.x < player.x + player.w/2 &&
+          bullet.y > player.y - player.h/2 && bullet.y < player.y + player.h/2) {
+        bullet.active = false;
+        player.hit();
+      }
+      
+      // Check bunkers
+      bunkers.forEach(bunker => {
+        if (bullet.active && bunker.checkHit(bullet)) {
+          bullet.active = false;
+        }
+      });
+    }
+  });
+  
+  // Bullet vs bullet
+  for (let i = 0; i < bullets.length; i++) {
+    for (let j = i + 1; j < bullets.length; j++) {
+      if (bullets[i].active && bullets[j].active && 
+          bullets[i].isPlayer !== bullets[j].isPlayer) {
+        const dx = bullets[i].x - bullets[j].x;
+        const dy = bullets[i].y - bullets[j].y;
+        if (Math.abs(dx) < 6 && Math.abs(dy) < 12) {
+          bullets[i].active = false;
+          bullets[j].active = false;
+        }
+      }
+    }
+  }
+}
+
+// ===== RENDER =====
+function render() {
+  // Background
+  ctx.fillStyle = COLORS.BG;
+  ctx.fillRect(0, 0, CONFIG.CANVAS_W, CONFIG.CANVAS_H);
+  
+  drawStars();
+  
+  if (gameState === STATE.TITLE) {
+    drawTitle();
+    return;
+  }
+  
+  if (gameState === STATE.GAMEOVER) {
+    drawGameOver();
+    return;
+  }
+  
+  // Draw invaders
+  invaders.forEach((inv, idx) => {
+    if (!inv.alive) return;
+    const col = idx % CONFIG.INVADER_COLS;
+    const row = Math.floor(idx / CONFIG.INVADER_COLS);
+    const x = invaderFormation.x + col * (CONFIG.INVADER_W + CONFIG.INVADER_GAP_X);
+    const y = invaderFormation.y + row * (CONFIG.INVADER_H + CONFIG.INVADER_GAP_Y);
+    inv.draw(x, y, invaderFormation.animFrame);
+  });
+  
+  // Draw bullets
+  bullets.forEach(b => b.draw());
+  
+  // Draw bunkers
+  bunkers.forEach(b => b.draw());
+  
+  // Draw player
+  player.draw();
+  
+  // Draw explosions
+  explosions.forEach(e => e.draw());
+  
+  // Draw HUD
+  drawHUD();
+  
+  if (gameState === STATE.PAUSED) {
+    ctx.fillStyle = 'rgba(0,0,0,0.7)';
+    ctx.fillRect(0, 0, CONFIG.CANVAS_W, CONFIG.CANVAS_H);
+    ctx.fillStyle = COLORS.TEXT;
+    ctx.font = 'bold 48px sans-serif';
+    ctx.textAlign = 'center';
+    ctx.fillText('PAUSED', CONFIG.CANVAS_W/2, CONFIG.CANVAS_H/2);
+    ctx.font = '20px sans-serif';
+    ctx.fillText('Press P or ESC to continue', CONFIG.CANVAS_W/2, CONFIG.CANVAS_H/2 + 40);
+  }
+}
+
+function drawHUD() {
+  // HUD bar
+  ctx.fillStyle = 'rgba(0,0,0,0.5)';
+  ctx.fillRect(0, 0, CONFIG.CANVAS_W, CONFIG.HUD_HEIGHT);
+  
+  ctx.fillStyle = COLORS.TEXT;
+  ctx.font = 'bold 18px sans-serif';
+  ctx.textAlign = 'left';
+  ctx.fillText('SCORE: ' + score, 20, 30);
+  
+  ctx.textAlign = 'center';
+  ctx.fillText('HIGH SCORE: ' + highScore, CONFIG.CANVAS_W/2, 30);
+  
+  ctx.textAlign = 'right';
+  const hearts = '♥'.repeat(lives);
+  ctx.fillText('LIVES: ' + hearts + ' LEVEL: ' + level, CONFIG.CANVAS_W - 20, 30);
+}
+
+function drawTitle() {
+  ctx.fillStyle = COLORS.TEXT;
+  ctx.font = 'bold 64px sans-serif';
+  ctx.textAlign = 'center';
+  ctx.fillText('SPACE or W - Shoot', CONFIG.CANVAS_W/2, 420);
+  ctx.fillText('P or ESC - Pause', CONFIG.CANVAS_W/2, 450);
+  
+  ctx.font = 'bold 28px sans-serif';
+  ctx.fillStyle = '#6B9CFF';
+  ctx.fillText('Press SPACE or Click to Start', CONFIG.CANVAS_W/2, 520);
+}
+
+function drawGameOver() {
+  // Draw final game state in background
+  invaders.forEach((inv, idx) => {
+    if (!inv.alive) return;
+    const col = idx % CONFIG.INVADER_COLS;
+    const row = Math.floor(idx / CONFIG.INVADER_COLS);
+    const x = invaderFormation.x + col * (CONFIG.INVADER_W + CONFIG.INVADER_GAP_X);
+    const y = invaderFormation.y + row * (CONFIG.INVADER_H + CONFIG.INVADER_GAP_Y);
+    inv.draw(x, y, invaderFormation.animFrame);
+  });
+  bunkers.forEach(b => b.draw());
+  bullets.forEach(b => b.draw());
+  
+  // Overlay
+  ctx.fillStyle = 'rgba(0,0,0,0.8)';
+  ctx.fillRect(0, 0, CONFIG.CANVAS_W, CONFIG.CANVAS_H);
+  
+  ctx.fillStyle = '#FF6B6B';
+  ctx.font = 'bold 56px sans-serif';
+  ctx.textAlign = 'center';
+  ctx.fillText('GAME OVER', CONFIG.CANVAS_W/2, 200);
+  
+  ctx.fillStyle = COLORS.TEXT;
+  ctx.font = 'bold 32px sans-serif';
+  ctx.fillText('Final Score: ' + score, CONFIG.CANVAS_W/2, 270);
+  
+  if (score >= highScore && score > 0) {
+    ctx.fillStyle = '#FFD700';
+    ctx.font = 'bold 28px sans-serif';
+    ctx.fillText('★ NEW HIGH SCORE! ★', CONFIG.CANVAS_W/2, 320);
+  }
+  
+  ctx.fillStyle = COLORS.TEXT;
+  ctx.font = '24px sans-serif';
+  ctx.fillText('High Score: ' + highScore, CONFIG.CANVAS_W/2, 370);
+  ctx.fillText('Level Reached: ' + level, CONFIG.CANVAS_W/2, 410);
+  
+  ctx.font = 'bold 28px sans-serif';
+  ctx.fillStyle = '#6B9CFF';
+  ctx.fillText('Press SPACE or Click to Restart', CONFIG.CANVAS_W/2, 500);
+}
+
+// ===== GAME LOOP =====
+let lastTime = performance.now();
+let isRunning = false;
+
+function loop(now) {
+  const dt = Math.min(0.033, (now - lastTime) / 1000);
+  lastTime = now;
+  
+  update(dt);
+  render();
+  
+  requestAnimationFrame(loop);
+}
+
+// Initialize and start
+console.log('Space Invaders - Initializing...');
+requestAnimationFrame(loop);
+console.log('Game loop started!');
+</script>
+</body>
+</html> INVADERS', CONFIG.CANVAS_W/2, 200);
+  
+  ctx.font = '24px sans-serif';
+  ctx.fillText('A Modern Classic', CONFIG.CANVAS_W/2, 240);
+  
+  ctx.font = '20px sans-serif';
+  ctx.fillText('High Score: ' + highScore, CONFIG.CANVAS_W/2, 300);
+  
+  ctx.font = '18px sans-serif';
+  ctx.fillText('Controls:', CONFIG.CANVAS_W/2, 360);
+  ctx.fillText('← → or A D - Move', CONFIG.CANVAS_W/2, 390);
+  ctx.fillText('SPACE

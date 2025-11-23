@@ -1,0 +1,4 @@
+- Features: start screen, no game over screen, score, high score, lives, UFO, and adjustable sound.
+- Bugs: No possibility to restart game. Stars not distributed randomly.
+- Graphics: simple aesthetics, animated aliens. Player ship with temporary shield shown, nice.
+- Comments: Initial version very playable, did not ask for bugfix.

@@ -1,0 +1,653 @@
+<!doctype html>
+<html>
+
+<head>
+    <title>Space Invaders</title>
+    <style>
+        body {
+            margin: 0;
+            padding: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            background: #071029;
+            font-family: sans-serif;
+            color: white;
+            overflow: hidden;
+        }
+
+        canvas {
+            border: 1px solid #000;
+            max-width: 100%;
+            height: auto;
+            width: 100%;
+            max-width: 1200px;
+        }
+    </style>
+</head>
+
+<body>
+    <canvas id="gameCanvas"></canvas>
+    <script>
+        // Constants and configuration
+        const CONFIG = {
+            CANVAS_W: 800,
+            CANVAS_H: 600,
+            HUD_HEIGHT: 48,
+            PLAYER_SPEED: 260,
+            PLAYER_BULLET_SPEED: 420,
+            INVADER_SPEED: 22,
+            INVADER_DROP: 18,
+            INVADER_ANIM_INTERVAL: 0.45,
+            INVADER_ROWS: 5,
+            INVADER_COLS: 11,
+            BUNKER_WIDTH: 70,
+            BUNKER_HEIGHT: 48,
+            BUNKER_BLOCK_WIDTH: 14,
+            BUNKER_BLOCK_HEIGHT: 12,
+            BUNKER_BLOCK_MARGIN: 2,
+            PLAYER_Y: 540,
+            BUNKER_Y: 460,
+            INVADER_START_Y: 80,
+            INVADER_WIDTH: 48,
+            INVADER_HEIGHT: 42,
+            INVADER_H_SPACING: 8,
+            INVADER_V_SPACING: 12,
+            LEVEL_UP_SPEED_INCREASE: 0.12,
+            LEVEL_UP_ANIM_DECREASE: 0.08,
+            MAX_INVADER_BULLETS: 6,
+            MAX_PLAYER_BULLETS: 1,
+            EXPLOSION_DURATION: 0.3,
+            UFO_SPAWN_CHANCE: 0.002,
+            UFO_SPEED: 140
+        };
+
+        function updateInvaders(dt) {
+            // Update invader formation
+            if (invaders.length === 0) return;
+            invaderAnimTime += dt;
+            if (invaderAnimTime >= CONFIG.INVADER_ANIM_INTERVAL) {
+                invaderAnimTime = 0;
+                for (let invader of invaders) {
+                    if (invader.alive) {
+                        invader.animFrame = 1 - invader.animFrame;
+                    }
+                }
+            }
+
+            // Move invaders horizontally
+            let moveX = CONFIG.INVADER_SPEED * invaderDirection * dt;
+            let leftMost = Infinity;
+            let rightMost = -Infinity;
+            for (let invader of invaders) {
+                if (invader.alive) {
+                    leftMost = Math.min(leftMost, invader.x);
+                    rightMost = Math.max(rightMost, invader.x + CONFIG.INVADER_WIDTH);
+                }
+            }
+
+            // Check if hit left or right edge
+            const edgeMargin = 16;
+            if (leftMost < edgeMargin) {
+                invaderDirection = 1;
+                for (let invader of invaders) {
+                    if (invader.alive) {
+                        invader.y += CONFIG.INVADER_DROP;
+                    }
+                }
+            } else if (rightMost > CONFIG.CANVAS_W - edgeMargin) {
+                invaderDirection = -1;
+                for (let invader of invaders) {
+                    if (invader.alive) {
+                        invader.y += CONFIG.INVADER_DROP;
+                    }
+                }
+            }
+
+            // Move invaders
+            for (let invader of invaders) {
+                if (invader.alive) {
+                    invader.x += moveX;
+                }
+            }
+        }
+
+        // Initialize game
+        const canvas = document.getElementById('gameCanvas');
+        canvas.width = CONFIG.CANVAS_W;
+        canvas.height = CONFIG.CANVAS_H;
+        const ctx = canvas.getContext('2d');
+
+        // Game state variables
+        let gameState = 'TITLE';
+        let score = 0;
+        let highScore = parseInt(localStorage.getItem('space_invaders_highscore_v1') || 0);
+        let lives = 3;
+        let level = 1;
+        let lastTime = performance.now();
+        let invaderDirection = 1;
+        let invaderAnimTime = 0;
+        let invaderShootTimer = 0;
+        let playerBullets = [];
+        let invaderBullets = [];
+        let explosions = [];
+        let bunkers = [];
+        let invaders = [];
+        let ufo;
+        let leftPressed = false;
+        let rightPressed = false;
+        let firePressed = false;
+        let playerX = 400;
+        let playerActive = true;
+        let paused = false;
+
+        function handleInput(dt) {
+            // Handle keyboard input
+            if (keyState['ArrowLeft'] || keyState['a'] || keyState['A']) {
+                leftPressed = true;
+            } else {
+                leftPressed = false;
+            }
+            if (keyState['ArrowRight'] || keyState['d'] || keyState['D']) {
+                rightPressed = true;
+            } else {
+                rightPressed = false;
+            }
+            if (keyState[' '] || keyState['w'] || keyState['W'] || keyState['k'] || keyState['K']) {
+                firePressed = true;
+            } else {
+                firePressed = false;
+            }
+        }
+
+        // Initialize bunkers
+        function initBunkers() {
+            bunkers = [];
+            const bunkerXPositions = [100, 270, 530, 700];
+            for (let i = 0; i < 4; i++) {
+                const bunker = {
+                    x: bunkerXPositions[i],
+                    y: CONFIG.BUNKER_Y,
+                    blocks: []
+                };
+                for (let row = 0; row < 4; row++) {
+                    for (let col = 0; col < 5; col++) {
+                        bunker.blocks.push({
+                            x: bunker.x + col * (CONFIG.BUNKER_BLOCK_WIDTH + CONFIG.BUNKER_BLOCK_MARGIN),
+                            y: bunker.y + row * (CONFIG.BUNKER_BLOCK_HEIGHT + CONFIG.BUNKER_BLOCK_MARGIN),
+                            destroyed: false
+                        });
+                    }
+                }
+                bunkers.push(bunker);
+            }
+        }
+
+        // Initialize invaders
+        function initInvaders() {
+            invaders = [];
+            const invaderStartX = (CONFIG.CANVAS_W - (CONFIG.INVADER_COLS * (CONFIG.INVADER_WIDTH + CONFIG.INVADER_H_SPACING) - CONFIG.INVADER_H_SPACING)) / 2;
+            for (let row = 0; row < CONFIG.INVADER_ROWS; row++) {
+                for (let col = 0; col < CONFIG.INVADER_COLS; col++) {
+                    invaders.push({
+                        x: invaderStartX + col * (CONFIG.INVADER_WIDTH + CONFIG.INVADER_H_SPACING),
+                        y: CONFIG.INVADER_START_Y + row * (CONFIG.INVADER_HEIGHT + CONFIG.INVADER_V_SPACING),
+                        row: row,
+                        alive: true,
+                        animFrame: 0
+                    });
+                }
+            }
+        }
+
+        // Initialize game
+        function initGame() {
+            initBunkers();
+            initInvaders();
+            score = 0;
+            lives = 3;
+            level = 1;
+            gameState = 'PLAYING';
+            playerX = CONFIG.CANVAS_W / 2;
+            playerActive = true;
+            paused = false;
+            invaderDirection = 1;
+            invaderAnimTime = 0;
+            invaderShootTimer = 0;
+            playerBullets = [];
+            invaderBullets = [];
+            explosions = [];
+            ufo = null;
+        }
+
+        function drawBunkers() {
+            for (let bunker of bunkers) {
+                for (let block of bunker.blocks) {
+                    if (!block.destroyed) {
+                        // Draw block
+                        ctx.fillStyle = '#2E8B57';
+                        ctx.fillRect(block.x, block.y, CONFIG.BUNKER_BLOCK_WIDTH, CONFIG.BUNKER_BLOCK_HEIGHT);
+                        // Top highlight
+                        ctx.fillStyle = 'rgba(255, 255, 255, 0.2)';
+                        ctx.fillRect(block.x, block.y, CONFIG.BUNKER_BLOCK_WIDTH, 4);
+                        // Bottom shadow
+                        ctx.fillStyle = 'rgba(0, 0, 0, 0.2)';
+                        ctx.fillRect(block.x, block.y + 8, CONFIG.BUNKER_BLOCK_WIDTH, 4);
+                    }
+                }
+            }
+        }
+
+        function checkAABB(obj1, obj2) {
+            return obj1.x < obj2.x + obj2.width &&
+                obj1.x + 4 < obj2.x &&
+                obj1.y < obj2.y + obj2.height &&
+                obj1.y + 12 < obj2.y;
+        }
+
+        function getScoreForRow(row) {
+            switch (row) {
+                case 0: return 30;
+                case 1: return 20;
+                case 2: return 20;
+                case 3: return 10;
+                case 4: return 10;
+                default: return 10;
+            }
+        }
+
+        function checkCollisions() {
+            // Player bullets vs invaders
+            for (let i = playerBullets.length - 1; i >= 0; i--) {
+                const bullet = playerBullets[i];
+                for (let j = 0; j < invaders.length; j++) {
+                    const invader = invaders[j];
+                    if (invader.alive && checkAABB(bullet, invader)) {
+                        invader.alive = false;
+                        score += getScoreForRow(invader.row);
+                        playSFX('invader-death');
+                        explosions.push({ x: invader.x + CONFIG.INVADER_WIDTH / 2, y: invader.y + CONFIG.INVADER_HEIGHT / 2, age: 0 });
+                        playerBullets.splice(i, 1);
+                        break;
+                    }
+                }
+            }
+
+            // Player bullets vs bunkers
+            for (let i = playerBullets.length - 1; i >= 0; i--) {
+                const bullet = playerBullets[i];
+                for (let bunker of bunkers) {
+                    for (let k = bunker.blocks.length - 1; k >= 0; k--) {
+                        const block = bunker.blocks[k];
+                        if (!block.destroyed && checkAABB(bullet, block)) {
+                            block.destroyed = true;
+                            playerBullets.splice(i, 1);
+                            playSFX('block-hit');
+                            break;
+                        }
+                    }
+                }
+            }
+
+            // Invader bullets vs player
+            for (let i = invaderBullets.length - 1; i >= 0; i--) {
+                const bullet = invaderBullets[i];
+                if (checkAABB(bullet, { x: playerX, y: CONFIG.PLAYER_Y, width: 48, height: 20 })) {
+                    playSFX('player-death');
+                    lives--;
+                    if (lives <= 0) {
+                        gameState = 'GAMEOVER';
+                    } else {
+                        playerActive = false;
+                        setTimeout(() => {
+                            playerActive = true;
+                        }, 800);
+                    }
+                    invaderBullets.splice(i, 1);
+                }
+            }
+
+            // Player bullets vs invader bullets
+            for (let i = playerBullets.length - 1; i >= 0; i--) {
+                for (let j = invaderBullets.length - 1; j >= 0; j--) {
+                    if (checkAABB(playerBullets[i], invaderBullets[j])) {
+                        playerBullets.splice(i, 1);
+                        invaderBullets.splice(j, 1);
+                        break;
+                    }
+                }
+            }
+        }
+
+        function levelUp() {
+            level++;
+            CONFIG.INVADER_SPEED *= (1 + CONFIG.LEVEL_UP_SPEED_INCREASE);
+            CONFIG.INVADER_ANIM_INTERVAL *= (1 - CONFIG.LEVEL_UP_ANIM_DECREASE);
+            initInvaders();
+            initBunkers();
+            playerX = CONFIG.CANVAS_W / 2;
+            playerBullets = [];
+            invaderBullets = [];
+        }
+
+        function playSFX(name) {
+            // Simple WebAudio implementation for SFX
+            const audioCtx = new (window.AudioContext || window.webkitAudioContext)();
+            let gainNode = audioCtx.createGain();
+            gainNode.gain.value = 0.5;
+            gainNode.connect(audioCtx.destination);
+
+            switch (name) {
+                case 'sfx-start':
+                    // Start sound (title screen)
+                    const osc = audioCtx.createOscillator();
+                    osc.frequency.value = 440;
+                    osc.connect(gainNode);
+                    osc.start();
+                    setTimeout(() => osc.stop(), 100);
+                    break;
+                case 'sfx-shot':
+                    // Player shot
+                    const osc2 = audioCtx.createOscillator();
+                    osc2.frequency.value = 880;
+                    osc2.connect(gainNode);
+                    osc2.start();
+                    setTimeout(() => osc2.stop(), 50);
+                    break;
+                case 'sfx-invader-shot':
+                    // Invader shot
+                    const osc3 = audioCtx.createOscillator();
+                    osc3.frequency.value = 330;
+                    osc3.connect(gainNode);
+                    osc3.start();
+                    setTimeout(() => osc3.stop(), 100);
+                    break;
+                case 'sfx-invader-death':
+                    // Invader death
+                    const osc4 = audioCtx.createOscillator();
+                    osc4.frequency.value = 220;
+                    osc4.connect(gainNode);
+                    osc4.start();
+                    setTimeout(() => osc4.stop(), 150);
+                    break;
+                case 'sfx-player-death':
+                    // Player death
+                    const osc5 = audioCtx.createOscillator();
+                    osc5.frequency.value = 110;
+                    osc5.connect(gainNode);
+                    osc5.start();
+                    setTimeout(() => osc5.stop(), 200);
+                    break;
+                case 'sfx-block-hit':
+                    // Block hit
+                    const osc6 = audioCtx.createOscillator();
+                    osc6.frequency.value = 660;
+                    osc6.connect(gainNode);
+                    osc6.start();
+                    setTimeout(() => osc6.stop(), 50);
+                    break;
+                case 'sfx-ufo':
+                    // UFO sound
+                    const osc7 = audioCtx.createOscillator();
+                    osc7.frequency.value = 550;
+                    osc7.connect(gainNode);
+                    osc7.start();
+                    setTimeout(() => osc7.stop(), 300);
+                    break;
+                case 'sfx-game-over':
+                    // Game over
+                    const osc8 = audioCtx.createOscillator();
+                    osc8.frequency.value = 110;
+                    osc8.connect(gainNode);
+                    osc8.start();
+                    setTimeout(() => osc8.stop(), 300);
+                    break;
+            }
+        }
+
+
+        function playSFX(name) {
+            // Simple WebAudio implementation for SFX
+            const audioCtx = new (window.AudioContext || window.webkitAudioContext)();
+            let gainNode = audioCtx.createGain();
+            gainNode.gain.value = 0.5;
+            gainNode.connect(audioCtx.destination);
+
+            switch (name) {
+                case 'sfx-start':
+                    // Start sound (title screen)
+                    const osc = audioCtx.createOscillator();
+                    osc.frequency.value = 440;
+                    osc.connect(gainNode);
+                    osc.start();
+                    setTimeout(() => osc.stop(), 100);
+                    break;
+                case 'sfx-shot':
+                    // Player shot
+                    const osc2 = audioCtx.createOscillator();
+                    osc2.frequency.value = 880;
+                    osc2.connect(gainNode);
+                    osc2.start();
+                    setTimeout(() => osc2.stop(), 50);
+                    break;
+                case 'sfx-invader-shot':
+                    // Invader shot
+                    const osc3 = audioCtx.createOscillator();
+                    osc3.frequency.value = 330;
+                    osc3.connect(gainNode);
+                    osc3.start();
+                    setTimeout(() => osc3.stop(), 100);
+                    break;
+                case 'sfx-invader-death':
+                    // Invader death
+                    const osc4 = audioCtx.createOscillator();
+                    osc4.frequency.value = 220;
+                    osc4.connect(gainNode);
+                    osc4.start();
+                    setTimeout(() => osc4.stop(), 150);
+                    break;
+                case 'sfx-player-death':
+                    // Player death
+                    const osc5 = audioCtx.createOscillator();
+                    osc5.frequency.value = 110;
+                    osc5.connect(gainNode);
+                    osc5.start();
+                    setTimeout(() => osc5.stop(), 200);
+                    break;
+                case 'sfx-block-hit':
+                    // Block hit
+                    const osc6 = audioCtx.createOscillator();
+                    osc6.frequency.value = 660;
+                    osc6.connect(gainNode);
+                    osc6.start();
+                    setTimeout(() => osc6.stop(), 50);
+                    break;
+                case 'sfx-ufo':
+                    // UFO sound
+                    const osc7 = audioCtx.createOscillator();
+                    osc7.frequency.value = 550;
+                    osc7.connect(gainNode);
+                    osc7.start();
+                    setTimeout(() => osc7.stop(), 300);
+                    break;
+                case 'sfx-game-over':
+                    // Game over
+                    const osc8 = audioCtx.createOscillator();
+                    osc8.frequency.value = 110;
+                    osc8.connect(gainNode);
+                    osc8.start();
+                    setTimeout(() => osc8.stop(), 300);
+                    break;
+            }
+        }
+
+        function gameLoop(now) {
+            const dt = Math.min(0.033, (now - lastTime) / 1000);
+            lastTime = now;
+            update(dt);
+            render();
+            requestAnimationFrame(gameLoop);
+        }
+        function gameLoop(now) {
+            const dt = Math.min(0.033, (now - lastTime) / 1000);
+            lastTime = now;
+            update(dt);
+            render();
+            requestAnimationFrame(gameLoop);
+        }
+
+        function update(dt) {
+            if (gameState === 'PLAYING') {
+                // Handle input
+                handleInput(dt);
+
+
+                // Update player position
+                if (playerActive) {
+                    if (leftPressed) {
+                        playerX -= CONFIG.PLAYER_SPEED * dt;
+                    }
+                    if (rightPressed) {
+                        playerX += CONFIG.PLAYER_SPEED * dt;
+                    }
+                    playerX = Math.max(24, Math.min(CONFIG.CANVAS_W - 24, playerX));
+                }
+
+                // Update player bullets
+                playerBullets = playerBullets.filter(bullet => {
+                    bullet.y -= CONFIG.PLAYER_BULLET_SPEED * dt;
+                    return bullet.y > 0;
+                });
+
+
+                // Invader shooting logic
+                invaderShootTimer += dt;
+                if (invaderShootTimer >= 1.1 && invaderBullets.length < CONFIG.MAX_INVADER_BULLETS) {
+                    // Find a random bottom invader
+                    let bottomInvaders = [];
+                    for (let invader of invaders) {
+                        if (invader.alive && invader.y === Math.max(...invaders.filter(i => i.alive).map(i => i.y))) {
+                            bottomInvaders.push(invader);
+                        }
+                    }
+                    if (bottomInvaders.length > 0) {
+                        let randomInvader = bottomInvaders[Math.floor(Math.random() * bottomInvaders.length)];
+                        invaderBullets.push({
+                            x: randomInvader.x + CONFIG.INVADER_WIDTH / 2,
+                            y: randomInvader.y + CONFIG.INVADER_HEIGHT,
+                            speed: 190
+                        });
+                    }
+                    invaderShootTimer = 0;
+                }
+
+                // Update invader bullets
+                invaderBullets = invaderBullets.filter(bullet => {
+                    bullet.y += 190 * dt;
+                    return bullet.y < CONFIG.CANVAS_H;
+                });
+
+                // Update invader formation
+                updateInvaders(dt);
+
+                // Update explosions
+                explosions = explosions.filter(explosion => {
+                    explosion.age += dt;
+                    return explosion.age < CONFIG.EXPLOSION_DURATION;
+                });
+
+                // Update UFO
+                if (ufo) {
+                    ufo.x += CONFIG.UFO_SPEED * dt * invaderDirection;
+                    if (ufo.x > CONFIG.CANVAS_W || ufo.x < 0) {
+                        ufo = null;
+                    }
+                }
+
+                // Check collisions
+                checkCollisions();
+
+                // Check if all invaders are dead
+                if (invaders.every(invader => !invader.alive)) {
+                    levelUp();
+                }
+            }
+        }
+
+        function render() {
+            // Clear canvas
+            ctx.clearRect(0, 0, canvas.width, canvas.height);
+
+            // Draw background
+            drawBackground();
+
+            // Draw HUD
+            drawHUD();
+
+            // Draw invaders
+            drawInvaders();
+
+            // Draw invader bullets
+            drawBullets(invaderBullets, '#FF0000');
+
+            // Draw bunkers
+            drawBunkers();
+
+            // Draw player bullets
+            drawBullets(playerBullets, '#00FF00');
+
+            // Draw player
+            drawPlayer();
+
+            // Draw explosions
+            drawExplosions();
+
+            // Draw UFO
+            if (ufo) {
+                drawUFO();
+            }
+
+            // Draw overlays for states
+            if (gameState === 'TITLE') {
+                drawTitleScreen();
+            } else if (gameState === 'PAUSED') {
+                drawPauseScreen();
+            } else if (gameState === 'GAMEOVER') {
+                drawGameOverScreen();
+            }
+        }
+
+        function drawHUD() {
+            // Draw semi-transparent bar
+            ctx.fillStyle = 'rgba(0, 0, 0, 0.5)';
+            ctx.fillRect(0, 0, CONFIG.CANVAS_W, CONFIG.HUD_HEIGHT);
+
+            // Draw score
+            ctx.fillStyle = '#FFFFFF';
+            ctx.font = '18px sans-serif';
+            ctx.fillText(`Score: ${score}`, 10, 30);
+
+            // Draw high score
+            ctx.fillText(`HIGH SCORE: ${highScore}`, CONFIG.CANVAS_W / 2 - 100, 30);
+
+            // Draw lives and level
+            const livesText = 'LIVES: ' + '♥'.repeat(lives);
+            const levelText = 'LEVEL: ' + level;
+            ctx.fillText(livesText, CONFIG.CANVAS_W - 150, 30);
+            ctx.fillText(levelText, CONFIG.CANVAS_W - 100, 30);
+        }
+
+        // ... (Additional functions would be implemented here based on the designdoc.md specification)
+
+        // Start the game
+        canvas.addEventListener('click', () => {
+            if (gameState === 'TITLE' || gameState === 'GAMEOVER') {
+                initGame();
+            }
+        });
+        requestAnimationFrame(gameLoop);
+    </script>
+</body>
+
+</html>

@@ -1,0 +1,4 @@
+- Features: start screen, 3 lives, score, high-score, sound.
+- Bugs: none found
+- Graphics: Sprites and font seem 'blocky'. Smooth animation. Starfield parallax.
+- Comments: Very playable, more than good enough.

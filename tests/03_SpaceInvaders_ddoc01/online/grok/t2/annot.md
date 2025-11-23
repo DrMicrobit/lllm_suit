@@ -1,0 +1,4 @@
+- Features: start screen, game over screen, score, high score, lives, UFO, and sound.
+- Bugs: None, even UFO can be shot.
+- Graphics: very, very simplistic shapes. Starfield, but no parallax.
+- Comments: Initial version took 2:27. Very playable.

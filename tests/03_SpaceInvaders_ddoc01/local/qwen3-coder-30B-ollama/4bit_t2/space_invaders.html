@@ -1,0 +1,133 @@
+<!doctype html>
+<html>
+
+<head>
+    <title>Space Invaders</title>
+    <style>
+        body {
+            margin: 0;
+            padding: 0;
+            background-color: #071029;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            font-family: sans-serif;
+            overflow: hidden;
+        }
+
+        #gameCanvas {
+            width: 100%;
+            max-width: 1200px;
+            height: auto;
+            display: block;
+            box-shadow: 0 0 20px rgba(107, 156, 255, 0.5);
+        }
+    </style>
+</head>
+
+<body>
+    <canvas id="gameCanvas"></canvas>
+    <script>
+        // Game constants and configuration
+        const CONFIG = {
+            CANVAS_W: 800,
+            CANVAS_H: 600,
+            HUD_HEIGHT: 48,
+            PLAYER_SPEED: 260,
+            PLAYER_BULLET_SPEED: 420,
+            INVADER_BASE_SPEED: 22,
+            INVADER_DROP_AMOUNT: 18,
+            INVADER_ANIMATION_INTERVAL: 0.45,
+            UFO_SPEED: 140,
+            INVADER_BULLET_SPEED: 190,
+            BULLET_WIDTH: 4,
+            BULLET_HEIGHT: 12,
+            PLAYER_SHIP_WIDTH: 48,
+            PLAYER_SHIP_HEIGHT: 20,
+            INVADER_WIDTH: 48,
+            INVADER_HEIGHT: 42,
+            INVADER_HORIZONTAL_SPACING: 8,
+            INVADER_VERTICAL_SPACING: 12,
+            BUNKER_WIDTH: 70,
+            BUNKER_HEIGHT: 48,
+            BUNKER_BLOCK_WIDTH: 14,
+            BUNKER_BLOCK_HEIGHT: 12,
+            BUNKER_BLOCK_MARGIN: 2,
+            PLAYER_Y: 540,
+            BUNKER_Y: 460,
+            INVADER_ROWS: 5,
+            INVADER_COLS: 11,
+            INITIAL_LIVES: 3,
+            INVADER_COLORS: [
+                '#FF6B6B', // red
+                '#FFB86B', // orange
+                '#FFD56B', // yellow
+                '#6BFFB8', // mint green
+                '#6B9CFF'  // light blue
+            ],
+            SCORE_VALUES: [30, 20, 20, 10, 10],
+            STAR_COUNT: 100,
+            MAX_PLAYER_BULLETS: 1,
+            MAX_INVADER_BULLETS: 6,
+            MAX_PARTICLES: 30
+        };
+
+        // Game state
+        let gameState = {
+            state: 'TITLE', // TITLE, PLAYING, PAUSED, GAMEOVER
+            score: 0,
+            highScore: parseInt(localStorage.getItem('space_invaders_highscore_v1') || 0),
+            level: 1,
+            lives: CONFIG.INITIAL_LIVES,
+            invaderSpeedScale: 1.0,
+            invaderAnimationTimer: 0,
+            invaderAnimationFrame: 0,
+            lastTime: performance.now(),
+            playerX: CONFIG.CANVAS_W / 2,
+            invaderDirection: 1, // 1 for right, -1 for left
+            invaderFormation: [],
+            playerBullets: [],
+            invaderBullets: [],
+            explosions: [],
+            particles: [],
+            bunkers: [],
+            ufo: null,
+            stars: [],
+            input: {
+                left: false,
+                right: false,
+                fire: false,
+                pause: false
+            },
+            keys: {},
+            mouse: {
+                x: 0,
+                y: 0,
+                isDown: false
+            }
+        };
+
+        // Canvas setup
+        const canvas = document.getElementById('gameCanvas');
+        const ctx = canvas.getContext('2d');
+
+        // Set canvas size
+        canvas.width = CONFIG.CANVAS_W;
+        canvas.height = CONFIG.CANVAS_H;
+
+        // Initialize stars for background
+        function initStars() {
+            gameState.stars = [];
+            for (let i = 0; i < CONFIG.STAR_COUNT; i++) {
+                gameState.stars.push({
+                    x: Math.random() * CONFIG.CANVAS_W,
+                    y: Math.random() * CONFIG.CANVAS_H,
+                    size: Math.random() * 2 + 1,
+                    speed: Math.random() * 0.5 + 0.1
+                });
+            }
+        }
+</body >
+
+</html >

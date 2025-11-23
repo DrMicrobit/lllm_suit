@@ -1,0 +1,4 @@
+- Features: start screen, game over screen, 3 lives, score, high-score, sound. Mouse-control.
+- Bugs: Minor, does not reset score to 0 for a new game. When aliens reach bottom, not immediate game over but successively killing remaining ships.
+- Graphics: nice animated shapes. Starfield parallax, right to left (funny).
+- Comments: Initial version took 2:27. Very playable.
