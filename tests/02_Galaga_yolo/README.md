@@ -197,7 +197,7 @@ Bugs:
   <img src="local/qwen3-coder-30B-ollama/4bit_t1/thumb.png" style="vertical-align: middle;">
 </a>
 
-I lost my notes for this experiment, it was the very first I made.
+I lost my notes for this experiment, it was the very first I performed locally.
 
 I remember getting a pretty good Space Invaders clone without  obvious errors. I then decided to write something like this to the model "This is not Galaga, this is Space Invaders." I did tghis in several iterations, in each the model added progressively complex alien movement patterns, but no attack patterns.
 
