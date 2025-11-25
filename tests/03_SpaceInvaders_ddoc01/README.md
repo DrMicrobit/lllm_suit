@@ -4,6 +4,17 @@ One comment to get this out of the way: this turned out to have become a test of
 
 It is entirely possible that some of the models which somehow failed in this test would shine if only I had used other tools than `cline`. But I needed to draw a line somewhere.
 
+## TL;DR;
+
+1. With cline and 32 GiB VRAM I would use only more or less untampered Qwen 3 coder models:
+   - qwen3-coder-30B as provided by Ollama
+   - qwen3-coder-30B on Huggingface by unsloth. There one can also choose to run with higher quantisations (e.g. 6 bit).
+2. Qwen 3 coder descendants that have been pruned or mixed seem to be worse than the original model.
+3. With 32 GiB VRAM, qwen 3 coder 30B in 4 bit quantisation allow for ~ 100-110 k token context. Using more makes the computation spill over to RAM / CPU and becomes immediately slow by a factor 7 to 20 (depending of your CPU and RAM speed). Spoiler: 8 bit quantisation and 250k context needs ~60-62 GiB VRAM
+4. Whatever is not specified exactly in the requirements is at the mercy of 'interpretation' of the model
+5. Even when something is specified in a design document, there is a non-zero chance of it not being implemented by the model. Or implemented differently.
+
+
 ## The "Space Invaders" design document
 
 As the prompt `Make me a Space Invaders game` is definitely too vague and produces too wide a variety of games with and without features one would expect, this experiment centers on the question how well LLMs stick to a moderately well defined design document.
@@ -27,9 +38,30 @@ Your task is to create a description of the game "Space Invaders" that can be gi
 
 The resulting document (after a bit of manual editing), is [this one](./designdoc.md). You will note it is, although still not specifying everything down to the last detail, already ~2300 words long (~14 KiB). I think it's a moderately usable design document which should get the job done. Not terrible, but not brilliant either.
 
+### Specifications intentionally left vague
+Note that I left a few points intentionally as vague as they were given by ChatGPT.
+
+#### No coding style or guidelines
+
+This was by design to see whether a kind of overarching pattern would emerge. Spoiler alert: none that I could discern.
+
+#### Look of the alien invaders
+Invaders were specified with
+- each invader row has its own color, with a color palette given for each row.
+- Invader body fill: row color, with a thin stroke rgba(255,255,255,0.08) and slight drop shadow (draw a blurred rectangle/ellipse behind). Invader animation: two frames (open/closed) toggled on a timer to produce the classic movement feel.
+
+The shape is completely left out
+
+#### Starfield
+These were the two lines with info on a starfield
+- Background: deep navy #071029 with subtle starfield (animated parallax dots).
+- draw background + starfield (update starfield positions slowly)
+
+This did not specify color, size, shape, number, or distribution of stars.
+
 ## Models tested
 
-I'll define a base line using some of the strongest currently available models to have something to compare to.
+I'll define a baseline using some of the strongest currently available models to have something to compare to.
 
 ### Online models in test
 
@@ -54,7 +86,7 @@ I tested each model twice. Qwen 3 max 3 times, as in the first trial I forgot to
 - Qwen 3 coder via [Ollama Qwen3-coder 30B](https://ollama.com/library/qwen3-coder) as delivered by Ollama by
   default. That is a 4 bit quantisation
   model and allows me to have a bit more than 96k tokens of context on my 32 GiB VRAM
-- Qwen 3 coder via unsloth@huggingface [Qwen3-Coder-30B-A3B-Instruct](https://huggingface.co/unsloth/Qwen3-Coder-30B-A3B-Instruct-GGUF) in 2, 3, and 4 bit quantisation.  
+- Qwen 3 coder via unsloth@huggingface [Qwen3-Coder-30B-A3B-Instruct](https://huggingface.co/unsloth/Qwen3-Coder-30B-A3B-Instruct-GGUF) in 2, 3, 4, and 6 bit quantisation.  
   I also threw in their "UD 4 bit XL" model. UD stands for "Unsloth Dynamic", a special
   kind of quantisation reduction they claim produces better results than other methods.
 - A merge. [YOYO-AI/Qwen3-30B-A3B-CoderThinking-YOYO-linear](https://huggingface.co/YOYO-AI/Qwen3-30B-A3B-CoderThinking-YOYO-linear) One of the HuggingFace models I tried and behaved well enough with cline.
@@ -81,18 +113,15 @@ The online models delivered between moderate and very good results.
 
 The local models with around 30B parameters are between complete fail and moderately useful.
 
-Interestingly enough, the local Qwen 3 coder models exhibited error patterns similar to their larger brethren, the online version. Two distinct errors occured which often could only be fixed by hand:
-
-1. the model liked to use dictionary entries in functions that were not defined in the dictionary they referred to. Specifically, INVADER_ROWS and INVADER_COLS of the CONFIG dictionary. The same error occurred in one of the documented online trials
-2. the model very often displayed a bug in the alien formation movement logic. That particular bug leads to the formation walk to a border and then, instead of dropping down a line, to slide immediately to the bottom of the screen and kill the player. Easy enough to fix by hand, but the models were not able to do it.
+Interestingly enough, the local Qwen 3 coder models exhibited error patterns similar to their larger online brethren. And they often committed the same logic errors over and over again.
 
 All models stuck quite well to the asks given in the design document ... when they implemented said feature as sometimes features were left out. Variability was observed where expected, e.g., graphics for aliens and player ship were not specified terribly well.
 
 ### Online models
 
-- GPT5: 1 failed attempt, one successful on first pass. The successfull trial had nice graphics and sound, few minor bugs. Very playable.
-- Grok: 1 failed attempt, one successful on first pass. The successfull trial had very simplistic, no bugs. Very playable.
-- Qwen 3 coder: one almost perfect one-shot, one attempt without errors after one round of bugfix.
+- GPT5: 1 failed attempt, one successful on first pass. The successful trial had nice graphics and sound, few minor bugs. Very playable.
+- Grok: 1 failed attempt, one successful on first pass. The successful trial had very simplistic, no bugs. Very playable.
+- Qwen 3 coder: one almost perfect one-shot, one attempt without errors after one round of bug-fix.
 - Qwen 3 max: 2 attempts successful, albeit both needing bug fixing rounds. Aliens are distinctively different / better looking than other models.
 - Sonnet 4.5: 1 attempt directly without bugs, other with 2 bug fixing rounds. Very playable.
 
@@ -121,7 +150,7 @@ With the very small sample size above, here's the list of models in descending o
 One will note that Qwen 3 30B models are all in the "failed" category, though their untampered brethren from the Qwen 30B coder family all more or less work. 
 
 - devstral: very slow code generation. Need to reduce context below acceptable level to let it run in 32 GiB VRAM. Extremely buggy result.
-- NVidia nemotron nano 9b: Total failure. Model rambling forever ("Wait, maybe the user meant ..."), destroying previously written code. Stopped experiment after 50 minutes.
+- NVidia Nemotron nano 9b: Total failure. Model rambling forever ("Wait, maybe the user meant ..."), destroying previously written code. Stopped experiment after 50 minutes.
 - qwen3-30B-a3b-instruct-2507-lmstudio: same problems in 4 and 6 bit versions where very buggy code was produced. Also, seems to have compatibility problems with cline.
 - qwen3-30B-a3b-ollama: slow as hell, complete fail, does not work.
 - qwen3-30B-instruct-ollama: very buggy code, incompatibility to cline.
@@ -129,14 +158,176 @@ One will note that Qwen 3 30B models are all in the "failed" category, though th
 - qwen3-coder-30B-yoyolin: Model slow, doesn't play well with Cline. Chatty beyond belief, and broken result.
 - skyfall-31B-v4-thedrummer: extremely slow model, derived from Mistral. Need to reduce context below acceptable level to have it run in VRAM. 2 trials, 2 complete fails.
 
+## Observations on code and specification adherence
+
+### Often encountered bugs of Qwen 3 coder
+Interestingly enough, the local Qwen 3 coder models exhibited error patterns similar to their larger online brethren. Two distinct errors occurred which often could only be fixed by hand when using local models:
+
+1. the model liked to use dictionary entries in functions that were not defined in the dictionary they referred to. Specifically, INVADER_ROWS and INVADER_COLS of the CONFIG dictionary. The same error occurred in one of the documented online trial, where model was able to find the problem just by a description of what the user saw as effect. When this error occurred with the local model, in none of the trials the model was able to find the root cause of the bug when just being told about the effect on screen.
+2. the model very often displayed a bug in the alien formation movement logic. That particular bug leads to the formation walk to a border and then, instead of dropping down a line, to slide immediately to the bottom of the screen and kill the player. Easy enough to fix by hand, but the models were not able to do it when just being told the effect the user saw on screen. The online model however could.
+
+### Varying coding style and code quality
+
+Whether functional, object oriented, or other, no specifications were given apart a short line asking to group numeric constant like so:
+```text
+- Keep all numeric constants up top as `const CONFIG = { CANVAS_W:800, CANVAS_H:600, ... }` so tuning is easy.
+```
+
+At the time of this first writing, I had 45 total trials. 11 for the online models, 34 for local models. Some numbers:
+- Classes: 3/34 trials with local models went for object orientation by having at least one class object defined. From the 11 trials with online models, 5 used classes.
+- gameState dictionary: 32/34 trials from local models used a dictionary called `gameState` to record different aspects of the running game. 5/11 trials with online models did the same.
+- update(dt) function: 28/34 trials with local models had an update(dt) function, 10/11 for the online model trials.
+
+
+#### Function size. E.g.: update(dt)
+
+The design document gave 3 crucial hints on how to implement some of the core functionalities: the main game loop, an update function, and a render function.
+
+The game loop was hinted at like this:
+```text
+# Pseudocode / main loop (concise)
+
+let lastTime = performance.now();
+function loop(now) {
+  const dt = Math.min(0.033, (now - lastTime) / 1000); // clamp dt to avoid big jumps
+  lastTime = now;
+  update(dt);
+  render();
+  requestAnimationFrame(loop);
+}
+requestAnimationFrame(loop);
+```
+
+These were the specifications given for a function `update(dt)`:
+```text
+update(dt):
+- handleInput(dt)
+- update bullets positions, collisions
+- update invader formation (move horizontally by speed*dt; if hits edge -> move down and flip)
+- invader shooting logic (timer + random)
+- update explosions and particles
+- update HUD timers and check level completion
+````
+
+And this was information for the render function:
+```text
+render():
+
+clear canvas
+- draw background + starfield (update starfield positions slowly)
+- draw invaders (alive ones)
+- draw invader bullets
+- draw bunkers (loop blocks)
+- draw player and player bullets
+- draw explosions
+- draw HUD (top bar)
+- draw overlays for paused/title/game over
+```
+
+I observed two different behaviours: sometimes the model put all code into one huge function with hundreds of lines of code, and at other times it made (the very sensible) decision to break down the functionality into subfunctions.
+
+The following examples are all from the UD 6 bit model.
+
+Here's [an example](./local/qwen3-coder-30B-unsloth/6bitUD_t5/space_invaders.html) where the model lumped everything into one function, 259 lines of code.
+
+
+Here's a [particularly nice example](./local/qwen3-coder-30B-unsloth/6bitUD_t1/space_invaders.html) where during a code review, one would have very little to complain about (except the useless / redundant first if-clause):
+
+```javascript
+// Update game state
+function update(dt) {
+    if (gameState.state === 'TITLE') return;
+    if (gameState.state === 'PLAYING' && !gameState.paused) {
+        handleInput(dt);
+        updateBullets(dt);
+        updateInvaders(dt);
+        updateExplosions(dt);
+        updateParticles(dt);
+        updateUFO(dt);
+        checkLevelCompletion();
+    }
+}
+```
+
+The very same model, [in yet another run](./local/qwen3-coder-30B-unsloth/6bitUD_t3/space_invaders.html), mixed up the update and the render functions like this (note how `update()` re-implements large parts of `render()`):
+
+```javascript
+// Update game state
+function update(dt) {
+    if (gameState.state === 'TITLE') {
+        drawTitleScreen();
+        return;
+    }
+    if (gameState.state === 'GAMEOVER') {
+        drawGameOverScreen();
+        return;
+    }
+    if (gameState.paused) {
+        drawPausedScreen();
+        return;
+    }
+    // Update game elements
+    updateStars(dt);
+    handleInput(dt);
+    updatePlayerBullets(dt);
+    updateInvaderBullets(dt);
+    updateInvaders(dt);
+    updateUFO(dt);
+    updateExplosions(dt);
+    updatePlayerInvulnerability(dt);
+    // Draw everything
+    drawBackground();
+    drawStars();
+    drawInvaders();
+    drawBunkers();
+    drawBullets();
+    drawExplosions();
+    drawUFO();
+    drawPlayer();
+    drawHUD();
+}
+// Render game
+function render() {
+    // Clear canvas
+    ctx.clearRect(0, 0, CONFIG.CANVAS_W, CONFIG.CANVAS_H);
+    // Draw based on state
+    if (gameState.state === 'TITLE') {
+        drawTitleScreen();
+    } else if (gameState.state === 'GAMEOVER') {
+        drawGameOverScreen();
+    } else if (gameState.paused) {
+        drawPausedScreen();
+    } else {
+        // Draw game elements
+        drawBackground();
+        drawStars();
+        drawInvaders();
+        drawBunkers();
+        drawBullets();
+        drawExplosions();
+        drawUFO();
+        drawPlayer();
+        drawHUD();
+    }
+}
+```
+
+
+### Specification adherence
+
+Not many trial runs had all the the requirements from the specifications implemented. Features most often missing were (due to bugs or 'decision' by the LLM):
+- shots by player or aliens (or both) going through bunkers and not destroying them
+- no UFO, or if, then not destroyable by player
+- starfield was completely missing in some trials. Often, if present, it was either static or randomly generated in every frame. Only a minority of trials showed parallax scrolling of stars.
+
 ## My current recommendation
 
 At the moment I would use only more or less untampered Qwen 3 coder models:
 
 - qwen3-coder-30B as provided by Ollama
-- qwen3-coder-30B on huggingface by unsloth. There one can also choose to run with higher quantisations (e.g. 6 bit).
+- qwen3-coder-30B on Huggingface by unsloth. There one can also choose to run with higher quantisations (e.g. 6 bit, or even 8 if one has more than 32 GiB VRAM).
 
-Qwen 3 coder descendents that have been pruned or mixed seem to be worse than the original model.
+Qwen 3 coder descendants that have been pruned or mixed seem to be worse than the original model.
 
 <!-- Everything below this line is generated automatically, do not change -->
 

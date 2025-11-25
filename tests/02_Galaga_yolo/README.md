@@ -1,5 +1,12 @@
 # Building a Galaga game with AI, the YOLO approach
 
+## TL;DR;
+
+1. The models have between no and only a vague idea of what a Galaga game is. 
+2. Models with probably 'best' idea: GPT5 and Sonnet 4.5
+3. Qwen and Gemini build more or less SPace Invaders.
+4. As one does not know what the models know and what not, a specification document is probably always needed for many use cases.
+
 ## Models tested
 
 Online models I tested (via web interfaces) to establish a base line:
@@ -47,7 +54,7 @@ In a nutshell: it is clear that, compared to Space Invaders, the large online mo
 
 ### Results local models
 
-Being descendents of Qwen 3 coder (which had apparently no idea what Galaga is), the results were predictably bad in a sense that they were more Space Invaders than Galaga.
+Being descendants of Qwen 3 coder (which had apparently no idea what Galaga is), the results were predictably bad in a sense that they were more Space Invaders than Galaga.
 
 <!-- Everything below this line is generated automatically, do not change -->
 

@@ -1,6 +1,6 @@
 ![](./title.png)
 
-# Suitability of local LLMs for AI assisted coding
+# Suitability of local LLMs for AI assisted coding with cline
 
 ## TL;DR;
 
@@ -12,6 +12,8 @@
 
 I made this repo to document a couple of experiments I ran in Nov 2025
 to assess the suitability of local LLMs for AI assisted programming.
+
+Note that I specifically wanted to test this not via web interface to local LLMs, but when using a development environment. I chose VS Code and cline.
 
 ## Models tested
 
