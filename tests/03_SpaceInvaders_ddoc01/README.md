@@ -38,7 +38,7 @@ Your task is to create a description of the game "Space Invaders" that can be gi
 
 The resulting document (after a bit of manual editing), is [this one](./designdoc.md). You will note it is, although still not specifying everything down to the last detail, already ~2300 words long (~14 KiB). I think it's a moderately usable design document which should get the job done. Not terrible, but not brilliant either.
 
-### Specifications intentionally left vague
+### Some specifications intentionally left vague
 Note that I left a few points intentionally as vague as they were given by ChatGPT.
 
 #### No coding style or guidelines
@@ -106,6 +106,7 @@ Beside the specialised coder version, I wanted to see how well (or not) the pare
 - Skyfall 31B v4 via [hf.co/TheDrummer/Skyfall-31B-v4-GGUF:Q4_K_M](https://huggingface.co/TheDrummer/Skyfall-31B-v4-GGUF) for fun as it has the highest UGI score for models at max ~30B parameters in the [UGI Leaderboard](https://huggingface.co/spaces/DontPlanToEnd/UGI-Leaderboard). The authors describe it as "an upscaled version of Mistral Small 3.2 2507"
 - Nemotron Nano 9B v2 via [hf.co/bartowski/nvidia_NVIDIA-Nemotron-Nano-9B-v2-GGUF](https://huggingface.co/bartowski/nvidia_NVIDIA-Nemotron-Nano-9B-v2-GGUF) as the highest scoring small model on [livecodebench](https://llm-stats.com/benchmarks/livecodebench), scoring even higher than the Qwen models.
 - Olmo 3 32B via [olmo3-32B-think-unsloth](https://huggingface.co/unsloth/Olmo-3-32B-Think-GGUF). Fully open model which dropped in the week i did theses tests.
+- GLM-Z1-32B-0414 via LMStudio community [GLM-Z1-32B-0414-GGUF](https://huggingface.co/lmstudio-community/GLM-Z1-32B-0414-GGUF)
 
 ## Results at a glance
 
@@ -157,6 +158,7 @@ One will note that Qwen 3 30B models are all in the "failed" category, though th
 - qwen3-coder-30B-cerebrasreap25B (4 bit): 3 trials, all very buggy and bug fixing unsuccessful (when tried)
 - qwen3-coder-30B-yoyolin: Model slow, doesn't play well with Cline. Chatty beyond belief, and broken result.
 - skyfall-31B-v4-thedrummer: extremely slow model, derived from Mistral. Need to reduce context below acceptable level to have it run in VRAM. 2 trials, 2 complete fails.
+- glm-z1-32B-0414-lmstudio: memory overrun to RAM despite VRAM free (Ollama problem?). But also cline interaction not working.
 
 ## Observations on code and specification adherence
 
@@ -501,6 +503,15 @@ Buggy (objects almost don't move), completely overloads the browser in terms of 
 
 Stopped experiment here.
 
+### Experiment <a href="https://github.com/DrMicrobit/lllm_suit/blob/main/tests/03_SpaceInvaders_ddoc01/local/glm-z1-32B-0414-lmstudio/4bit_t1">tests/03_SpaceInvaders_ddoc01/local/glm-z1-32B-0414-lmstudio/4bit_t1</a>
+
+<a href="https://drmicrobit.github.io/lllm_suit/tests/03_SpaceInvaders_ddoc01/local/glm-z1-32B-0414-lmstudio/4bit_t1/space_invaders.html">
+  <img src="local/glm-z1-32B-0414-lmstudio/4bit_t1/thumb.png" style="vertical-align: middle;">
+</a>
+
+Complete fail.
+1. Even when restricting context window to 30k tokens, the model spilled over to RAM (~5 GiB) and CPU. Despite having ~3 GiB VRAM free on each card (~6 GiB total). Maybe more an Ollama problem.
+2. Tool calling seems to fail, cline cannot parse the output in a way that allows meaningful interaction. No index.html created.
 ### Experiment <a href="https://github.com/DrMicrobit/lllm_suit/blob/main/tests/03_SpaceInvaders_ddoc01/local/nemotron-nano-9B-v2-bartowski/8bit_t1">tests/03_SpaceInvaders_ddoc01/local/nemotron-nano-9B-v2-bartowski/8bit_t1</a>
 
 <a href="https://drmicrobit.github.io/lllm_suit/tests/03_SpaceInvaders_ddoc01/local/nemotron-nano-9B-v2-bartowski/8bit_t1/space_invaders.html">
