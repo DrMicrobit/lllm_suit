@@ -506,7 +506,7 @@ Stopped experiment here.
 ### Experiment <a href="https://github.com/DrMicrobit/lllm_suit/blob/main/tests/03_SpaceInvaders_ddoc01/local/glm-z1-32B-0414-lmstudio/4bit_t1">tests/03_SpaceInvaders_ddoc01/local/glm-z1-32B-0414-lmstudio/4bit_t1</a>
 
 <a href="https://drmicrobit.github.io/lllm_suit/tests/03_SpaceInvaders_ddoc01/local/glm-z1-32B-0414-lmstudio/4bit_t1/space_invaders.html">
-  <img src="./assets/complete_failure.png" style="vertical-align: middle;">
+  <img src="./assets/complete_fail.png" style="vertical-align: middle;">
 </a>
 
 Complete fail.

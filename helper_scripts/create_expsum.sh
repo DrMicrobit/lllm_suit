@@ -78,7 +78,7 @@ list_these () {
         # use the failure png as thumb for that
         if [ -f $ldir_path/$gamefile ]; then
             if [ ! -s $ldir_path/$gamefile ]; then
-                thumb_path="./assets/complete_failure.png"
+                thumb_path="./assets/complete_fail.png"
             fi
         fi
 
