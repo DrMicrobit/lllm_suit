@@ -71,17 +71,30 @@ list_these () {
             cdir_path="$basedir/$ldir_path"
         fi
         echo $cdir_path
+
+
+        thumb_path=$ldir_path/thumb.png
+        # an existing game file, but empty means: complete failure
+        # use the failure png as thumb for that
+        if [ -f $ldir_path/$gamefile ]; then
+            if [ ! -s $ldir_path/$gamefile ]; then
+                thumb_path="assets/complete_failure.png"
+            fi
+        fi
+
         cat << EOF >> README.md
 ### Experiment <a href="$ghbase/$cdir_path">$cdir_path</a>
 
 <a href="$ghpages/$cdir_path/$gamefile">
-  <img src="$ldir_path/thumb.png" style="vertical-align: middle;">
+  <img src="$thumb_path" style="vertical-align: middle;">
 </a>
 
 EOF
+        # add annot.md to readme
         if [ -s $ldir_path/annot.md ] ; then
             cat $ldir_path/annot.md >> README.md
         else
+            # convenience: create an annot.md if not existing
             touch $ldir_path/annot.md
         fi
 
@@ -138,20 +151,3 @@ go_through_expdirs() {
 
 
 go_through_expdirs
-
-# # Truncate old README
-# 
-# awk "/$autoline/ {exit} {print}" README.md >ttt
-# echo "$autoline" >>ttt
-# echo "" >>ttt
-# cp ttt README.md
-# rm ttt
-# 
-# 
-# 
-# list_these ./tests/Galaga/online "Online" "Galaga" galaga.html
-# list_these ./tests/Galaga/local "Local" "Galaga" galaga.html
-# 
-# list_these ./tests/SpaceInvaders/local "Local" "Space Invaders" space_invaders.html
-# list_these ./tests/SpaceInvaders/online "Online" "Space Invaders" space_invaders.html
-

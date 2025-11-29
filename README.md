@@ -1,4 +1,4 @@
-![](./title.png)
+![](./assets/title.png)
 
 # Suitability of local LLMs for AI assisted coding with cline
 
